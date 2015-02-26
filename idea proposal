@@ -1,0 +1,47 @@
+Idea Proposal
+ 
+* Sport apps for Pace athletics
+ 
+What is the name of the app you want to develop? (Tentative name)
+MPG – My Pace Gym
+
+What is the app you want to develop? (Description in less than 250 words)
+A specific guide for Pace students who want go to the gym, but don’t have a workout and don’t know how to build one. Selecting a specific goal with a personal profile it is possible to achieve your goals working out at Pace gym.
+What is your 140-character pitch for this app?
+An app with a specific guide for Pace students who want go to the gym, don’t have deep knowledge about gym workouts.
+	
+	//Develop a creative way of teaching someone how to properly use gym equipment to get                the most out of their workout. 
+	My question would be: are we teaching how to properly use gym equipment or are we trying to motivate them to go to the gym? Or both? 
+
+What is/are the problem/s you want to solve?
+Some people workout without knowledge of physical education and do exercises without accompaniment just looking for some machines. Some exercises have different goals and people usually don’t mind about this. The MPG is meant to help these people finding the best exercises based on personal profile and pre established specific goals.
+
+Who are the users you are targeting?
+Those that already go to the gym but do not understand how the machines work.
+
+How will this app solve the tackled problem/s? Please provide a vision statement.
+This app will build specific workout sets that can be executed at Pace Gym. It will help the people to achieve their fitness goals.
+
+What are the major features of the app?
+Build specific workout sets based on the user’s profile. The user will specify a his/her characteristics and goals and the app will provide training tips.
+
+How is this app unique?
+This app adequates itself to the user. When a user sets his/her profile, the app will generate information about training exercises in order to help beginners and pace students at the gym. 
+
+What are the risks associated with the development of this app? Why wouldn’t it be delivered completely, on time and on budget? Identify 4 to 6 risks that are relevant in your case.
+	1 - There is an issue associated with creating the right set of exercises for the right user. 	The app will need to learn a bit about its user in order to generate precise results. 
+	2 - Determine the functional requirements for the app might be difficult, taking in account 	
+	this is a critical application and should be based on scientific proofs;
+	
+What similar apps exist on the market? (at least 5 apps) 
+	1 - My Workout 
+	2 - Body Building
+	3 - Total fitness
+	4 - Gym Workout
+  5 - Gym Trainer 
+  6 - iMuscle 2
+
+Also for some tools we should consider using:
+
+www.asana.com - its a task management tool 
+www.podio.com - Its more towards project management and there are tools we can use to manage our mobile app development. 
