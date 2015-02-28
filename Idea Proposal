@@ -33,7 +33,10 @@ The user will specify a his/her characteristics and goals and the app will provi
 This app adequates itself to the user. When a user sets his/her profile, 
 the app will generate information about training exercises in order to help beginners and pace students at the gym. 
 
-9. What are the risks associated with the development of this app? Why wouldn’t it be delivered completely, on time and on budget? Identify 4 to 6 risks that are relevant in your case.
+9. What are the risks associated with the development of this app? 
+   Why wouldn’t it be delivered completely, on time and on budget? 
+   Identify 4 to 6 risks that are relevant in your case.
+   	
 	1 - There is an issue associated with creating the right set of exercises for the right user. 
 	    The app will need to learn a bit about its user in order to generate precise results. 
 	    
