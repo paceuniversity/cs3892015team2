@@ -18,32 +18,119 @@
 
 package pace.cs389.team2.quickfitness;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
+import java.util.ArrayList;
+import java.util.List;
+
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
+import android.widget.AdapterView;
+import android.widget.ListView;
+
+import pace.cs389.team2.quickfitness.adapter.CustomDrawerAdapter;
+import pace.cs389.team2.quickfitness.adapter.ItemDrawer;
 
 /**
  * MainActivity will launch the app's home screen
  */
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
+
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private ActionBarDrawerToggle mDrawerToggle;
+
+    private CharSequence mDrawerTitle;
+    private CharSequence mTitle;
+    CustomDrawerAdapter adapter;
+
+    List<ItemDrawer> mDataList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mDataList = new ArrayList<ItemDrawer>();
+        mTitle = mDrawerTitle = getTitle();
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.container);
+        mDrawerList = (ListView) findViewById(R.id.list_left_drawer);
+
+        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow,
+                GravityCompat.START);
+
+
+        mDataList.add(new ItemDrawer("Set Goal", R.mipmap.ic_settings_grey600_24dp));
+        mDataList.add(new ItemDrawer("Workouts", R.mipmap.ic_settings_grey600_24dp));
+        mDataList.add(new ItemDrawer("Profile", R.mipmap.ic_settings_grey600_24dp));
+        mDataList.add(new ItemDrawer("Statistics", R.mipmap.ic_settings_grey600_24dp));
+
+        mDataList.add(new ItemDrawer(""));
+
+        mDataList.add(new ItemDrawer("Settings", R.mipmap.ic_settings_grey600_24dp));
+        mDataList.add(new ItemDrawer("Help", R.mipmap.ic_help_grey600_24dp));
+
+        adapter = new CustomDrawerAdapter(this, R.layout.custom_drawer_item,
+                mDataList);
+
+        mDrawerList.setAdapter(adapter);
+
+        /*new Thread(new Runnable() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mDrawerLayout.openDrawer(Gravity.LEFT);
+                    }
+                });
+            }
+        }).start();*/
+
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+                R.drawable.ic_drawer, R.string.drawer_open,
+                R.string.drawer_close) {
+            public void onDrawerClosed(View view) {
+                getActionBar().setTitle(mTitle);
+                invalidateOptionsMenu(); // creates call to
+                // onPrepareOptionsMenu()
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                getActionBar().setTitle(mDrawerTitle);
+                invalidateOptionsMenu(); // creates call to
+                // onPrepareOptionsMenu()
+            }
+        };
+
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
+
+            if (mDataList.get(1).getmTitleItem() != null) {
+                selectItem(2);
+            } else if (mDataList.get(0).getmTitleItem() != null) {
+                selectItem(1);
+            } else {
+                selectItem(0);
+            }
         }
+
     }
 
 
@@ -59,29 +146,114 @@ public class MainActivity extends ActionBarActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
 
-        return super.onOptionsItemSelected(item);
+        return false;
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
+    public void selectItem(int position) {
 
-        public PlaceholderFragment() {
+        Fragment fragment = null;
+        Bundle args = new Bundle();
+        switch (position) {
+
+            case 0:
+                fragment = new FragmentOne();
+                args.putString(FragmentOne.ITEM_NAME, mDataList.get(position)
+                        .getmNameItem());
+                args.putInt(FragmentOne.IMAGE_RESOURCE_ID, mDataList
+                        .get(position).getmIconRes());
+                break;
+            case 1:
+                fragment = new FragmentOne();
+                args.putString(FragmentOne.ITEM_NAME, mDataList.get(position)
+                        .getmNameItem());
+                args.putInt(FragmentOne.IMAGE_RESOURCE_ID, mDataList
+                        .get(position).getmIconRes());
+                break;
+            case 2:
+                fragment = new FragmentOne();
+                args.putString(FragmentOne.ITEM_NAME, mDataList.get(position)
+                        .getmNameItem());
+                args.putInt(FragmentOne.IMAGE_RESOURCE_ID, mDataList
+                        .get(position).getmIconRes());
+                break;
+            case 3:
+                fragment = new FragmentOne();
+                args.putString(FragmentOne.ITEM_NAME, mDataList.get(position)
+                        .getmNameItem());
+                args.putInt(FragmentOne.IMAGE_RESOURCE_ID, mDataList
+                        .get(position).getmIconRes());
+                break;
+            case 4:
+                fragment = new FragmentOne();
+                args.putString(FragmentOne.ITEM_NAME, mDataList.get(position)
+                        .getmNameItem());
+                args.putInt(FragmentOne.IMAGE_RESOURCE_ID, mDataList
+                        .get(position).getmIconRes());
+                break;
+            case 5:
+                fragment = new FragmentOne();
+                args.putString(FragmentOne.ITEM_NAME, mDataList.get(position)
+                        .getmNameItem());
+                args.putInt(FragmentOne.IMAGE_RESOURCE_ID, mDataList
+                        .get(position).getmIconRes());
+                break;
+            case 6:
+                fragment = new FragmentOne();
+                args.putString(FragmentOne.ITEM_NAME, mDataList.get(position)
+                        .getmNameItem());
+                args.putInt(FragmentOne.IMAGE_RESOURCE_ID, mDataList
+                        .get(position).getmIconRes());
+                break;
+            default:
+                break;
         }
 
+        fragment.setArguments(args);
+        FragmentManager frgManager = getFragmentManager();
+        frgManager.beginTransaction().replace(R.id.content_place_holder, fragment)
+                .commit();
+
+        mDrawerList.setItemChecked(position, true);
+        setTitle(mDataList.get(position).getmNameItem());
+        mDrawerLayout.closeDrawer(mDrawerList);
+
+
+    }
+
+    @Override
+    public void setTitle(CharSequence title) {
+        mTitle = title;
+        getActionBar().setTitle(mTitle);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Pass any configuration change to the drawer toggles
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+
+    private class DrawerItemClickListener implements
+            ListView.OnItemClickListener {
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
+        public void onItemClick(AdapterView<?> parent, View view, int position,
+                                long id) {
+            if (mDataList.get(position).getmTitleItem() == null) {
+                selectItem(position);
+            }
+
         }
     }
 }
