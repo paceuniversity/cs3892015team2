@@ -14,17 +14,71 @@
 
     </FrameLayout>
 
-    <ListView
-        android:id="@+id/list_left_drawer"
-        android:layout_gravity="start"
+
+    <LinearLayout
+        android:id="@+id/group_layout"
         android:layout_width="300dp"
-        android:layout_height="match_parent"
-        android:background="@color/background_white"
-        android:choiceMode="singleChoice"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="0dp">
+        android:layout_gravity="start"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
 
-    </ListView>
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp">
+
+            <ImageView
+                android:layout_width="300dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/wall_back" />
+
+            <LinearLayout
+                android:layout_width="280dp"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="40dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:orientation="vertical">
+
+
+                <ImageView
+                    android:onClick="setUserPicture"
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_account_circle_white_48dp" />
+
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:layout_marginTop="5dp"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                    android:fontFamily="sans-serif-regular"
+                    android:text="Text Username"
+                    android:textColor="@color/background_white" />
+
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <ListView
+            android:id="@+id/list_left_drawer"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:background="@color/background_white"
+            android:drawSelectorOnTop="false"
+            android:listSelector="@color/background_light_gray"
+            android:choiceMode="singleChoice"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0dp">
+
+        </ListView>
+
+
+    </LinearLayout>
 
 </android.support.v4.widget.DrawerLayout>

@@ -29,12 +29,17 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import pace.cs389.team2.quickfitness.adapter.CustomDrawerAdapter;
 import pace.cs389.team2.quickfitness.adapter.ItemDrawer;
@@ -51,9 +56,9 @@ public class MainActivity extends Activity {
 
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
-    CustomDrawerAdapter adapter;
-
-    List<ItemDrawer> mDataList;
+    private CustomDrawerAdapter adapter;
+    private LinearLayout mGroupView;
+    private List<ItemDrawer> mDataList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,15 +69,15 @@ public class MainActivity extends Activity {
         mTitle = mDrawerTitle = getTitle();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.container);
         mDrawerList = (ListView) findViewById(R.id.list_left_drawer);
+        mGroupView = (LinearLayout) findViewById(R.id.group_layout);
 
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow,
                 GravityCompat.START);
 
-
-        mDataList.add(new ItemDrawer("Set Goal", R.mipmap.ic_settings_grey600_24dp));
-        mDataList.add(new ItemDrawer("Workouts", R.mipmap.ic_settings_grey600_24dp));
-        mDataList.add(new ItemDrawer("Profile", R.mipmap.ic_settings_grey600_24dp));
-        mDataList.add(new ItemDrawer("Statistics", R.mipmap.ic_settings_grey600_24dp));
+        mDataList.add(new ItemDrawer("Set Goal", R.mipmap.ic_goal24dp));
+        mDataList.add(new ItemDrawer("Workouts", R.mipmap.ic_workouts24dp));
+        mDataList.add(new ItemDrawer("Profile", R.mipmap.ic_person_grey600_24dp));
+        mDataList.add(new ItemDrawer("Statistics", R.mipmap.ic_trending_up_grey600_24dp));
 
         mDataList.add(new ItemDrawer(""));
 
@@ -120,17 +125,10 @@ public class MainActivity extends Activity {
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
+
         if (savedInstanceState == null) {
-
-            if (mDataList.get(1).getmTitleItem() != null) {
-                selectItem(2);
-            } else if (mDataList.get(0).getmTitleItem() != null) {
-                selectItem(1);
-            } else {
-                selectItem(0);
-            }
+            selectItem(0);
         }
-
     }
 
 
@@ -219,7 +217,7 @@ public class MainActivity extends Activity {
 
         mDrawerList.setItemChecked(position, true);
         setTitle(mDataList.get(position).getmNameItem());
-        mDrawerLayout.closeDrawer(mDrawerList);
+        mDrawerLayout.closeDrawer(mGroupView);
 
 
     }
@@ -255,5 +253,9 @@ public class MainActivity extends Activity {
             }
 
         }
+    }
+
+    public void setUserPicture(View view) {
+        Toast.makeText(this, "User picture.", Toast.LENGTH_LONG).show();
     }
 }

@@ -28,6 +28,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -35,7 +36,7 @@ import pace.cs389.team2.quickfitness.R;
 
 /**
  * Created by Luiz on 25/03/2015.
- *
+ * <p/>
  * This class creates an adapter of type ItemDrawer to display in a ListView
  */
 public class CustomDrawerAdapter extends ArrayAdapter<ItemDrawer> {
@@ -71,7 +72,6 @@ public class CustomDrawerAdapter extends ArrayAdapter<ItemDrawer> {
 
             mDrawerHolder.mHeaderLayout = (LinearLayout) mView
                     .findViewById(R.id.header_layout);
-
             mDrawerHolder.mItemLayout = (LinearLayout) mView
                     .findViewById(R.id.item_layout);
 
