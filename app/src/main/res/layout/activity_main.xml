@@ -57,7 +57,7 @@
                     android:layout_marginTop="2dp"
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
                     android:fontFamily="sans-serif-regular"
-                    android:text="Luiz Henrique"
+                    android:text="Josh"
                     android:textColor="@color/background_white" />
 
 
