@@ -26,7 +26,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class FragmentOne extends Fragment {
+public class FragmentMainContent extends Fragment {
 
     private ImageView mImageIcon;
     private TextView mTextIcon;
@@ -34,23 +34,23 @@ public class FragmentOne extends Fragment {
     public static final String IMAGE_RESOURCE_ID = "iconResourceID";
     public static final String ITEM_NAME = "itemName";
 
-    public FragmentOne() {
+    public FragmentMainContent() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_one, container,
+        View view = inflater.inflate(R.layout.fragment_main_content, container,
                 false);
 
         mImageIcon = (ImageView) view.findViewById(R.id.fragment_one_icon);
         mTextIcon = (TextView) view.findViewById(R.id.fragment_one_text);
 
-        mTextIcon.setText(getArguments().getString(ITEM_NAME));
+        mTextIcon.setText("Main content.");
 
         mImageIcon.setImageDrawable(view.getResources().getDrawable(
-                getArguments().getInt(IMAGE_RESOURCE_ID)));
+                R.mipmap.ic_launcher));
 
         return view;
 

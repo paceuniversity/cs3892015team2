@@ -21,24 +21,24 @@ package pace.cs389.team2.quickfitness;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import pace.cs389.team2.quickfitness.adapter.CustomDrawerAdapter;
@@ -74,6 +74,8 @@ public class MainActivity extends Activity {
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow,
                 GravityCompat.START);
 
+        mDataList.add(new ItemDrawer("Home", R.mipmap.ic_home_grey600_24dp
+        ));
         mDataList.add(new ItemDrawer("Set Goal", R.mipmap.ic_goal24dp));
         mDataList.add(new ItemDrawer("Workouts", R.mipmap.ic_workouts24dp));
         mDataList.add(new ItemDrawer("Profile", R.mipmap.ic_person_grey600_24dp));
@@ -151,66 +153,108 @@ public class MainActivity extends Activity {
         return false;
     }
 
+
     public void selectItem(int position) {
 
         Fragment fragment = null;
         Bundle args = new Bundle();
+
+        Drawable myIcon = null;
+
+        int mPressedColor = getResources().getColor(R.color.dark_orange);
+
+        Drawable mHomeIcon = getResources().getDrawable(R.mipmap.ic_home_grey600_24dp);
+        mHomeIcon.setColorFilter(null);
+
+        Drawable mSetGoalIcon = getResources().getDrawable(R.mipmap.ic_goal24dp);
+        mSetGoalIcon.setColorFilter(null);
+
+        Drawable mWorkoutIcon = getResources().getDrawable(R.mipmap.ic_workouts24dp);
+        mWorkoutIcon.setColorFilter(null);
+
+        Drawable mProfileIcon = getResources().getDrawable(R.mipmap.ic_person_grey600_24dp);
+        mProfileIcon.setColorFilter(null);
+
+        Drawable mStatisticsIcon = getResources().getDrawable(R.mipmap.ic_trending_up_grey600_24dp);
+        mStatisticsIcon.setColorFilter(null);
+
+        Drawable mSettingsIcon = getResources().getDrawable(R.mipmap.ic_settings_grey600_24dp);
+        mSettingsIcon.setColorFilter(null);
+
+        Drawable mHelpIcon = getResources().getDrawable(R.mipmap.ic_help_grey600_24dp);
+        mHelpIcon.setColorFilter(null);
+
         switch (position) {
 
             case 0:
-                fragment = new FragmentOne();
-                args.putString(FragmentOne.ITEM_NAME, mDataList.get(position)
-                        .getmNameItem());
-                args.putInt(FragmentOne.IMAGE_RESOURCE_ID, mDataList
-                        .get(position).getmIconRes());
+                fragment = new FragmentMainContent();
+                getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+                getActionBar().setDisplayShowTitleEnabled(true);
+                myIcon = getResources().getDrawable(R.mipmap.ic_home_grey600_24dp);
+                myIcon.setColorFilter(mPressedColor, PorterDuff.Mode.MULTIPLY);
                 break;
             case 1:
-                fragment = new FragmentOne();
-                args.putString(FragmentOne.ITEM_NAME, mDataList.get(position)
-                        .getmNameItem());
-                args.putInt(FragmentOne.IMAGE_RESOURCE_ID, mDataList
-                        .get(position).getmIconRes());
+                fragment = new FragmentSetGoal();
+                myIcon = getResources().getDrawable(R.mipmap.ic_goal24dp);
+                myIcon.setColorFilter(mPressedColor, PorterDuff.Mode.MULTIPLY);
                 break;
             case 2:
-                fragment = new FragmentOne();
-                args.putString(FragmentOne.ITEM_NAME, mDataList.get(position)
+                fragment = new FragmentMainContent();
+                args.putString(FragmentMainContent.ITEM_NAME, mDataList.get(position)
                         .getmNameItem());
-                args.putInt(FragmentOne.IMAGE_RESOURCE_ID, mDataList
+                args.putInt(FragmentMainContent.IMAGE_RESOURCE_ID, mDataList
                         .get(position).getmIconRes());
+                getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+                getActionBar().setDisplayShowTitleEnabled(true);
+                myIcon = getResources().getDrawable(R.mipmap.ic_workouts24dp);
+                myIcon.setColorFilter(mPressedColor, PorterDuff.Mode.MULTIPLY);
                 break;
             case 3:
-                fragment = new FragmentOne();
-                args.putString(FragmentOne.ITEM_NAME, mDataList.get(position)
+                fragment = new FragmentMainContent();
+                args.putString(FragmentMainContent.ITEM_NAME, mDataList.get(position)
                         .getmNameItem());
-                args.putInt(FragmentOne.IMAGE_RESOURCE_ID, mDataList
+                args.putInt(FragmentMainContent.IMAGE_RESOURCE_ID, mDataList
                         .get(position).getmIconRes());
+                getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+                getActionBar().setDisplayShowTitleEnabled(true);
+                myIcon = getResources().getDrawable(R.mipmap.ic_person_grey600_24dp);
+                myIcon.setColorFilter(mPressedColor, PorterDuff.Mode.MULTIPLY);
                 break;
             case 4:
-                fragment = new FragmentOne();
-                args.putString(FragmentOne.ITEM_NAME, mDataList.get(position)
+                fragment = new FragmentMainContent();
+                args.putString(FragmentMainContent.ITEM_NAME, mDataList.get(position)
                         .getmNameItem());
-                args.putInt(FragmentOne.IMAGE_RESOURCE_ID, mDataList
+                args.putInt(FragmentMainContent.IMAGE_RESOURCE_ID, mDataList
                         .get(position).getmIconRes());
+                myIcon = getResources().getDrawable(R.mipmap.ic_trending_up_grey600_24dp);
+                myIcon.setColorFilter(mPressedColor, PorterDuff.Mode.MULTIPLY);
                 break;
             case 5:
-                fragment = new FragmentOne();
-                args.putString(FragmentOne.ITEM_NAME, mDataList.get(position)
-                        .getmNameItem());
-                args.putInt(FragmentOne.IMAGE_RESOURCE_ID, mDataList
-                        .get(position).getmIconRes());
                 break;
             case 6:
-                fragment = new FragmentOne();
-                args.putString(FragmentOne.ITEM_NAME, mDataList.get(position)
+                fragment = new FragmentMainContent();
+                args.putString(FragmentMainContent.ITEM_NAME, mDataList.get(position)
                         .getmNameItem());
-                args.putInt(FragmentOne.IMAGE_RESOURCE_ID, mDataList
+                args.putInt(FragmentMainContent.IMAGE_RESOURCE_ID, mDataList
                         .get(position).getmIconRes());
+                myIcon = getResources().getDrawable(R.mipmap.ic_settings_grey600_24dp);
+                myIcon.setColorFilter(mPressedColor, PorterDuff.Mode.MULTIPLY);
+
+                break;
+            case 7:
+                fragment = new FragmentMainContent();
+                args.putString(FragmentMainContent.ITEM_NAME, mDataList.get(position)
+                        .getmNameItem());
+                args.putInt(FragmentMainContent.IMAGE_RESOURCE_ID, mDataList
+                        .get(position).getmIconRes());
+                myIcon = getResources().getDrawable(R.mipmap.ic_help_grey600_24dp);
+                myIcon.setColorFilter(mPressedColor, PorterDuff.Mode.MULTIPLY);
                 break;
             default:
                 break;
         }
 
-        fragment.setArguments(args);
+
         FragmentManager frgManager = getFragmentManager();
         frgManager.beginTransaction().replace(R.id.content_place_holder, fragment)
                 .commit();
@@ -225,6 +269,7 @@ public class MainActivity extends Activity {
     @Override
     public void setTitle(CharSequence title) {
         mTitle = title;
+
         getActionBar().setTitle(mTitle);
     }
 
