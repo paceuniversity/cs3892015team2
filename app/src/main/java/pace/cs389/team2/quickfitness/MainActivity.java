@@ -77,7 +77,7 @@ public class MainActivity extends Activity {
         mDataList.add(new ItemDrawer("Home", R.mipmap.ic_home_grey600_24dp
         ));
         mDataList.add(new ItemDrawer("Set your Goal", R.mipmap.ic_goal24dp));
-        mDataList.add(new ItemDrawer("Workouts", R.mipmap.ic_workouts24dp));
+        mDataList.add(new ItemDrawer("Your Workouts", R.mipmap.ic_workouts24dp));
         mDataList.add(new ItemDrawer("Profile", R.mipmap.ic_person_grey600_24dp));
         mDataList.add(new ItemDrawer("Stats", R.mipmap.ic_trending_up_grey600_24dp));
 
