@@ -74,17 +74,16 @@ public class MainActivity extends Activity {
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow,
                 GravityCompat.START);
 
-        mDataList.add(new ItemDrawer("Home", R.mipmap.ic_home_grey600_24dp
-        ));
-        mDataList.add(new ItemDrawer("Set your Goal", R.mipmap.ic_goal24dp));
-        mDataList.add(new ItemDrawer("Your Workouts", R.mipmap.ic_workouts24dp));
-        mDataList.add(new ItemDrawer("Profile", R.mipmap.ic_person_grey600_24dp));
-        //mDataList.add(new ItemDrawer("Stats", R.mipmap.ic_trending_up_grey600_24dp));
+        mDataList.add(new ItemDrawer(getResources().getString(R.string.list_drawer_item_home), R.mipmap.ic_home_grey600_24dp));
+        mDataList.add(new ItemDrawer(getResources().getString(R.string.list_drawer_item_set_goal), R.mipmap.ic_goal24dp));
+        mDataList.add(new ItemDrawer(getResources().getString(R.string.list_drawer_item_workouts), R.mipmap.ic_workouts24dp));
+        mDataList.add(new ItemDrawer(getResources().getString(R.string.list_drawer_item_profile), R.mipmap.ic_person_grey600_24dp));
+        mDataList.add(new ItemDrawer(getResources().getString(R.string.list_drawer_item_statistics), R.mipmap.ic_trending_up_grey600_24dp));
 
         mDataList.add(new ItemDrawer(""));
 
-        mDataList.add(new ItemDrawer("Settings", R.mipmap.ic_settings_grey600_24dp));
-        mDataList.add(new ItemDrawer("Help", R.mipmap.ic_help_grey600_24dp));
+        mDataList.add(new ItemDrawer(getResources().getString(R.string.list_drawer_item_settings), R.mipmap.ic_settings_grey600_24dp));
+        mDataList.add(new ItemDrawer(getResources().getString(R.string.list_drawer_item_help), R.mipmap.ic_help_grey600_24dp));
 
         adapter = new CustomDrawerAdapter(this, R.layout.custom_drawer_item,
                 mDataList);
@@ -146,10 +145,8 @@ public class MainActivity extends Activity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
+        if (mDrawerToggle.onOptionsItemSelected(item))
             return true;
-        }
-
         return false;
     }
 
