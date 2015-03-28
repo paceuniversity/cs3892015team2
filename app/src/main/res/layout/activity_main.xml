@@ -30,6 +30,7 @@
             <ImageView
                 android:layout_width="300dp"
                 android:layout_height="match_parent"
+                android:contentDescription="@string/drawer_header_image_content_desc"
                 android:src="@drawable/wall_back" />
 
             <LinearLayout
@@ -46,6 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@string/drawer_set_user_picture_content_desc"
                     android:src="@mipmap/ic_account_circle_white_48dp" />
 
                 <TextView
@@ -54,10 +56,10 @@
                     android:layout_height="wrap_content"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
-                    android:layout_marginTop="2dp"
-                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                    android:layout_marginTop="10dp"
+                    android:textSize="15sp"
                     android:fontFamily="sans-serif-regular"
-                    android:text="Josh"
+                    android:text="@string/drawer_txt_user_name"
                     android:textColor="@color/background_white" />
 
 
@@ -70,8 +72,6 @@
             android:layout_width="300dp"
             android:layout_height="match_parent"
             android:background="@color/background_white"
-            android:drawSelectorOnTop="false"
-            android:listSelector="@color/background_light_gray"
             android:choiceMode="singleChoice"
             android:divider="@android:color/transparent"
             android:dividerHeight="0dp">

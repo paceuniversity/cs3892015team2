@@ -16,7 +16,7 @@
  *
  */
 
-package pace.cs389.team2.quickfitness.adapter;
+package pace.cs389.team2.quickfitness.model;
 
 import java.io.Serializable;
 

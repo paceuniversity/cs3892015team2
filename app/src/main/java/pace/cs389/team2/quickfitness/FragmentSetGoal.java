@@ -21,7 +21,6 @@ package pace.cs389.team2.quickfitness;
 
 import android.app.ActionBar;
 import android.app.Fragment;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -31,6 +30,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import pace.cs389.team2.quickfitness.adapter.CustomSpinnerAdapter;
+import pace.cs389.team2.quickfitness.model.SpinnerNavItem;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,9 +43,10 @@ import android.widget.Toast;
 public class FragmentSetGoal extends Fragment implements ActionBar.OnNavigationListener {
 
 
-    private ArrayAdapter<String> mSpinnerAdapter;
+    private CustomSpinnerAdapter mSpinnerAdapter;
+    private ArrayList<SpinnerNavItem> mSpinnerList;
     private ListView mSetGoalCategories;
-    private String[] mSpinnerItems = {"All Categories", "Strength", "Cardio", "Weight Loss", "Endurance"};
+    private SpinnerNavItem mNavSpinner;
     private String[] mListItems = {"Pull Down", "Treadmill", "Spin", "Hammer Press", "Leg Press", "Shoulder Press"};
     private ArrayAdapter<String> mListAdapter;
 
@@ -61,20 +67,48 @@ public class FragmentSetGoal extends Fragment implements ActionBar.OnNavigationL
         // Enabling Spinner dropdown navigation
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 
+
         View view = inflater.inflate(R.layout.fragment_set_goal, container,
                 false);
 
-        mSpinnerAdapter = new ArrayAdapter<String>(actionBar.getThemedContext(), android.R.layout.simple_list_item_1, mSpinnerItems);
         mListAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, mListItems);
         mSetGoalCategories = (ListView) view.findViewById(R.id.set_goal_list_categories);
 
+        mSpinnerList = new ArrayList<SpinnerNavItem>();
+        mSpinnerList.add(new SpinnerNavItem("All Categories"));
+        mSpinnerList.add(new SpinnerNavItem("Cardio", R.drawable.circle_tag_spinner_green));
+        mSpinnerList.add(new SpinnerNavItem("Endurance", R.drawable.circle_tag_spinner_orange));
+        mSpinnerList.add(new SpinnerNavItem("Strength", R.drawable.circle_tag_spinner_purple));
+        mSpinnerList.add(new SpinnerNavItem("Weight Loss", R.drawable.circle_tag_spinner_grey_blue));
+
+
+        // title drop down adapter
+        mSpinnerAdapter = new CustomSpinnerAdapter(getActivity().getApplicationContext(), mSpinnerList);
+
+        // assigning the spinner navigation
         actionBar.setListNavigationCallbacks(mSpinnerAdapter, this);
+
+
         setListExercisesAdapter(mListItems);
 
         return view;
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        actionBar.setDisplayShowTitleEnabled(true);
+    }
 
     /**
      * On selecting action bar icons
@@ -89,19 +123,9 @@ public class FragmentSetGoal extends Fragment implements ActionBar.OnNavigationL
      */
     @Override
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-        String spinnerSelectedItem = mSpinnerAdapter.getItem(itemPosition);
-        Toast.makeText(getActivity(), spinnerSelectedItem, Toast.LENGTH_LONG).show();
 
-        String[] mListItems1 = {"Pull Down", "Treadmill", "Spin"};
-        String[] mListItems2 = {"Hammer Press", "Leg Press", "Shoulder Press"};
 
-        if (spinnerSelectedItem.equals("Strength")) {
-            setListExercisesAdapter(mListItems1);
-        } else if (spinnerSelectedItem.equals("Cardio")) {
-            setListExercisesAdapter(mListItems2);
-        }
-
-        return true;
+        return false;
     }
 
     private void setListExercisesAdapter(String[] mList) {

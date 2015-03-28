@@ -20,33 +20,29 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:gravity="center_vertical"
-    android:id="@+id/item_layout"
-    android:background="@drawable/list_item_state"
-    android:layout_alignParentStart="true"
+    android:orientation="horizontal"
     android:layout_height="wrap_content">
 
+    <TextView
+        android:id="@+id/txt_spinner_adapter"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:textColor="#424242"
+        android:text="Weight Loss"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:layout_gravity="fill_vertical"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:fontFamily="sans-serif-regular" />
 
     <ImageView
-        android:id="@+id/drawer_item_icon"
-        android:layout_width="wrap_content"
-        android:layout_marginStart="15dp"
+        android:id="@+id/img_spinner_adapter"
+        android:layout_width="17dp"
+        android:layout_height="17dp"
+        android:contentDescription="@string/spinner_categories_tag_content_desc"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/drawer_item_icon_content_desc" />
-
-    <TextView
-        android:id="@+id/drawer_item_name"
-        android:layout_width="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginStart="30dp"
-        android:textColor="@drawable/text_selector"
-        android:fontFamily="sans-serif-medium"
-        android:textSize="15sp" />
-
-
+        android:layout_marginStart="30dp" />
 </LinearLayout>
-

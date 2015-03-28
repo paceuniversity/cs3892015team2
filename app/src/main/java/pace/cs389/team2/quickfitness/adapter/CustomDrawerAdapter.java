@@ -18,9 +18,7 @@
 
 package pace.cs389.team2.quickfitness.adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,11 +26,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
 import pace.cs389.team2.quickfitness.R;
+import pace.cs389.team2.quickfitness.model.ItemDrawer;
 
 /**
  * Created by Luiz on 25/03/2015.
@@ -41,7 +39,7 @@ import pace.cs389.team2.quickfitness.R;
  */
 public class CustomDrawerAdapter extends ArrayAdapter<ItemDrawer> {
 
-    private Context mContext;
+    Context mContext;
     private int mIconRes;
     private List<ItemDrawer> mListDrawer;
     private LayoutInflater mInflater;
@@ -68,12 +66,17 @@ public class CustomDrawerAdapter extends ArrayAdapter<ItemDrawer> {
             mView = mInflater.inflate(mIconRes, parent, false);
             mDrawerHolder.mItemText = (TextView) mView.findViewById(R.id.drawer_item_name);
             mDrawerHolder.mItemIcon = (ImageView) mView.findViewById(R.id.drawer_item_icon);
-            mDrawerHolder.mItemTitle = (TextView) mView.findViewById(R.id.list_header_text);
 
-            mDrawerHolder.mHeaderLayout = (LinearLayout) mView
-                    .findViewById(R.id.header_layout);
+           /* mDrawerHolder.mListSeparator = mView.findViewById(R.id.list_divider2);
+
+            if (position == 4) {
+                mDrawerHolder.mListSeparator.setVisibility(View.VISIBLE);
+            }*/
+
+
             mDrawerHolder.mItemLayout = (LinearLayout) mView
                     .findViewById(R.id.item_layout);
+
 
             mView.setTag(mDrawerHolder);
 
@@ -83,19 +86,10 @@ public class CustomDrawerAdapter extends ArrayAdapter<ItemDrawer> {
         }
 
         ItemDrawer mItemDrawer = (ItemDrawer) this.mListDrawer.get(position);
-
-        if (mItemDrawer.getmTitleItem() != null) {
-            mDrawerHolder.mHeaderLayout.setVisibility(LinearLayout.VISIBLE);
-            mDrawerHolder.mItemLayout.setVisibility(LinearLayout.INVISIBLE);
-            mDrawerHolder.mItemTitle.setText(mItemDrawer.getmTitleItem());
-
-        } else {
-            mDrawerHolder.mHeaderLayout.setVisibility(LinearLayout.INVISIBLE);
-            mDrawerHolder.mItemLayout.setVisibility(LinearLayout.VISIBLE);
-            mDrawerHolder.mItemIcon.setImageDrawable(mView.getResources().getDrawable(
-                    mItemDrawer.getmIconRes()));
-            mDrawerHolder.mItemText.setText(mItemDrawer.getmNameItem());
-        }
+        mDrawerHolder.mItemLayout.setVisibility(LinearLayout.VISIBLE);
+        mDrawerHolder.mItemIcon.setImageDrawable(mView.getResources().getDrawable(
+                mItemDrawer.getmIconRes()));
+        mDrawerHolder.mItemText.setText(mItemDrawer.getmNameItem());
 
 
         return mView;
@@ -103,7 +97,8 @@ public class CustomDrawerAdapter extends ArrayAdapter<ItemDrawer> {
 
     public static class DrawerViewHolder {
         TextView mItemText, mItemTitle;
+        View mListSeparator;
         ImageView mItemIcon;
-        LinearLayout mHeaderLayout, mItemLayout;
+        LinearLayout mItemLayout;
     }
 }
