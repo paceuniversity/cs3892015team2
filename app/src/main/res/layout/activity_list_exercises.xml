@@ -16,9 +16,13 @@
   ~  */
   -->
 
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_pressed="true" android:color="@color/text_color_dark_grey" />
-    <item android:state_activated="true" android:color="@color/text_color_dark_grey" />
-    <item android:color="@color/text_color_lighter_grey" />
-</selector>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/cardList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>
