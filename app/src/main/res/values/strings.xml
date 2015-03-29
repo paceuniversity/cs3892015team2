@@ -20,7 +20,7 @@
     <string name="spinner_categories_tag_content_desc">Spinner Item Tag</string>
     <string name="drawer_txt_user_name">Josh</string>
 
-    <string name="fragment_one_text">Main Content.</string>
+    <string name="fragment_one_text">Main Content</string>
 
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
