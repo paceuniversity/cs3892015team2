@@ -28,8 +28,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import pace.cs389.team2.quickfitness.R;
+import pace.cs389.team2.quickfitness.model.CategoryItem;
 import pace.cs389.team2.quickfitness.model.SpinnerNavItem;
 
 /**
@@ -40,11 +42,11 @@ public class CustomSpinnerAdapter extends BaseAdapter {
 
     private ImageView imgIcon;
     private TextView txtTitle;
-    private ArrayList<SpinnerNavItem> spinnerNavItem;
+    private List<CategoryItem> spinnerNavItem;
     private Context context;
 
     public CustomSpinnerAdapter(Context context,
-                                ArrayList<SpinnerNavItem> spinnerNavItem) {
+                                List<CategoryItem> spinnerNavItem) {
         this.spinnerNavItem = spinnerNavItem;
         this.context = context;
     }
@@ -75,9 +77,9 @@ public class CustomSpinnerAdapter extends BaseAdapter {
         imgIcon = (ImageView) convertView.findViewById(R.id.img_spinner_adapter);
         txtTitle = (TextView) convertView.findViewById(R.id.txt_spinner_adapter);
 
+        txtTitle.setText(spinnerNavItem.get(position).getName());
         imgIcon.setImageResource(spinnerNavItem.get(position).getIcon());
-        imgIcon.setVisibility(View.GONE);
-        txtTitle.setText(spinnerNavItem.get(position).getTitle());
+
 
         return convertView;
     }
@@ -96,10 +98,10 @@ public class CustomSpinnerAdapter extends BaseAdapter {
         txtTitle = (TextView) convertView.findViewById(R.id.txt_spinner_adapter);
 
         if (imgIcon == null) {
-            txtTitle.setText(spinnerNavItem.get(position).getTitle());
+            txtTitle.setText(spinnerNavItem.get(position).getName());
         } else {
             imgIcon.setImageResource(spinnerNavItem.get(position).getIcon());
-            txtTitle.setText(spinnerNavItem.get(position).getTitle());
+            txtTitle.setText(spinnerNavItem.get(position).getName());
         }
 
         return convertView;

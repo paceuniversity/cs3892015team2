@@ -34,8 +34,8 @@ import java.util.List;
 
 import pace.cs389.team2.quickfitness.adapter.CustomExercisesListAdapter;
 import pace.cs389.team2.quickfitness.adapter.CustomSpinnerAdapter;
+import pace.cs389.team2.quickfitness.data.QuickFitnessDAO;
 import pace.cs389.team2.quickfitness.model.ExercisesItem;
-import pace.cs389.team2.quickfitness.model.SpinnerNavItem;
 
 
 /**
@@ -45,7 +45,6 @@ public class FragmentSetGoal extends Fragment implements ActionBar.OnNavigationL
 
 
     private CustomSpinnerAdapter mSpinnerAdapter;
-    private ArrayList<SpinnerNavItem> mSpinnerList;
     private RecyclerView mRecyclerView;
     private List<ExercisesItem> mExercisesList;
     private ExercisesItem mExercisesItem;
@@ -57,6 +56,7 @@ public class FragmentSetGoal extends Fragment implements ActionBar.OnNavigationL
     private ExercisesItem mExercisesItem7;
     private ExercisesItem mExercisesItem8;
     private ExercisesItem mExercisesItem9;
+
     private CustomExercisesListAdapter mExercisesAdapter;
 
     private ActionBar actionBar;
@@ -87,15 +87,7 @@ public class FragmentSetGoal extends Fragment implements ActionBar.OnNavigationL
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(llm);
 
-        mSpinnerList = new ArrayList<>();
-        mSpinnerList.add(new SpinnerNavItem("All Categories"));
-        mSpinnerList.add(new SpinnerNavItem("Cardio", R.drawable.circle_tag_spinner_green));
-        mSpinnerList.add(new SpinnerNavItem("Endurance", R.drawable.circle_tag_spinner_orange));
-        mSpinnerList.add(new SpinnerNavItem("Strength", R.drawable.circle_tag_spinner_purple));
-        mSpinnerList.add(new SpinnerNavItem("Weight Loss", R.drawable.circle_tag_spinner_grey_blue));
-
-
-        mExercisesItem = new ExercisesItem("Pull Down", "Exercise Description", R.drawable.wall2);
+        mExercisesItem = new ExercisesItem("Pull Down", "Pull Down exercises work very well for losing weight purposes.", R.drawable.wall2);
         mExercisesItem2 = new ExercisesItem("Treadmill", "Exercise Description", R.drawable.wall2);
         mExercisesItem3 = new ExercisesItem("Leg Press", "Exercise Description", R.drawable.wall2);
         mExercisesItem4 = new ExercisesItem("Shoulder Press", "Exercise Description", R.drawable.wall2);
@@ -117,7 +109,7 @@ public class FragmentSetGoal extends Fragment implements ActionBar.OnNavigationL
         mExercisesList.add(mExercisesItem9);
 
         // title drop down adapter
-        mSpinnerAdapter = new CustomSpinnerAdapter(getActivity().getApplicationContext(), mSpinnerList);
+        mSpinnerAdapter = new CustomSpinnerAdapter(getActivity().getApplicationContext(), QuickFitnessDAO.getInstance(getActivity()).listExercisesCategories());
 
         // assigning the spinner navigation
         actionBar.setListNavigationCallbacks(mSpinnerAdapter, this);
@@ -140,8 +132,8 @@ public class FragmentSetGoal extends Fragment implements ActionBar.OnNavigationL
     @Override
     public void onPause() {
         super.onPause();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
     }
 
     /**

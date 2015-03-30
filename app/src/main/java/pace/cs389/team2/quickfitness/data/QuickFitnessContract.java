@@ -32,7 +32,7 @@ public class QuickFitnessContract {
         public static final String TABLE_NAME = "user";
 
         //User id is stored as an integer value
-        public static final String COLUMN_USER_ID = "user_id";
+        public static final String COLUMN_USER_ID = "_id";
 
         //User name, stored as string
         public static final String COLUMN_USER_NAME = "user_name";
@@ -55,7 +55,7 @@ public class QuickFitnessContract {
         public static final String TABLE_NAME = "body";
 
         //Body id column is stored as an integer value
-        public static final String COLUMN_BODY_ID = "body_id";
+        public static final String COLUMN_BODY_ID = "_id";
 
         //User height column stores the user height as integer
         public static final String COLUMN_BODY_HEIGHT = "body_height";
@@ -80,7 +80,7 @@ public class QuickFitnessContract {
         public static final String TABLE_NAME = "exercise";
 
         //Exercise primary key, stored as an integer
-        public static final String COLUMN_EXERCISE_ID = "exercise_id";
+        public static final String COLUMN_EXERCISE_ID = "_id";
 
         //Exercise name, stored as string
         public static final String COLUMN_EXERCISE_NAME = "exercise_name";
@@ -111,7 +111,10 @@ public class QuickFitnessContract {
         public static final String TABLE_NAME = "category";
 
         //Category primary key, stored as integer
-        public static final String COLUMN_CATEGORY_ID = "category_id";
+        public static final String COLUMN_CATEGORY_ID = "_id";
+
+        //Category icon, stored as integer
+        public static final String COLUMN_CATEGORY_ICON = "icon";
 
         //Category name, stored as String
         public static final String COLUMN_CATEGORY_NAME = "category_name";
@@ -124,7 +127,7 @@ public class QuickFitnessContract {
         public static final String TABLE_NAME = "workout_set";
 
         //Workout set primary key, stored as integer
-        public static final String COLUMN_WORKOUT_SET_ID = "workout_set_id";
+        public static final String COLUMN_WORKOUT_SET_ID = "_id";
 
         //Workout set name, stored as string
         public static final String COLUMN_WORKOUT_SET_NAME = "workout_set_name";
@@ -143,7 +146,7 @@ public class QuickFitnessContract {
         public static final String TABLE_NAME = "status";
 
         //Status primary key stored as an integer
-        public static final String COLUMN_STATUS_ID = "status_id";
+        public static final String COLUMN_STATUS_ID = "_id";
 
         //Status name, stored as string
         public static final String COLUMN_STATUS_NAME = "status_name";

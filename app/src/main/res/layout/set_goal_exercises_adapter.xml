@@ -18,6 +18,7 @@
         <ImageView
             android:id="@+id/img_exercise_picture"
             android:layout_width="match_parent"
+            android:contentDescription="@string/cards_list_img_content_description"
             android:layout_height="160dp" />
 
         <LinearLayout
@@ -34,19 +35,18 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginTop="2dp"
-                android:text="Exercise Title"
-                android:fontFamily="sans-serif-roboto"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-regular"
                 android:textSize="18sp"
                 android:textColor="#fff" />
 
             <TextView
-                android:id="@+id/txt_exercise_decription"
+                android:id="@+id/txt_exercise_description"
                 android:layout_width="match_parent"
-                android:text="Exercise Description"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:fontFamily="sans-serif-roboto"
-                android:textSize="15sp"
+                android:fontFamily="sans-serif-regular"
+                android:textSize="13sp"
                 android:textColor="#fff"
                 android:layout_height="wrap_content" />
         </LinearLayout>

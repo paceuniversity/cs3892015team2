@@ -18,7 +18,6 @@
 
 package pace.cs389.team2.quickfitness.adapter;
 
-import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -96,7 +95,7 @@ public class CustomExercisesListAdapter extends RecyclerView.Adapter<CustomExerc
         public ExercisesViewHolder(View v) {
             super(v);
             mExerciseTitle = (TextView) v.findViewById(R.id.txt_exercise_title);
-            mExerciseDescription = (TextView) v.findViewById(R.id.txt_exercise_decription);
+            mExerciseDescription = (TextView) v.findViewById(R.id.txt_exercise_description);
             mImageExerciseTop = (ImageView) v.findViewById(R.id.img_exercise_picture);
             mCardBottomLayout = (LinearLayout) v.findViewById(R.id.card_bottom_layout);
         }

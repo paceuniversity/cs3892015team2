@@ -18,20 +18,16 @@
 
 package pace.cs389.team2.quickfitness;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.res.Configuration;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,7 +36,13 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import pace.cs389.team2.quickfitness.adapter.CustomDrawerAdapter;
+import pace.cs389.team2.quickfitness.data.QuickFitnessDAO;
+import pace.cs389.team2.quickfitness.data.QuickFitnessDbHelper;
+import pace.cs389.team2.quickfitness.model.CategoryItem;
 import pace.cs389.team2.quickfitness.model.ItemDrawer;
 
 /**
@@ -49,10 +51,15 @@ import pace.cs389.team2.quickfitness.model.ItemDrawer;
 
 public class MainActivity extends Activity {
 
+    // DrawerLayout object to display app's left menu options
     private DrawerLayout mDrawerLayout;
+
+    // ListView to show menu options on DrawerLayout
     private ListView mDrawerList;
+
     private ActionBarDrawerToggle mDrawerToggle;
 
+    //Variable to show the title on drawer
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private LinearLayout mGroupView;
@@ -63,8 +70,26 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        //if (QuickFitnessDbHelper.getInstance(getApplicationContext()) != null) {
+        //    Toast.makeText(this, "Database Created.", Toast.LENGTH_LONG).show();
+        //}
+
+      /*  QuickFitnessDAO dao = QuickFitnessDAO.getInstance(getApplicationContext());
+        dao.categoryBulkInsert();
+        Toast.makeText(this, "Categories inserted.", Toast.LENGTH_LONG).show();
+
+
+        List<CategoryItem> items = dao.listExercisesCategories();
+
+        for (int i = 0; i < items.size(); i++) {
+            Log.i("TABLE CATEGORY", items.get(i).getName());
+            Log.i("TABLE CATEGORY", String.valueOf(items.get(i).getIcon()));
+        }*/
+
+
         // Copies references to local variables
-        mDataList = new ArrayList<ItemDrawer>();
+        mDataList = new ArrayList<>();
         mTitle = mDrawerTitle = getTitle();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.container);
         mDrawerList = (ListView) findViewById(R.id.list_left_drawer);
@@ -82,13 +107,19 @@ public class MainActivity extends Activity {
         mDataList.add(new ItemDrawer(getResources().getString(R.string.list_drawer_item_settings), R.mipmap.ic_settings_grey600_24dp));
         mDataList.add(new ItemDrawer(getResources().getString(R.string.list_drawer_item_help), R.mipmap.ic_help_grey600_24dp));
 
+        //Makes a reference to the menu drawer adapter, which will show them items with an icon on the left.
+        //CustomDrawerAdapter receives the context, the custom xml layout adapter and the list of items to be displayed.
         CustomDrawerAdapter adapter = new CustomDrawerAdapter(this, R.layout.custom_drawer_item,
                 mDataList);
 
+        //Set adapter to ListView
         mDrawerList.setAdapter(adapter);
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
+        //Check if the action bar object isn't null and then enables the up navigator and home buttons
+        if (getActionBar() != null) {
+            getActionBar().setDisplayHomeAsUpEnabled(true);
+            getActionBar().setHomeButtonEnabled(true);
+        }
 
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
@@ -119,9 +150,11 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+        if (!mDrawerLayout.isDrawerOpen(mGroupView)) {
+            getMenuInflater().inflate(R.menu.menu_main, menu);
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -129,9 +162,8 @@ public class MainActivity extends Activity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        if (mDrawerToggle.onOptionsItemSelected(item))
-            return true;
-        return false;
+
+        return mDrawerToggle.onOptionsItemSelected(item);
     }
 
 
@@ -202,7 +234,10 @@ public class MainActivity extends Activity {
     public void setTitle(CharSequence title) {
         mTitle = title;
 
-        getActionBar().setTitle(mTitle);
+        if (getActionBar() != null) {
+            getActionBar().setTitle(mTitle);
+        }
+
     }
 
     @Override
@@ -230,6 +265,7 @@ public class MainActivity extends Activity {
             }
 
         }
+
     }
 
     public void setUserPicture(View view) {

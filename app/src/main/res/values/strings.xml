@@ -18,6 +18,7 @@
     <string name="drawer_set_user_picture_content_desc">Set User Picture</string>
     <string name="drawer_header_image_content_desc">Header Image on Drawer</string>
     <string name="spinner_categories_tag_content_desc">Spinner Item Tag</string>
+    <string name="cards_list_img_content_description">Exercise Image</string>
     <string name="drawer_txt_user_name">Josh</string>
 
     <string name="fragment_one_text">Main Content</string>
