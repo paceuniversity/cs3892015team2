@@ -57,6 +57,7 @@ public class FragmentSetGoal extends Fragment implements ActionBar.OnNavigationL
     private ExercisesItem mExercisesItem7;
     private ExercisesItem mExercisesItem8;
     private ExercisesItem mExercisesItem9;
+    private ExercisesItem mExercisesItem10;
     private CustomExercisesListAdapter mExercisesAdapter;
 
     private ActionBar actionBar;
@@ -104,6 +105,7 @@ public class FragmentSetGoal extends Fragment implements ActionBar.OnNavigationL
         mExercisesItem7 = new ExercisesItem("Leg Extension", "Tap to View More Information", R.drawable.wall2);
         mExercisesItem8 = new ExercisesItem("Back Leg", "Tap to View More Information", R.drawable.wall2);
         mExercisesItem9 = new ExercisesItem("Neck Extension", "Tap to View More Information", R.drawable.wall2);
+        mExercisesItem10= new ExercisesItem("Decline Push Up", "Tap to View More Information", R.drawable.wall2);
 
         mExercisesList = new ArrayList<>();
         mExercisesList.add(mExercisesItem);
@@ -115,6 +117,7 @@ public class FragmentSetGoal extends Fragment implements ActionBar.OnNavigationL
         mExercisesList.add(mExercisesItem7);
         mExercisesList.add(mExercisesItem8);
         mExercisesList.add(mExercisesItem9);
+        mExercisesList.add(mExercisesItem10);
 
         // title drop down adapter
         mSpinnerAdapter = new CustomSpinnerAdapter(getActivity().getApplicationContext(), mSpinnerList);
