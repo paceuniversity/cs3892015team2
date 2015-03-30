@@ -95,7 +95,7 @@ public class FragmentSetGoal extends Fragment implements ActionBar.OnNavigationL
         mExercisesItem6 = new ExercisesItem("Back Extension", "Exercise Description", R.drawable.wall2);
         mExercisesItem7 = new ExercisesItem("Leg Extension", "Exercise Description", R.drawable.wall2);
         mExercisesItem8 = new ExercisesItem("Back Leg", "Exercise Description", R.drawable.wall2);
-        mExercisesItem9 = new ExercisesItem("Neck Extension", "Exercise Description", R.drawable.wall2);
+        mExercisesItem9 = new ExercisesItem("Neck Extension Test", "Exercise Description", R.drawable.wall2);
 
         mExercisesList = new ArrayList<>();
         mExercisesList.add(mExercisesItem);
