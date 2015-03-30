@@ -88,7 +88,7 @@ public class FragmentSetGoal extends Fragment implements ActionBar.OnNavigationL
         mRecyclerView.setLayoutManager(llm);
 
         mExercisesItem = new ExercisesItem("Pull Down", "Pull Down exercises work very well for losing weight purposes.", R.drawable.wall2);
-        mExercisesItem2 = new ExercisesItem("Treadmill", "Exercise Description", R.drawable.wall2);
+        mExercisesItem2 = new ExercisesItem("Treadmill", "Tap to View More Infomation", R.drawable.wall2);
         mExercisesItem3 = new ExercisesItem("Leg Press", "Exercise Description", R.drawable.wall2);
         mExercisesItem4 = new ExercisesItem("Shoulder Press", "Exercise Description", R.drawable.wall2);
         mExercisesItem5 = new ExercisesItem("Chest Pull Down", "Exercise Description", R.drawable.wall2);
