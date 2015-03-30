@@ -95,15 +95,15 @@ public class FragmentSetGoal extends Fragment implements ActionBar.OnNavigationL
         mSpinnerList.add(new SpinnerNavItem("Weight Loss", R.drawable.circle_tag_spinner_grey_blue));
 
 
-        mExercisesItem = new ExercisesItem("Pull Down", "Exercise Description", R.drawable.wall2);
-        mExercisesItem2 = new ExercisesItem("Treadmill", "Exercise Description", R.drawable.wall2);
-        mExercisesItem3 = new ExercisesItem("Leg Press", "Exercise Description", R.drawable.wall2);
-        mExercisesItem4 = new ExercisesItem("Shoulder Press", "Exercise Description", R.drawable.wall2);
-        mExercisesItem5 = new ExercisesItem("Chest Pull Down", "Exercise Description", R.drawable.wall2);
-        mExercisesItem6 = new ExercisesItem("Back Extension", "Exercise Description", R.drawable.wall2);
-        mExercisesItem7 = new ExercisesItem("Leg Extension", "Exercise Description", R.drawable.wall2);
-        mExercisesItem8 = new ExercisesItem("Back Leg", "Exercise Description", R.drawable.wall2);
-        mExercisesItem9 = new ExercisesItem("Neck Extension", "Exercise Description", R.drawable.wall2);
+        mExercisesItem = new ExercisesItem("Pull Down", "Tap to View More Information", R.drawable.wall2);
+        mExercisesItem2 = new ExercisesItem("Treadmill", "Tap to View More Information", R.drawable.wall2);
+        mExercisesItem3 = new ExercisesItem("Leg Press", "Tap to View More Information", R.drawable.wall2);
+        mExercisesItem4 = new ExercisesItem("Shoulder Press", "Tap to View More Information", R.drawable.wall2);
+        mExercisesItem5 = new ExercisesItem("Chest Pull Down", "Tap to View More Information", R.drawable.wall2);
+        mExercisesItem6 = new ExercisesItem("Back Extension", "Tap to View More Information", R.drawable.wall2);
+        mExercisesItem7 = new ExercisesItem("Leg Extension", "Tap to View More Information", R.drawable.wall2);
+        mExercisesItem8 = new ExercisesItem("Back Leg", "Tap to View More Information", R.drawable.wall2);
+        mExercisesItem9 = new ExercisesItem("Neck Extension", "Tap to View More Information", R.drawable.wall2);
 
         mExercisesList = new ArrayList<>();
         mExercisesList.add(mExercisesItem);
