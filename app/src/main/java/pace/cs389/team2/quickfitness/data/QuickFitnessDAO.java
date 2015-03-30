@@ -69,6 +69,7 @@ public class QuickFitnessDAO {
 
 
         List<CategoryItem> exerciseCategories = new ArrayList<>();
+
         exerciseCategories.add(allCategoriesItem);
         exerciseCategories.add(cardioItem);
         exerciseCategories.add(enduranceItem);
