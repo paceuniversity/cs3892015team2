@@ -18,6 +18,7 @@
 
 package pace.cs389.team2.quickfitness.adapter;
 
+import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,8 @@ import android.widget.Toast;
 import java.util.List;
 
 import pace.cs389.team2.quickfitness.R;
+import pace.cs389.team2.quickfitness.data.QuickFitnessDAO;
+import pace.cs389.team2.quickfitness.model.CategoryItem;
 import pace.cs389.team2.quickfitness.model.ExercisesItem;
 
 public class CustomExercisesListAdapter extends RecyclerView.Adapter<CustomExercisesListAdapter.ExercisesViewHolder> implements View.OnClickListener {
@@ -61,30 +64,27 @@ public class CustomExercisesListAdapter extends RecyclerView.Adapter<CustomExerc
     public void onBindViewHolder(ExercisesViewHolder exercisesViewHolder, int i) {
         exercisesItem = mExercisesList.get(i);
 
-        if (exercisesItem.getCategory().get_id() == 2) {
+        if (exercisesItem.getCategoryKey() == 2) {
             exercisesViewHolder.mCardBottomLayout.setBackgroundResource(R.color.material_green);
-        } else if (exercisesItem.getCategory().get_id() == 3) {
+        } else if (exercisesItem.getCategoryKey() == 3) {
             exercisesViewHolder.mCardBottomLayout.setBackgroundResource(R.color.material_orange);
-        } else if (exercisesItem.getCategory().get_id() == 4) {
+        } else if (exercisesItem.getCategoryKey() == 4) {
             exercisesViewHolder.mCardBottomLayout.setBackgroundResource(R.color.material_purple);
-        } else if (exercisesItem.getCategory().get_id() == 5) {
+        } else if (exercisesItem.getCategoryKey() == 5) {
             exercisesViewHolder.mCardBottomLayout.setBackgroundResource(R.color.material_blue_grey);
+
+        } else {
+            exercisesViewHolder.mCardBottomLayout.setBackgroundResource(R.color.background_list_item_gray);
         }
 
         exercisesViewHolder.mExerciseTitle.setText(exercisesItem.getName());
-        exercisesViewHolder.mExerciseDescription.setText(exercisesItem.getDescription());
-        exercisesViewHolder.mImageExerciseTop.setImageResource(exercisesItem.getIcon());
 
-        //Bitmap icon = BitmapFactory.decodeResource(itemView.getResources(),
-        //        exercisesItem.getIcon());
+        CategoryItem category = QuickFitnessDAO.getInstance(itemView.getContext()).categoryById(exercisesItem.getCategoryKey());
+        exercisesViewHolder.mExerciseCategory.setText(category.getName());
 
-        //Bitmap mIconResized = Bitmap.createScaledBitmap(icon, 350, 160, true);
+        ImageLoader task = new ImageLoader();
+        task.execute(exercisesItem.getIcon());
 
-        //BitmapResizeUtils.getResizedBitmap(icon, 350, 160);
-
-
-        //exercisesViewHolder.mImageExerciseTop.setImageBitmap(BitmapUtils.decodeSampledBitmapFromResource(itemView.getResources(),
-        //       exercisesItem.getIcon(), 350, 160));
     }
 
     @Override
@@ -97,17 +97,33 @@ public class CustomExercisesListAdapter extends RecyclerView.Adapter<CustomExerc
 
     public static class ExercisesViewHolder extends RecyclerView.ViewHolder {
         protected TextView mExerciseTitle;
-        protected TextView mExerciseDescription;
+        protected TextView mExerciseCategory;
         protected ImageView mImageExerciseTop;
         protected LinearLayout mCardBottomLayout;
 
         public ExercisesViewHolder(View v) {
             super(v);
             mExerciseTitle = (TextView) v.findViewById(R.id.txt_exercise_title);
-            mExerciseDescription = (TextView) v.findViewById(R.id.txt_exercise_description);
+            mExerciseCategory = (TextView) v.findViewById(R.id.txt_exercise_category);
             mImageExerciseTop = (ImageView) v.findViewById(R.id.img_exercise_picture);
             mCardBottomLayout = (LinearLayout) v.findViewById(R.id.card_bottom_layout);
         }
     }
+
+    private class ImageLoader extends AsyncTask<Integer, Void, Integer> {
+
+        ExercisesViewHolder exercisesViewHolder = new ExercisesViewHolder(itemView);
+
+        @Override
+        protected Integer doInBackground(Integer... params) {
+            return params[0];
+        }
+
+        @Override
+        protected void onPostExecute(Integer imageResourceId) {
+            exercisesViewHolder.mImageExerciseTop.setImageResource(imageResourceId);
+        }
+    }
+
 
 }

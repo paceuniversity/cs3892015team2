@@ -37,7 +37,7 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
 
     private static QuickFitnessDbHelper instance;
     public static final String DATABASE_NAME = "fitness.db";
-    private static final int DB_VERSION = 29;
+    private static final int DB_VERSION = 34;
     static Context mContext;
 
     //private static final String SQL_DROP_DATABASE = "DROP DATABASE " + DATABASE_NAME;
@@ -164,14 +164,13 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
     private void exercisesBulkInsert(SQLiteDatabase db) {
 
         ExercisesItem weightLossCycling = new ExercisesItem(mContext.getResources().getString(R.string.weight_loss_exercise_title_cycling), mContext.getResources().getString(R.string.weight_loss_exercise_description_cycling),
-                R.drawable.cycling, mContext.getResources().getInteger(R.integer.weight_loss_exercise_sets_cycling), mContext.getResources().getInteger(R.integer.weight_loss_exercise_reps_cycling), mContext.getResources().getInteger(R.integer.weight_loss_exercise_calories_cycling), "video_path", new CategoryItem(5));
+                R.drawable.cycling_large, mContext.getResources().getInteger(R.integer.weight_loss_exercise_sets_cycling), mContext.getResources().getInteger(R.integer.weight_loss_exercise_reps_cycling), mContext.getResources().getInteger(R.integer.weight_loss_exercise_calories_cycling), "video_path", 5);
 
         ExercisesItem weightLossTreadmillRounds = new ExercisesItem(mContext.getResources().getString(R.string.weight_loss_exercise_title_treadmill_rounds), mContext.getResources().getString(R.string.weight_loss_exercise_description_treadmill_rounds),
-                R.drawable.treadmill_rounds, mContext.getResources().getInteger(R.integer.weight_loss_exercise_sets_treadmill_rounds), mContext.getResources().getInteger(R.integer.weight_loss_exercise_reps_treadmill_rounds), mContext.getResources().getInteger(R.integer.weight_loss_exercise_calories_treadmill_rounds), "video_path", new CategoryItem(5));
-
+                R.drawable.treadmill_rounds_large, mContext.getResources().getInteger(R.integer.weight_loss_exercise_sets_treadmill_rounds), mContext.getResources().getInteger(R.integer.weight_loss_exercise_reps_treadmill_rounds), mContext.getResources().getInteger(R.integer.weight_loss_exercise_calories_treadmill_rounds), "video_path", 5);
 
         ExercisesItem weightLossJumpRope = new ExercisesItem(mContext.getResources().getString(R.string.weight_loss_exercise_title_jumping_rope), mContext.getResources().getString(R.string.weight_loss_exercise_description_jumping_rope),
-                R.drawable.jumping_rope, mContext.getResources().getInteger(R.integer.weight_loss_exercise_sets_jumping_rope), mContext.getResources().getInteger(R.integer.weight_loss_exercise_reps_jumping_rope), mContext.getResources().getInteger(R.integer.weight_loss_exercise_calories_jumping_rope), "video_path", new CategoryItem(5));
+                R.drawable.jumping_rope_large, mContext.getResources().getInteger(R.integer.weight_loss_exercise_sets_jumping_rope), mContext.getResources().getInteger(R.integer.weight_loss_exercise_reps_jumping_rope), mContext.getResources().getInteger(R.integer.weight_loss_exercise_calories_jumping_rope), "video_path", 5);
 
 
         List<ExercisesItem> exercises = new ArrayList<>();
@@ -190,7 +189,7 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
             values.put(QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_REPS, exercises.get(i).getReps());
             values.put(QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_CALORIES, exercises.get(i).getCalories());
             values.put(QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_VIDEO, exercises.get(i).getVideoAnimation());
-            values.put(QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_CATEGORY_KEY, exercises.get(i).getCategory().get_id());
+            values.put(QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_CATEGORY_KEY, exercises.get(i).getCategoryKey());
             db.insert(QuickFitnessContract.ExerciseEntry.TABLE_NAME, null, values);
         }
     }

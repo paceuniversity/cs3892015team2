@@ -18,21 +18,19 @@
 
 package pace.cs389.team2.quickfitness.data;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteDatabaseLockedException;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import pace.cs389.team2.quickfitness.R;
+import pace.cs389.team2.quickfitness.MainActivity;
 import pace.cs389.team2.quickfitness.model.CategoryItem;
 import pace.cs389.team2.quickfitness.model.ExercisesItem;
 
-/**
- * Created by Luiz on 29/03/2015.
- */
 public class QuickFitnessDAO {
 
     private static QuickFitnessDAO instance;
@@ -70,48 +68,55 @@ public class QuickFitnessDAO {
         sqLiteDatabase = helper.getWritableDatabase();
     }
 
-    public void categoryBulkInsert(SQLiteDatabase db) {
-
-        CategoryItem allCategoriesItem = new CategoryItem("All Categories");
-        CategoryItem cardioItem = new CategoryItem("Cardio", R.drawable.circle_tag_spinner_green);
-        CategoryItem enduranceItem = new CategoryItem("Endurance", R.drawable.circle_tag_spinner_orange);
-        CategoryItem strengthItem = new CategoryItem("Strength", R.drawable.circle_tag_spinner_purple);
-        CategoryItem weightLossItem = new CategoryItem("Weight Loss", R.drawable.circle_tag_spinner_grey_blue);
-
-
-        List<CategoryItem> exerciseCategories = new ArrayList<>();
-
-        exerciseCategories.add(allCategoriesItem);
-        exerciseCategories.add(cardioItem);
-        exerciseCategories.add(enduranceItem);
-        exerciseCategories.add(strengthItem);
-        exerciseCategories.add(weightLossItem);
-
-        for (int i = 0; i < exerciseCategories.size(); i++) {
-            ContentValues values = new ContentValues();
-            values.put(QuickFitnessContract.ExerciseCategoryEntry.COLUMN_CATEGORY_NAME, exerciseCategories.get(i).getName());
-            values.put(QuickFitnessContract.ExerciseCategoryEntry.COLUMN_CATEGORY_ICON, exerciseCategories.get(i).getIcon());
-            db.insert(QuickFitnessContract.ExerciseCategoryEntry.TABLE_NAME, null, values);
-        }
-
-
-    }
-
     public List<CategoryItem> listExercisesCategories() {
         List<CategoryItem> categories = new ArrayList<>();
 
         Cursor cursor = sqLiteDatabase.query(QuickFitnessContract.ExerciseCategoryEntry.TABLE_NAME, PROJECTION,
                 null, null, null, null, QuickFitnessContract.ExerciseCategoryEntry.COLUMN_CATEGORY_NAME);
 
-        CategoryItem itemCategory = null;
-        if (cursor.moveToFirst()) {
-            do {
-                itemCategory = new CategoryItem(cursor.getInt(0), cursor.getString(1), cursor.getInt(2));
-                categories.add(itemCategory);
-            } while (cursor.moveToNext());
+        CategoryItem itemCategory;
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    itemCategory = new CategoryItem(cursor.getInt(0), cursor.getString(1), cursor.getInt(2));
+                    categories.add(itemCategory);
+                } while (cursor.moveToNext());
+            }
+        } catch (SQLiteDatabaseLockedException exception) {
+            Log.e(MainActivity.APP_TAG, exception.getMessage());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
         }
 
+
         return categories;
+    }
+
+    public CategoryItem categoryById(int id) {
+
+        Cursor cursor = sqLiteDatabase.query(QuickFitnessContract.ExerciseCategoryEntry.TABLE_NAME, PROJECTION,
+                QuickFitnessContract.ExerciseCategoryEntry.COLUMN_CATEGORY_ID + " = ?", new String[]{String.valueOf(id)}, null, null, QuickFitnessContract.ExerciseCategoryEntry.COLUMN_CATEGORY_NAME);
+
+        CategoryItem itemCategory = null;
+
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    itemCategory = new CategoryItem(cursor.getInt(0), cursor.getString(1), cursor.getInt(2));
+                } while (cursor.moveToNext());
+            }
+        } catch (SQLiteDatabaseLockedException exception) {
+            Log.e(MainActivity.APP_TAG, exception.getMessage());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+
+        return itemCategory;
     }
 
     public List<ExercisesItem> listExercisesById(int id) {
@@ -120,28 +125,46 @@ public class QuickFitnessDAO {
         Cursor cursor = sqLiteDatabase.query(QuickFitnessContract.ExerciseEntry.TABLE_NAME, PROJECTION_TABLE_EXERCISE,
                 QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_CATEGORY_KEY + " = ?", new String[]{String.valueOf(id)}, null, null, QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_NAME);
 
-        ExercisesItem itemExercise = null;
-        if (cursor.moveToFirst()) {
-            do {
-                itemExercise = new ExercisesItem(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getInt(6), cursor.getString(7), new CategoryItem(cursor.getInt(8)));
-                exercises.add(itemExercise);
-            } while (cursor.moveToNext());
+        ExercisesItem itemExercise;
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    itemExercise = new ExercisesItem(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getInt(6), cursor.getString(7), cursor.getInt(8));
+                    exercises.add(itemExercise);
+                } while (cursor.moveToNext());
+            }
+        } catch (SQLiteDatabaseLockedException exception) {
+            Log.e(MainActivity.APP_TAG, exception.getMessage());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
         }
 
         return exercises;
     }
+
 
     public List<ExercisesItem> listExercises() {
         List<ExercisesItem> exercises = new ArrayList<>();
 
         Cursor cursor = sqLiteDatabase.query(QuickFitnessContract.ExerciseEntry.TABLE_NAME, PROJECTION_TABLE_EXERCISE,
                 null, null, null, null, QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_NAME);
-        ExercisesItem itemExercise = null;
-        if (cursor.moveToFirst()) {
-            do {
-                itemExercise = new ExercisesItem(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getInt(6), cursor.getString(7), new CategoryItem(cursor.getInt(8)));
-                exercises.add(itemExercise);
-            } while (cursor.moveToNext());
+        ExercisesItem itemExercise;
+
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    itemExercise = new ExercisesItem(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getInt(6), cursor.getString(7), cursor.getInt(8));
+                    exercises.add(itemExercise);
+                } while (cursor.moveToNext());
+            }
+        } catch (SQLiteDatabaseLockedException exception) {
+            Log.e(MainActivity.APP_TAG, exception.getMessage());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
         }
 
         return exercises;

@@ -18,9 +18,6 @@
 
 package pace.cs389.team2.quickfitness.model;
 
-/**
- * Created by Luiz on 28/03/2015.
- */
 public class ExercisesItem {
 
     private int id;
@@ -31,16 +28,10 @@ public class ExercisesItem {
     private int reps;
     private int calories;
     private String videoAnimation;
-    private CategoryItem category;
+    private int categoryKey;
 
 
-    public ExercisesItem(String name, String description, int icon) {
-        this.name = name;
-        this.description = description;
-        this.icon = icon;
-    }
-
-    public ExercisesItem(String name, String description, int icon, int sets, int reps, int calories, String videoAnimation, CategoryItem category) {
+    public ExercisesItem(String name, String description, int icon, int sets, int reps, int calories, String videoAnimation, int category) {
         this.name = name;
         this.description = description;
         this.icon = icon;
@@ -48,10 +39,10 @@ public class ExercisesItem {
         this.reps = reps;
         this.calories = calories;
         this.videoAnimation = videoAnimation;
-        this.category = category;
+        this.categoryKey = category;
     }
 
-    public ExercisesItem(int id, String name, String description, int icon, int sets, int reps, int calories, String videoAnimation, CategoryItem category) {
+    public ExercisesItem(int id, String name, String description, int icon, int sets, int reps, int calories, String videoAnimation, int category) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -60,14 +51,9 @@ public class ExercisesItem {
         this.reps = reps;
         this.calories = calories;
         this.videoAnimation = videoAnimation;
-        this.category = category;
+        this.categoryKey = category;
     }
 
-
-    public ExercisesItem(String name, String description) {
-        this.name = name;
-        this.description = description;
-    }
 
     public int getId() {
         return id;
@@ -89,9 +75,6 @@ public class ExercisesItem {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public int getIcon() {
         return icon;
@@ -105,39 +88,24 @@ public class ExercisesItem {
         return sets;
     }
 
-    public void setSets(int sets) {
-        this.sets = sets;
-    }
 
     public int getReps() {
         return reps;
     }
 
-    public void setReps(int reps) {
-        this.reps = reps;
-    }
 
     public int getCalories() {
         return calories;
     }
 
-    public void setCalories(int calories) {
-        this.calories = calories;
-    }
 
     public String getVideoAnimation() {
         return videoAnimation;
     }
 
-    public void setVideoAnimation(String videoAnimation) {
-        this.videoAnimation = videoAnimation;
+
+    public int getCategoryKey() {
+        return categoryKey;
     }
 
-    public CategoryItem getCategory() {
-        return category;
-    }
-
-    public void setCategory(CategoryItem category) {
-        this.category = category;
-    }
 }
