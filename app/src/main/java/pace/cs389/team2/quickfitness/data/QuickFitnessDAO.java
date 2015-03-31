@@ -28,7 +28,7 @@ import java.util.List;
 
 import pace.cs389.team2.quickfitness.R;
 import pace.cs389.team2.quickfitness.model.CategoryItem;
-import pace.cs389.team2.quickfitness.model.ItemDrawer;
+import pace.cs389.team2.quickfitness.model.ExercisesItem;
 
 /**
  * Created by Luiz on 29/03/2015.
@@ -36,12 +36,23 @@ import pace.cs389.team2.quickfitness.model.ItemDrawer;
 public class QuickFitnessDAO {
 
     private static QuickFitnessDAO instance;
-    private SQLiteDatabase sqLiteDatabase;
+    private static SQLiteDatabase sqLiteDatabase;
     QuickFitnessDbHelper helper;
 
     private static final String[] PROJECTION = {QuickFitnessContract.ExerciseCategoryEntry.COLUMN_CATEGORY_ID,
             QuickFitnessContract.ExerciseCategoryEntry.COLUMN_CATEGORY_NAME,
             QuickFitnessContract.ExerciseCategoryEntry.COLUMN_CATEGORY_ICON
+    };
+
+    private static final String[] PROJECTION_TABLE_EXERCISE = {QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_ID,
+            QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_NAME,
+            QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_DESCRIPTION,
+            QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_ICON,
+            QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_SETS,
+            QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_REPS,
+            QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_CALORIES,
+            QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_VIDEO,
+            QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_CATEGORY_KEY
     };
 
     public static QuickFitnessDAO getInstance(Context mContext) {
@@ -59,7 +70,7 @@ public class QuickFitnessDAO {
         sqLiteDatabase = helper.getWritableDatabase();
     }
 
-    public void categoryBulkInsert() {
+    public void categoryBulkInsert(SQLiteDatabase db) {
 
         CategoryItem allCategoriesItem = new CategoryItem("All Categories");
         CategoryItem cardioItem = new CategoryItem("Cardio", R.drawable.circle_tag_spinner_green);
@@ -80,7 +91,7 @@ public class QuickFitnessDAO {
             ContentValues values = new ContentValues();
             values.put(QuickFitnessContract.ExerciseCategoryEntry.COLUMN_CATEGORY_NAME, exerciseCategories.get(i).getName());
             values.put(QuickFitnessContract.ExerciseCategoryEntry.COLUMN_CATEGORY_ICON, exerciseCategories.get(i).getIcon());
-            sqLiteDatabase.insert(QuickFitnessContract.ExerciseCategoryEntry.TABLE_NAME, null, values);
+            db.insert(QuickFitnessContract.ExerciseCategoryEntry.TABLE_NAME, null, values);
         }
 
 
@@ -101,6 +112,39 @@ public class QuickFitnessDAO {
         }
 
         return categories;
+    }
+
+    public List<ExercisesItem> listExercisesById(int id) {
+        List<ExercisesItem> exercises = new ArrayList<>();
+
+        Cursor cursor = sqLiteDatabase.query(QuickFitnessContract.ExerciseEntry.TABLE_NAME, PROJECTION_TABLE_EXERCISE,
+                QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_CATEGORY_KEY + " = ?", new String[]{String.valueOf(id)}, null, null, QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_NAME);
+
+        ExercisesItem itemExercise = null;
+        if (cursor.moveToFirst()) {
+            do {
+                itemExercise = new ExercisesItem(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getInt(6), cursor.getString(7), new CategoryItem(cursor.getInt(8)));
+                exercises.add(itemExercise);
+            } while (cursor.moveToNext());
+        }
+
+        return exercises;
+    }
+
+    public List<ExercisesItem> listExercises() {
+        List<ExercisesItem> exercises = new ArrayList<>();
+
+        Cursor cursor = sqLiteDatabase.query(QuickFitnessContract.ExerciseEntry.TABLE_NAME, PROJECTION_TABLE_EXERCISE,
+                null, null, null, null, QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_NAME);
+        ExercisesItem itemExercise = null;
+        if (cursor.moveToFirst()) {
+            do {
+                itemExercise = new ExercisesItem(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getInt(6), cursor.getString(7), new CategoryItem(cursor.getInt(8)));
+                exercises.add(itemExercise);
+            } while (cursor.moveToNext());
+        }
+
+        return exercises;
     }
 
 }

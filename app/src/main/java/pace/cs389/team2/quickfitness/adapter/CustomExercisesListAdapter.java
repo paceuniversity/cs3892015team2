@@ -25,22 +25,21 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
 import pace.cs389.team2.quickfitness.R;
 import pace.cs389.team2.quickfitness.model.ExercisesItem;
 
-/**
- * Created by Luiz on 28/03/2015.
- */
-public class CustomExercisesListAdapter extends RecyclerView.Adapter<CustomExercisesListAdapter.ExercisesViewHolder> {
+public class CustomExercisesListAdapter extends RecyclerView.Adapter<CustomExercisesListAdapter.ExercisesViewHolder> implements View.OnClickListener {
 
     private List<ExercisesItem> mExercisesList;
     private View itemView;
+    ExercisesItem exercisesItem;
 
-    public CustomExercisesListAdapter(List<ExercisesItem> contactList) {
-        this.mExercisesList = contactList;
+    public CustomExercisesListAdapter(List<ExercisesItem> exercisesList) {
+        this.mExercisesList = exercisesList;
     }
 
     @Override
@@ -54,20 +53,22 @@ public class CustomExercisesListAdapter extends RecyclerView.Adapter<CustomExerc
                 from(viewGroup.getContext()).
                 inflate(R.layout.set_goal_exercises_adapter, viewGroup, false);
 
+
         return new ExercisesViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(ExercisesViewHolder exercisesViewHolder, int i) {
-        ExercisesItem exercisesItem = mExercisesList.get(i);
+        exercisesItem = mExercisesList.get(i);
 
-        if (exercisesItem.getName().equals("Treadmill")) {
+        if (exercisesItem.getCategory().get_id() == 2) {
             exercisesViewHolder.mCardBottomLayout.setBackgroundResource(R.color.material_green);
-        } else if (exercisesItem.getName().equals("Leg Press")) {
+        } else if (exercisesItem.getCategory().get_id() == 3) {
             exercisesViewHolder.mCardBottomLayout.setBackgroundResource(R.color.material_orange);
-        } else {
+        } else if (exercisesItem.getCategory().get_id() == 4) {
+            exercisesViewHolder.mCardBottomLayout.setBackgroundResource(R.color.material_purple);
+        } else if (exercisesItem.getCategory().get_id() == 5) {
             exercisesViewHolder.mCardBottomLayout.setBackgroundResource(R.color.material_blue_grey);
-
         }
 
         exercisesViewHolder.mExerciseTitle.setText(exercisesItem.getName());
@@ -86,6 +87,14 @@ public class CustomExercisesListAdapter extends RecyclerView.Adapter<CustomExerc
         //       exercisesItem.getIcon(), 350, 160));
     }
 
+    @Override
+    public void onClick(View v) {
+        if (exercisesItem != null) {
+            //Intent i = Activity.getIntent(v.getContext(), exercisesItem);
+            Toast.makeText(v.getContext(), exercisesItem.getName(), Toast.LENGTH_LONG).show();
+        }
+    }
+
     public static class ExercisesViewHolder extends RecyclerView.ViewHolder {
         protected TextView mExerciseTitle;
         protected TextView mExerciseDescription;
@@ -100,4 +109,5 @@ public class CustomExercisesListAdapter extends RecyclerView.Adapter<CustomExerc
             mCardBottomLayout = (LinearLayout) v.findViewById(R.id.card_bottom_layout);
         }
     }
+
 }

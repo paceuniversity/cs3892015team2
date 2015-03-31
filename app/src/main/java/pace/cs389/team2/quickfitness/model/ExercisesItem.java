@@ -27,7 +27,11 @@ public class ExercisesItem {
     private String name;
     private String description;
     private int icon;
+    private int sets;
+    private int reps;
+    private int calories;
     private String videoAnimation;
+    private CategoryItem category;
 
 
     public ExercisesItem(String name, String description, int icon) {
@@ -35,6 +39,30 @@ public class ExercisesItem {
         this.description = description;
         this.icon = icon;
     }
+
+    public ExercisesItem(String name, String description, int icon, int sets, int reps, int calories, String videoAnimation, CategoryItem category) {
+        this.name = name;
+        this.description = description;
+        this.icon = icon;
+        this.sets = sets;
+        this.reps = reps;
+        this.calories = calories;
+        this.videoAnimation = videoAnimation;
+        this.category = category;
+    }
+
+    public ExercisesItem(int id, String name, String description, int icon, int sets, int reps, int calories, String videoAnimation, CategoryItem category) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.icon = icon;
+        this.sets = sets;
+        this.reps = reps;
+        this.calories = calories;
+        this.videoAnimation = videoAnimation;
+        this.category = category;
+    }
+
 
     public ExercisesItem(String name, String description) {
         this.name = name;
@@ -73,11 +101,43 @@ public class ExercisesItem {
         this.icon = icon;
     }
 
+    public int getSets() {
+        return sets;
+    }
+
+    public void setSets(int sets) {
+        this.sets = sets;
+    }
+
+    public int getReps() {
+        return reps;
+    }
+
+    public void setReps(int reps) {
+        this.reps = reps;
+    }
+
+    public int getCalories() {
+        return calories;
+    }
+
+    public void setCalories(int calories) {
+        this.calories = calories;
+    }
+
     public String getVideoAnimation() {
         return videoAnimation;
     }
 
     public void setVideoAnimation(String videoAnimation) {
         this.videoAnimation = videoAnimation;
+    }
+
+    public CategoryItem getCategory() {
+        return category;
+    }
+
+    public void setCategory(CategoryItem category) {
+        this.category = category;
     }
 }

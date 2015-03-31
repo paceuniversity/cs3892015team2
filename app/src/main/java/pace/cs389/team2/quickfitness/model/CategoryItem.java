@@ -35,6 +35,10 @@ public class CategoryItem implements Serializable {
         this.icon = icon;
     }
 
+    public CategoryItem(int id) {
+        this._id = id;
+    }
+
     public CategoryItem(String name) {
         this.name = name;
     }

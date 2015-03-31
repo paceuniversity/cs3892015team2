@@ -22,12 +22,10 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.res.Configuration;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,9 +38,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pace.cs389.team2.quickfitness.adapter.CustomDrawerAdapter;
-import pace.cs389.team2.quickfitness.data.QuickFitnessDAO;
-import pace.cs389.team2.quickfitness.data.QuickFitnessDbHelper;
-import pace.cs389.team2.quickfitness.model.CategoryItem;
 import pace.cs389.team2.quickfitness.model.ItemDrawer;
 
 /**
@@ -50,6 +45,10 @@ import pace.cs389.team2.quickfitness.model.ItemDrawer;
  */
 
 public class MainActivity extends Activity {
+
+    //App tag used for debug
+    //The tag uses the class name to filter log messages for this class
+    public static final String APP_TAG = MainActivity.class.getSimpleName();
 
     // DrawerLayout object to display app's left menu options
     private DrawerLayout mDrawerLayout;
@@ -71,9 +70,9 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
 
-        //if (QuickFitnessDbHelper.getInstance(getApplicationContext()) != null) {
-        //    Toast.makeText(this, "Database Created.", Toast.LENGTH_LONG).show();
-        //}
+       /* if (QuickFitnessDbHelper.getInstance(getApplicationContext()) != null) {
+            Toast.makeText(this, "Database Created.", Toast.LENGTH_LONG).show();
+        }*/
 
       /*  QuickFitnessDAO dao = QuickFitnessDAO.getInstance(getApplicationContext());
         dao.categoryBulkInsert();

@@ -26,4 +26,42 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="greetings">Hi! Welcome to Quickfitness</string>
+
+    <string name="category_all">All Categories</string>
+    <string name="category_cardio">Cardio</string>
+    <string name="category_endurance">Endurance</string>
+    <string name="category_strength">Strength</string>
+    <string name="category_weight_loss">Weight Loss</string>
+
+
+    <string name="workout_status_start">Start</string>
+    <string name="workout_status_doing">Doing</string>
+    <string name="workout_status_finished">Finished</string>
+
+
+    <string name="weight_loss_exercise_title_cycling">Cycling</string>
+    <string name="weight_loss_exercise_title_treadmill_rounds">Treadmill Rounds</string>
+    <string name="weight_loss_exercise_title_jumping_rope">Jumping Rope</string>
+
+    <string name="weight_loss_exercise_description_cycling">Bicycling is another low-impact, high-rewards activity for losing weight.
+    Cycling can burn anywhere from 372 to over 1,100 calories per hour, depending on your weight, your speed and the terrain you’re biking across.</string>
+    <string name="weight_loss_exercise_description_treadmill_rounds">Treadmill rounds utilize the treadmill to get the heart rate up, followed by floor exercises that include plenty of resistance training to strengthen muscle and increase metabolism to help you burn more fat throughout the day</string>
+    <string name="weight_loss_exercise_description_jumping_rope">Jumping rope is a favorite activity on playgrounds across the country, but it’s hardly child’s play when it comes to losing weight.
+    Just ten minutes of rope jumping is worth an eight-minute mile when it comes to cardio benefits and calorie burning.
+    An hour of jumping rope burns over 800 calories and works the arms, legs, and core, as well as strengthens bones and joints.
+    </string>
+
+    <integer name="weight_loss_exercise_sets_cycling">60</integer>
+    <integer name="weight_loss_exercise_sets_treadmill_rounds">60</integer>
+    <integer name="weight_loss_exercise_sets_jumping_rope">20</integer>
+
+    <integer name="weight_loss_exercise_reps_cycling">0</integer>
+    <integer name="weight_loss_exercise_reps_treadmill_rounds">0</integer>
+    <integer name="weight_loss_exercise_reps_jumping_rope">0</integer>
+
+    <integer name="weight_loss_exercise_calories_cycling">700</integer>
+    <integer name="weight_loss_exercise_calories_treadmill_rounds">500</integer>
+    <integer name="weight_loss_exercise_calories_jumping_rope">800</integer>
+
+
 </resources>

@@ -88,6 +88,9 @@ public class QuickFitnessContract {
         //Exercise description column will store a brief description of the exercise as a string
         public static final String COLUMN_EXERCISE_DESCRIPTION = "exercise_description";
 
+        //Exercise description column will the exercise's icon as an integer
+        public static final String COLUMN_EXERCISE_ICON = "exercise_icon";
+
         //Sets will represent how many times each exercise will be done. Stored as integer
         public static final String COLUMN_EXERCISE_SETS = "exercise_sets";
 

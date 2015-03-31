@@ -22,14 +22,16 @@ package pace.cs389.team2.quickfitness;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import pace.cs389.team2.quickfitness.adapter.CustomExercisesListAdapter;
@@ -44,20 +46,10 @@ import pace.cs389.team2.quickfitness.model.ExercisesItem;
 public class FragmentSetGoal extends Fragment implements ActionBar.OnNavigationListener {
 
 
-    private CustomSpinnerAdapter mSpinnerAdapter;
+    CustomSpinnerAdapter mSpinnerAdapter;
     private RecyclerView mRecyclerView;
-    private List<ExercisesItem> mExercisesList;
-    private ExercisesItem mExercisesItem;
-    private ExercisesItem mExercisesItem2;
-    private ExercisesItem mExercisesItem3;
-    private ExercisesItem mExercisesItem4;
-    private ExercisesItem mExercisesItem5;
-    private ExercisesItem mExercisesItem6;
-    private ExercisesItem mExercisesItem7;
-    private ExercisesItem mExercisesItem8;
-    private ExercisesItem mExercisesItem9;
-
-    private CustomExercisesListAdapter mExercisesAdapter;
+    private QuickFitnessDAO dao;
+    CustomExercisesListAdapter mExercisesAdapter;
 
     private ActionBar actionBar;
 
@@ -71,12 +63,13 @@ public class FragmentSetGoal extends Fragment implements ActionBar.OnNavigationL
 
         actionBar = getActivity().getActionBar();
 
-        // Hide the action bar title
-        actionBar.setDisplayShowTitleEnabled(false);
+        if (actionBar != null) {
+            // Hide the action bar title
+            actionBar.setDisplayShowTitleEnabled(false);
 
-        // Enabling Spinner dropdown navigation
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-
+            // Enabling Spinner dropdown navigation
+            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+        }
 
         View view = inflater.inflate(R.layout.activity_list_exercises, container,
                 false);
@@ -87,35 +80,18 @@ public class FragmentSetGoal extends Fragment implements ActionBar.OnNavigationL
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(llm);
 
-        mExercisesItem = new ExercisesItem("Pull Down", "Pull Down exercises work very well for losing weight purposes.", R.drawable.wall2);
-        mExercisesItem2 = new ExercisesItem("Treadmill", "Tap to View More Infomation", R.drawable.wall2);
-        mExercisesItem3 = new ExercisesItem("Leg Press", "Exercise Description", R.drawable.wall2);
-        mExercisesItem4 = new ExercisesItem("Shoulder Press", "Exercise Description", R.drawable.wall2);
-        mExercisesItem5 = new ExercisesItem("Chest Pull Down", "Exercise Description", R.drawable.wall2);
-        mExercisesItem6 = new ExercisesItem("Back Extension", "Exercise Description", R.drawable.wall2);
-        mExercisesItem7 = new ExercisesItem("Leg Extension", "Exercise Description", R.drawable.wall2);
-        mExercisesItem8 = new ExercisesItem("Back Leg", "Exercise Description", R.drawable.wall2);
-        mExercisesItem9 = new ExercisesItem("Neck Extension Test", "Exercise Description", R.drawable.wall2);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        mExercisesList = new ArrayList<>();
-        mExercisesList.add(mExercisesItem);
-        mExercisesList.add(mExercisesItem2);
-        mExercisesList.add(mExercisesItem3);
-        mExercisesList.add(mExercisesItem4);
-        mExercisesList.add(mExercisesItem5);
-        mExercisesList.add(mExercisesItem6);
-        mExercisesList.add(mExercisesItem7);
-        mExercisesList.add(mExercisesItem8);
-        mExercisesList.add(mExercisesItem9);
+        dao = QuickFitnessDAO.getInstance(getActivity());
 
         // title drop down adapter
-        mSpinnerAdapter = new CustomSpinnerAdapter(getActivity().getApplicationContext(), QuickFitnessDAO.getInstance(getActivity()).listExercisesCategories());
+        mSpinnerAdapter = new CustomSpinnerAdapter(getActivity().getApplicationContext(), dao.listExercisesCategories());
 
         // assigning the spinner navigation
         actionBar.setListNavigationCallbacks(mSpinnerAdapter, this);
 
-
-        setListExercisesAdapter(mExercisesList);
+        Toast.makeText(getActivity(), "Size: " + dao.listExercises().size(), Toast.LENGTH_LONG).show();
+        setListExercisesAdapter(dao.listExercises());
 
         return view;
 
@@ -124,16 +100,21 @@ public class FragmentSetGoal extends Fragment implements ActionBar.OnNavigationL
     @Override
     public void onResume() {
         super.onResume();
-        actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 
+        if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(false);
+            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+
+        if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(true);
+            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        }
     }
 
     /**
@@ -149,13 +130,26 @@ public class FragmentSetGoal extends Fragment implements ActionBar.OnNavigationL
      */
     @Override
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+        int pos = itemPosition + 1;
 
+        if (pos > 0 && pos <= 5) {
+            if ((pos) == 1) {
+                setListExercisesAdapter(dao.listExercises());
+            } else {
+                setListExercisesAdapter(dao.listExercisesById(pos));
+            }
 
-        return false;
+        } else {
+            Log.i(MainActivity.APP_TAG, "Invalid Option.");
+        }
+
+        return true;
     }
 
     private void setListExercisesAdapter(List<ExercisesItem> mListAdapter) {
         mExercisesAdapter = new CustomExercisesListAdapter(mListAdapter);
         mRecyclerView.setAdapter(mExercisesAdapter);
     }
+
+
 }
