@@ -184,13 +184,16 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
         ExercisesItem cardioElliptical = new ExercisesItem(mContext.getResources().getString(R.string.cardio_exercise_title_elliptical), mContext.getResources().getString(R.string.cardio_exercise_description_elliptical),
                 R.drawable.elliptical, mContext.getResources().getInteger(R.integer.cardio_exercise_sets_elliptical), mContext.getResources().getInteger(R.integer.strength_exercise_reps_globet_squat), mContext.getResources().getInteger(R.integer.cardio_exercise_calories_elliptical), "video_path", 2);
 
-        ExercisesItem cardioStationaryBike = new ExercisesItem(mContext.getResources().getString(R.string.cardio_exercise_title_stationary_bike), mContext.getResources().getString(R.string.cardio_exercise_title_elliptical),
+        ExercisesItem cardioStationaryBike = new ExercisesItem(mContext.getResources().getString(R.string.cardio_exercise_title_stationary_bike), mContext.getResources().getString(R.string.cardio_exercise_description_stationary_bike),
                 R.drawable.stationary_bike, mContext.getResources().getInteger(R.integer.cardio_exercise_sets_stationary_bike), mContext.getResources().getInteger(R.integer.cardio_exercise_reps_stationary_bike), mContext.getResources().getInteger(R.integer.cardio_exercise_calories_stationary_bike), "video_path", 2);
 
-        ExercisesItem cardioRowing = new ExercisesItem(mContext.getResources().getString(R.string.cardio_exercise_title_rowing), mContext.getResources().getString(R.string.cardio_exercise_title_stationary_bike),
+        ExercisesItem cardioRowing = new ExercisesItem(mContext.getResources().getString(R.string.cardio_exercise_title_rowing), mContext.getResources().getString(R.string.cardio_exercise_description_rowing),
                 R.drawable.rowing_machines, mContext.getResources().getInteger(R.integer.cardio_exercise_sets_rowing), mContext.getResources().getInteger(R.integer.cardio_exercise_reps_rowing), mContext.getResources().getInteger(R.integer.cardio_exercise_calories_stationary_bike), "video_path", 2);
 
-
+/*
+        ExercisesItem enduranceTrailRunning = new ExercisesItem(mContext.getResources().getString(R.string.endurance_exercise_title_trailRunning), mContext.getResources().getString(R.string.endurance_exercise_descrption_trailRunning),
+                R.drawable.trail_running, mContext.getResources().getInteger(R.integer.endurance_exercise_sets_trailRunning), mContext.getResources().getInteger(R.integer.endurance_exercise_reps_trailRunning), mContext.getResources().getInteger(R.integer.endurance_exercise_calories_trailRunning), "video_path", 4);
+*/
         List<ExercisesItem> exercises = new ArrayList<>();
 
         exercises.add(weightLossCycling);
@@ -205,6 +208,7 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
         exercises.add(cardioStationaryBike);
         exercises.add(cardioRowing);
 
+        //exercises.add(enduranceTrailRunning);
 
         for (int i = 0; i < exercises.size(); i++) {
             ContentValues values = new ContentValues();

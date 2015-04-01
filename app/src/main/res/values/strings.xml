@@ -39,6 +39,7 @@
     <string name="workout_status_finished">Finished</string>
 
 
+
     <string name="weight_loss_exercise_title_cycling">Cycling</string>
     <string name="weight_loss_exercise_title_treadmill_rounds">Treadmill Rounds</string>
     <string name="weight_loss_exercise_title_jumping_rope">Jumping Rope</string>
@@ -106,5 +107,15 @@
     <integer name="cardio_exercise_calories_stationary_bike">490</integer>
     <integer name="cardio_exercise_calories_rowing">720</integer>
 
+
+    <string name="endurance_exercise_title_trailRunning">Trail Running</string>
+
+    <string name="endurance_exercise_descrption_trailRunning">To be filled in later</string>
+
+    <integer name="endurance_exercise_sets_trailRunning">0</integer>
+
+    <integer name="endurance_exercise_reps_trailRunning">0</integer>
+
+    <integer name="endurance_exercise_calories_trailRunning">600</integer>
 
 </resources>
