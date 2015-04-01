@@ -4,6 +4,7 @@
     <string name="action_settings">Settings</string>
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>
+    <string name="menu_do_exercise">Do Exercise</string>
 
     <string name="list_drawer_item_home">Home</string>
     <string name="list_drawer_item_set_goal">Set Goal</string>
@@ -37,7 +38,6 @@
     <string name="workout_status_start">Start</string>
     <string name="workout_status_doing">Doing</string>
     <string name="workout_status_finished">Finished</string>
-
 
 
     <string name="weight_loss_exercise_title_cycling">Cycling</string>
@@ -108,14 +108,25 @@
     <integer name="cardio_exercise_calories_rowing">720</integer>
 
 
-    <string name="endurance_exercise_title_trailRunning">Trail Running</string>
+    <string name="endurance_exercise_title_swimming_laps">Swimming Laps</string>
+    <string name="endurance_exercise_title_stair_machines">Stair Machines</string>
+    <string name="endurance_exercise_title_push_ups">Push-ups</string>
 
-    <string name="endurance_exercise_descrption_trailRunning">To be filled in later</string>
+    <string name="endurance_exercise_description_swimming_laps">The overall goal of the Beginner Swimming Workouts is to build up to a level where the workouts will improve and maintain fitness goals. The 2 overriding challenges are to build up endurance so you can swim continuously without stopping, and to improve strokes and breathing through drills.</string>
+    <string name="endurance_exercise_description_stair_machines">Stair machines elevate your rate up by duplicating the motion of climbing up stairs. Although this is an excellent choice for cardiovascular endurance training, it might not be the best choice for a beginner or those with bad knees. The stair machine focuses on your lower body while your upper body tries not to hold on for dear life.</string>
+    <string name="endurance_exercise_description_push_ups">The beauty of the push-up is that you can do it anywhere, anytime. It is a great all-encompassing exercise that hits not only your arms and chest but also gets a burn going in your core. The only downside is that busting out the same old up-and-down routine day after day can start to feel tedious.</string>
 
-    <integer name="endurance_exercise_sets_trailRunning">0</integer>
+    <integer name="endurance_exercise_sets_swimming_laps">0</integer>
+    <integer name="endurance_exercise_sets_stair_machines">0</integer>
+    <integer name="endurance_exercise_sets_push_ups">3</integer>
 
-    <integer name="endurance_exercise_reps_trailRunning">0</integer>
+    <integer name="endurance_exercise_reps_swimming_laps">0</integer>
+    <integer name="endurance_exercise_reps_stair_machines">0</integer>
+    <integer name="endurance_exercise_reps_push_ups">20</integer>
 
-    <integer name="endurance_exercise_calories_trailRunning">600</integer>
+    <integer name="endurance_exercise_calories_swimming_laps">600</integer>
+    <integer name="endurance_exercise_calories_stair_machines">500</integer>
+    <integer name="endurance_exercise_calories_push_ups">700</integer>
+    <string name="title_activity_exercise_details">ExerciseDetailsActivity</string>
 
 </resources>

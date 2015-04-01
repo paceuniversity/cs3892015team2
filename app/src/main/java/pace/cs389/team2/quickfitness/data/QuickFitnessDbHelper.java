@@ -37,7 +37,7 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
 
     private static QuickFitnessDbHelper instance;
     public static final String DATABASE_NAME = "fitness.db";
-    private static final int DB_VERSION = 36;
+    private static final int DB_VERSION = 38;
     static Context mContext;
 
     //private static final String SQL_DROP_DATABASE = "DROP DATABASE " + DATABASE_NAME;
@@ -190,10 +190,19 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
         ExercisesItem cardioRowing = new ExercisesItem(mContext.getResources().getString(R.string.cardio_exercise_title_rowing), mContext.getResources().getString(R.string.cardio_exercise_description_rowing),
                 R.drawable.rowing_machines, mContext.getResources().getInteger(R.integer.cardio_exercise_sets_rowing), mContext.getResources().getInteger(R.integer.cardio_exercise_reps_rowing), mContext.getResources().getInteger(R.integer.cardio_exercise_calories_stationary_bike), "video_path", 2);
 
-/*
-        ExercisesItem enduranceTrailRunning = new ExercisesItem(mContext.getResources().getString(R.string.endurance_exercise_title_trailRunning), mContext.getResources().getString(R.string.endurance_exercise_descrption_trailRunning),
-                R.drawable.trail_running, mContext.getResources().getInteger(R.integer.endurance_exercise_sets_trailRunning), mContext.getResources().getInteger(R.integer.endurance_exercise_reps_trailRunning), mContext.getResources().getInteger(R.integer.endurance_exercise_calories_trailRunning), "video_path", 4);
-*/
+
+        ExercisesItem enduranceSwimmingLaps = new ExercisesItem(mContext.getResources().getString(R.string.endurance_exercise_title_swimming_laps), mContext.getResources().getString(R.string.endurance_exercise_description_swimming_laps),
+                R.drawable.swimming_laps, mContext.getResources().getInteger(R.integer.endurance_exercise_sets_swimming_laps), mContext.getResources().getInteger(R.integer.endurance_exercise_reps_swimming_laps), mContext.getResources().getInteger(R.integer.endurance_exercise_calories_swimming_laps), "video_path", 3);
+
+
+        ExercisesItem enduranceStairMachine = new ExercisesItem(mContext.getResources().getString(R.string.endurance_exercise_title_stair_machines), mContext.getResources().getString(R.string.endurance_exercise_description_stair_machines),
+                R.drawable.stair_machine, mContext.getResources().getInteger(R.integer.endurance_exercise_sets_stair_machines), mContext.getResources().getInteger(R.integer.endurance_exercise_reps_stair_machines), mContext.getResources().getInteger(R.integer.endurance_exercise_calories_stair_machines), "video_path", 3);
+
+
+        ExercisesItem endurancePushUps = new ExercisesItem(mContext.getResources().getString(R.string.endurance_exercise_title_push_ups), mContext.getResources().getString(R.string.endurance_exercise_description_push_ups),
+                R.drawable.push_ups, mContext.getResources().getInteger(R.integer.endurance_exercise_sets_push_ups), mContext.getResources().getInteger(R.integer.endurance_exercise_reps_push_ups), mContext.getResources().getInteger(R.integer.endurance_exercise_calories_push_ups), "video_path", 3);
+
+
         List<ExercisesItem> exercises = new ArrayList<>();
 
         exercises.add(weightLossCycling);
@@ -208,7 +217,9 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
         exercises.add(cardioStationaryBike);
         exercises.add(cardioRowing);
 
-        //exercises.add(enduranceTrailRunning);
+        exercises.add(enduranceSwimmingLaps);
+        exercises.add(enduranceStairMachine);
+        exercises.add(endurancePushUps);
 
         for (int i = 0; i < exercises.size(); i++) {
             ContentValues values = new ContentValues();

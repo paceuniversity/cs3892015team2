@@ -40,6 +40,7 @@ import pace.cs389.team2.quickfitness.adapter.CustomExercisesListAdapter;
 import pace.cs389.team2.quickfitness.adapter.CustomSpinnerAdapter;
 import pace.cs389.team2.quickfitness.data.QuickFitnessDAO;
 import pace.cs389.team2.quickfitness.model.ExercisesItem;
+import pace.cs389.team2.quickfitness.utils.OrientationUtils;
 
 
 /**
@@ -81,7 +82,7 @@ public class FragmentSetGoal extends Fragment implements ActionBar.OnNavigationL
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
 
-        if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+        if (OrientationUtils.isPortrait(getActivity().getResources().getConfiguration())) {
             mRecyclerView.setLayoutManager(llm);
         } else {
             mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));

@@ -21,6 +21,8 @@ package pace.cs389.team2.quickfitness;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -170,7 +172,7 @@ public class MainActivity extends Activity {
 
         Fragment fragment = null;
         Bundle args = new Bundle();
-
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
 
         switch (position) {
 
@@ -180,13 +182,16 @@ public class MainActivity extends Activity {
                 break;
             case 1:
                 fragment = new FragmentSetGoal();
+                ft.addToBackStack(null);
                 break;
             case 2:
-                fragment = new FragmentMainContent();
-                args.putString(FragmentMainContent.ITEM_NAME, mDataList.get(position)
+                fragment = new FragmentExerciseDetails();
+                /*args.putString(FragmentMainContent.ITEM_NAME, mDataList.get(position)
                         .getmNameItem());
                 args.putInt(FragmentMainContent.IMAGE_RESOURCE_ID, mDataList
-                        .get(position).getmIconRes());
+                        .get(position).getmIconRes());*/
+                //startActivity(new Intent(this, ExerciseDetailsActivity.class));
+                ft.addToBackStack(null);
                 break;
             case 3:
                 fragment = new FragmentMainContent();
@@ -218,10 +223,10 @@ public class MainActivity extends Activity {
                         .get(position).getmIconRes());
                 break;
             default:
+                fragment = new FragmentMainContent();
                 break;
         }
-        FragmentManager frgManager = getFragmentManager();
-        frgManager.beginTransaction().replace(R.id.content_place_holder, fragment)
+        ft.replace(R.id.content_place_holder, fragment)
                 .commit();
 
         mDrawerList.setItemChecked(position, true);
