@@ -21,8 +21,10 @@ package pace.cs389.team2.quickfitness;
 
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -78,9 +80,16 @@ public class FragmentSetGoal extends Fragment implements ActionBar.OnNavigationL
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(llm);
 
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            mRecyclerView.setLayoutManager(llm);
+        } else {
+            mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        }
+
+        RecyclerView.ItemAnimator animator = mRecyclerView.getItemAnimator();
+        animator.setAddDuration(2000);
+        animator.setRemoveDuration(1000);
 
         dao = QuickFitnessDAO.getInstance(getActivity());
 
@@ -90,7 +99,6 @@ public class FragmentSetGoal extends Fragment implements ActionBar.OnNavigationL
         // assigning the spinner navigation
         actionBar.setListNavigationCallbacks(mSpinnerAdapter, this);
 
-        Toast.makeText(getActivity(), "Size: " + dao.listExercises().size(), Toast.LENGTH_LONG).show();
         setListExercisesAdapter(dao.listExercises());
 
         return view;

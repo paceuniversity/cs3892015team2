@@ -64,4 +64,47 @@
     <integer name="weight_loss_exercise_calories_jumping_rope">800</integer>
 
 
+    <string name="strength_exercise_title_globet_squat">Globet Squat</string>
+    <string name="strength_exercise_title_pallof_press"> Pallof Press</string>
+    <string name="strength_exercise_title_dumbbell_row">Dumbbell Row</string>
+
+    <string name="strength_exercise_description_globet_squat">Squats are an exercise many people struggle to perform safely and effectively. Luckily, the goblet squat is a great progression from a bodyweight squat before squatting with a bar. Because the load is held in front, the core works double-time to keep you tall, while your legs work to control your movement down and stand back up.</string>
+    <string name="strength_exercise_description_pallof_press">The Pallof press is one of those movements that looks confusing, but is actually incredibly simple and beneficial, says Mike Campbell, personal trainer and owner of Unleash Your Alpha. While you may not be hoisting heavy weight, the real challenge lies in resisting movement — in this case, rotation</string>
+    <string name="strength_exercise_description_dumbbell_row">Most of us spend more time training the mirror muscles on the front of the body, and neglect what we can’t see, according to Campbell. But developing a strong back is key to balance things out, improve posture and avoid injury. The dumbbell row can help achieve all that, in addition building strong arms and a strong core</string>
+
+    <integer name="strength_exercise_sets_globet_squat">3</integer>
+    <integer name="strength_exercise_sets_pallof_pres">3</integer>
+    <integer name="strength_exercise_sets_dumbbell_row">3</integer>
+
+    <integer name="strength_exercise_reps_globet_squat">15</integer>
+    <integer name="strength_exercise_reps_pallof_pres">10</integer>
+    <integer name="strength_exercise_reps_dumbbell_row">12</integer>
+
+    <integer name="strength_exercise_calories_globet_squat">500</integer>
+    <integer name="strength_exercise_calories_pallof_pres">200</integer>
+    <integer name="strength_exercise_calories_dumbbell_row">450</integer>
+
+
+    <string name="cardio_exercise_title_elliptical">Elliptical Machines</string>
+    <string name="cardio_exercise_title_stationary_bike">Stationary Bikes</string>
+    <string name="cardio_exercise_title_rowing">Rowing Machines</string>
+
+    <string name="cardio_exercise_description_elliptical">These machines pack a little less punch on the joints, and either can be a good alternative to the treadmill.
+     Because you use them in a standing position, you are using lots of muscle mass, so the calorie burn rate is still pretty high.</string>
+    <string name="cardio_exercise_description_stationary_bike">All our experts agree that the stationary bike offers the workout with the least impact on the joints. People with knee pain are often steered toward these bikes, since the impact of body weight is not a concern as it is on a treadmill, elliptical trainer, or stair stepper</string>
+    <string name="cardio_exercise_description_rowing">Don’t be fooled into thinking this machine gives you only an upper-body workout. Rowers are more advanced cardiovascular machines. Because you must push with the legs while you pull with the arms, rowers require coordination. They also you require you to engage your core abdominal muscles to support and protect your back.</string>
+
+    <integer name="cardio_exercise_sets_elliptical">3</integer>
+    <integer name="cardio_exercise_sets_stationary_bike">3</integer>
+    <integer name="cardio_exercise_sets_rowing">3</integer>
+
+    <integer name="cardio_exercise_reps_elliptical">20</integer>
+    <integer name="cardio_exercise_reps_stationary_bike">20</integer>
+    <integer name="cardio_exercise_reps_rowing">20</integer>
+
+    <integer name="cardio_exercise_calories_elliptical">900</integer>
+    <integer name="cardio_exercise_calories_stationary_bike">490</integer>
+    <integer name="cardio_exercise_calories_rowing">720</integer>
+
+
 </resources>

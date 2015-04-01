@@ -65,25 +65,27 @@ public class CustomExercisesListAdapter extends RecyclerView.Adapter<CustomExerc
         exercisesItem = mExercisesList.get(i);
 
         if (exercisesItem.getCategoryKey() == 2) {
-            exercisesViewHolder.mCardBottomLayout.setBackgroundResource(R.color.material_green);
+            exercisesViewHolder.mCardTopLayout.setBackgroundResource(R.color.material_green);
         } else if (exercisesItem.getCategoryKey() == 3) {
-            exercisesViewHolder.mCardBottomLayout.setBackgroundResource(R.color.material_orange);
+            exercisesViewHolder.mCardTopLayout.setBackgroundResource(R.color.material_orange);
         } else if (exercisesItem.getCategoryKey() == 4) {
-            exercisesViewHolder.mCardBottomLayout.setBackgroundResource(R.color.material_purple);
+            exercisesViewHolder.mCardTopLayout.setBackgroundResource(R.color.material_purple);
         } else if (exercisesItem.getCategoryKey() == 5) {
-            exercisesViewHolder.mCardBottomLayout.setBackgroundResource(R.color.material_blue_grey);
+            exercisesViewHolder.mCardTopLayout.setBackgroundResource(R.color.material_blue_grey);
 
         } else {
-            exercisesViewHolder.mCardBottomLayout.setBackgroundResource(R.color.background_list_item_gray);
+            exercisesViewHolder.mCardTopLayout.setBackgroundResource(R.color.background_list_item_gray);
         }
+
+        exercisesViewHolder.mImageExerciseTop.setImageResource(exercisesItem.getIcon());
 
         exercisesViewHolder.mExerciseTitle.setText(exercisesItem.getName());
 
         CategoryItem category = QuickFitnessDAO.getInstance(itemView.getContext()).categoryById(exercisesItem.getCategoryKey());
         exercisesViewHolder.mExerciseCategory.setText(category.getName());
 
-        ImageLoader task = new ImageLoader();
-        task.execute(exercisesItem.getIcon());
+        // ImageLoader task = new ImageLoader();
+        // task.execute(exercisesItem.getIcon());
 
     }
 
@@ -99,14 +101,14 @@ public class CustomExercisesListAdapter extends RecyclerView.Adapter<CustomExerc
         protected TextView mExerciseTitle;
         protected TextView mExerciseCategory;
         protected ImageView mImageExerciseTop;
-        protected LinearLayout mCardBottomLayout;
+        protected LinearLayout mCardTopLayout;
 
         public ExercisesViewHolder(View v) {
             super(v);
             mExerciseTitle = (TextView) v.findViewById(R.id.txt_exercise_title);
             mExerciseCategory = (TextView) v.findViewById(R.id.txt_exercise_category);
             mImageExerciseTop = (ImageView) v.findViewById(R.id.img_exercise_picture);
-            mCardBottomLayout = (LinearLayout) v.findViewById(R.id.card_bottom_layout);
+            mCardTopLayout = (LinearLayout) v.findViewById(R.id.card_top_layout);
         }
     }
 
