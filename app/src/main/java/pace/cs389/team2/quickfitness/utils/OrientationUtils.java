@@ -19,6 +19,10 @@
 package pace.cs389.team2.quickfitness.utils;
 
 import android.content.res.Configuration;
+import android.os.Build;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 public class OrientationUtils {
 
@@ -27,4 +31,26 @@ public class OrientationUtils {
         return screenOrientation.orientation == Configuration.ORIENTATION_PORTRAIT;
 
     }
+
+    public static void showStatusBar(Window window) {
+        View decorView = window.getDecorView();
+        decorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        );
+    }
+
+    public static void hideStatusBar(Window window) {
+        if (Build.VERSION.SDK_INT < 16) {
+            window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
+        View decorView = window.getDecorView();
+        // Hide the status bar.
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
+
+    }
+
 }

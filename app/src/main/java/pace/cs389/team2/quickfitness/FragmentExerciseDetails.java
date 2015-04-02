@@ -37,24 +37,14 @@ public class FragmentExerciseDetails extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         setHasOptionsMenu(true);
 
         if (getActivity().getActionBar() != null) {
             if (OrientationUtils.isPortrait(getActivity().getResources().getConfiguration())) {
                 getActivity().getActionBar().show();
+
             } else {
-                if (Build.VERSION.SDK_INT < 16) {
-                    getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                            WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                }
-
-                View decorView = getActivity().getWindow().getDecorView();
-                // Hide the status bar.
-                int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
-                decorView.setSystemUiVisibility(uiOptions);
                 getActivity().getActionBar().hide();
-
             }
         }
     }

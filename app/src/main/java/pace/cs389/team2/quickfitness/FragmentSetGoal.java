@@ -21,9 +21,7 @@ package pace.cs389.team2.quickfitness;
 
 import android.app.ActionBar;
 import android.app.Fragment;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,10 +30,12 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.view.Window;
+import android.view.WindowManager;
 
 import java.util.List;
 
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 import pace.cs389.team2.quickfitness.adapter.CustomExercisesListAdapter;
 import pace.cs389.team2.quickfitness.adapter.CustomSpinnerAdapter;
 import pace.cs389.team2.quickfitness.data.QuickFitnessDAO;
@@ -85,14 +85,14 @@ public class FragmentSetGoal extends Fragment implements ActionBar.OnNavigationL
         if (OrientationUtils.isPortrait(getActivity().getResources().getConfiguration())) {
             mRecyclerView.setLayoutManager(llm);
         } else {
+            getActivity().getActionBar().show();
             mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         }
 
-        RecyclerView.ItemAnimator animator = mRecyclerView.getItemAnimator();
-        animator.setAddDuration(2000);
-        animator.setRemoveDuration(1000);
 
         dao = QuickFitnessDAO.getInstance(getActivity());
+
+        setListExercisesAdapter(dao.listExercises());
 
         // title drop down adapter
         mSpinnerAdapter = new CustomSpinnerAdapter(getActivity().getApplicationContext(), dao.listExercisesCategories());
@@ -155,9 +155,11 @@ public class FragmentSetGoal extends Fragment implements ActionBar.OnNavigationL
         return true;
     }
 
+
     private void setListExercisesAdapter(List<ExercisesItem> mListAdapter) {
-        mExercisesAdapter = new CustomExercisesListAdapter(mListAdapter);
+        mExercisesAdapter = new CustomExercisesListAdapter(mListAdapter, mRecyclerView);
         mRecyclerView.setAdapter(mExercisesAdapter);
+
     }
 
 

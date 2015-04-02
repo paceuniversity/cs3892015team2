@@ -19,10 +19,13 @@
 package pace.cs389.team2.quickfitness.adapter;
 
 import android.os.AsyncTask;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -40,8 +43,11 @@ public class CustomExercisesListAdapter extends RecyclerView.Adapter<CustomExerc
     private List<ExercisesItem> mExercisesList;
     private View itemView;
     ExercisesItem exercisesItem;
+    private int lastPosition = -1;
+    RecyclerView mRecyclerView;
 
-    public CustomExercisesListAdapter(List<ExercisesItem> exercisesList) {
+    public CustomExercisesListAdapter(List<ExercisesItem> exercisesList, RecyclerView mRecyclerView) {
+        this.mRecyclerView = mRecyclerView;
         this.mExercisesList = exercisesList;
     }
 
@@ -55,7 +61,7 @@ public class CustomExercisesListAdapter extends RecyclerView.Adapter<CustomExerc
         itemView = LayoutInflater.
                 from(viewGroup.getContext()).
                 inflate(R.layout.set_goal_exercises_adapter, viewGroup, false);
-
+        itemView.setOnClickListener(this);
 
         return new ExercisesViewHolder(itemView);
     }
@@ -78,7 +84,6 @@ public class CustomExercisesListAdapter extends RecyclerView.Adapter<CustomExerc
         }
 
         exercisesViewHolder.mImageExerciseTop.setImageResource(exercisesItem.getIcon());
-
         exercisesViewHolder.mExerciseTitle.setText(exercisesItem.getName());
 
         CategoryItem category = QuickFitnessDAO.getInstance(itemView.getContext()).categoryById(exercisesItem.getCategoryKey());
@@ -87,21 +92,17 @@ public class CustomExercisesListAdapter extends RecyclerView.Adapter<CustomExerc
         // ImageLoader task = new ImageLoader();
         // task.execute(exercisesItem.getIcon());
 
+        setAnimation(exercisesViewHolder.mCardItemLayout, i);
+
     }
 
-    @Override
-    public void onClick(View v) {
-        if (exercisesItem != null) {
-            //Intent i = Activity.getIntent(v.getContext(), exercisesItem);
-            Toast.makeText(v.getContext(), exercisesItem.getName(), Toast.LENGTH_LONG).show();
-        }
-    }
 
     public static class ExercisesViewHolder extends RecyclerView.ViewHolder {
         protected TextView mExerciseTitle;
         protected TextView mExerciseCategory;
         protected ImageView mImageExerciseTop;
         protected LinearLayout mCardTopLayout;
+        protected CardView mCardItemLayout;
 
         public ExercisesViewHolder(View v) {
             super(v);
@@ -109,7 +110,16 @@ public class CustomExercisesListAdapter extends RecyclerView.Adapter<CustomExerc
             mExerciseCategory = (TextView) v.findViewById(R.id.txt_exercise_category);
             mImageExerciseTop = (ImageView) v.findViewById(R.id.img_exercise_picture);
             mCardTopLayout = (LinearLayout) v.findViewById(R.id.card_top_layout);
+            mCardItemLayout = (CardView) v.findViewById(R.id.card_view1);
+
         }
+    }
+
+    @Override
+    public void onClick(final View view) {
+        int itemPosition = mRecyclerView.getChildPosition(view);
+        ExercisesItem mItem = mExercisesList.get(itemPosition);
+        Toast.makeText(itemView.getContext(), mItem.getName(), Toast.LENGTH_LONG).show();
     }
 
     private class ImageLoader extends AsyncTask<Integer, Void, Integer> {
@@ -124,6 +134,16 @@ public class CustomExercisesListAdapter extends RecyclerView.Adapter<CustomExerc
         @Override
         protected void onPostExecute(Integer imageResourceId) {
             exercisesViewHolder.mImageExerciseTop.setImageResource(imageResourceId);
+        }
+
+    }
+
+    private void setAnimation(View viewToAnimate, int position) {
+        // If the bound view wasn't previously displayed on screen, it's animated
+        if (position > lastPosition) {
+            Animation animation = AnimationUtils.loadAnimation(itemView.getContext(), android.R.anim.slide_in_left);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
         }
     }
 
