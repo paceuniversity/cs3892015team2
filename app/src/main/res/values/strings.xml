@@ -7,8 +7,8 @@
     <string name="menu_do_exercise">Do Exercise</string>
 
     <string name="list_drawer_item_home">Home</string>
-    <string name="list_drawer_item_set_goal">Set Goal</string>
-    <string name="list_drawer_item_workouts">Workouts</string>
+    <string name="list_drawer_item_set_goal">Select an Goal</string>
+    <string name="list_drawer_item_workouts">Workout Sets</string>
     <string name="list_drawer_item_profile">Profile</string>
     <string name="list_drawer_item_statistics">Statistics</string>
     <string name="list_drawer_item_settings">Settings</string>
