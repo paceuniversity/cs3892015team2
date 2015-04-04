@@ -18,7 +18,9 @@
 
 package pace.cs389.team2.quickfitness.model;
 
-public class ExercisesItem {
+import java.io.Serializable;
+
+public class ExercisesItem implements Serializable {
 
     private int id;
     private String name;

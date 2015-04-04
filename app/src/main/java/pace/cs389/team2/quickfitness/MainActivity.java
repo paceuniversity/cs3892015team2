@@ -18,6 +18,7 @@
 
 package pace.cs389.team2.quickfitness;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -28,6 +29,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -46,7 +48,7 @@ import pace.cs389.team2.quickfitness.model.ItemDrawer;
  * MainActivity will launch the app's home screen
  */
 
-public class MainActivity extends Activity {
+public class MainActivity extends ActionBarActivity {
 
     //App tag used for debug
     //The tag uses the class name to filter log messages for this class
@@ -117,9 +119,9 @@ public class MainActivity extends Activity {
         mDrawerList.setAdapter(adapter);
 
         //Check if the action bar object isn't null and then enables the up navigator and home buttons
-        if (getActionBar() != null) {
-            getActionBar().setDisplayHomeAsUpEnabled(true);
-            getActionBar().setHomeButtonEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
         }
 
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
@@ -128,13 +130,13 @@ public class MainActivity extends Activity {
                 R.drawable.ic_drawer, R.string.drawer_open,
                 R.string.drawer_close) {
             public void onDrawerClosed(View view) {
-                getActionBar().setTitle(mTitle);
+                getSupportActionBar().setTitle(mTitle);
                 invalidateOptionsMenu(); // creates call to
                 // onPrepareOptionsMenu()
             }
 
             public void onDrawerOpened(View drawerView) {
-                getActionBar().setTitle(mDrawerTitle);
+                getSupportActionBar().setTitle(mDrawerTitle);
                 invalidateOptionsMenu(); // creates call to
                 // onPrepareOptionsMenu()
             }
@@ -170,7 +172,7 @@ public class MainActivity extends Activity {
 
     public void selectItem(int position) {
 
-        Fragment fragment = null;
+        Fragment fragment;
         Bundle args = new Bundle();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
 
@@ -181,17 +183,14 @@ public class MainActivity extends Activity {
                 fragment = new FragmentMainContent();
                 break;
             case 1:
-                fragment = new FragmentSetGoal();
-                ft.addToBackStack(null);
+                fragment = new ActivitySetGoal.FragmentSetGoal();
                 break;
             case 2:
-                fragment = new FragmentExerciseDetails();
-                /*args.putString(FragmentMainContent.ITEM_NAME, mDataList.get(position)
+                fragment = new FragmentMainContent();
+                args.putString(FragmentMainContent.ITEM_NAME, mDataList.get(position)
                         .getmNameItem());
                 args.putInt(FragmentMainContent.IMAGE_RESOURCE_ID, mDataList
-                        .get(position).getmIconRes());*/
-                //startActivity(new Intent(this, ExerciseDetailsActivity.class));
-                ft.addToBackStack(null);
+                        .get(position).getmIconRes());
                 break;
             case 3:
                 fragment = new FragmentMainContent();
@@ -238,8 +237,8 @@ public class MainActivity extends Activity {
     public void setTitle(CharSequence title) {
         mTitle = title;
 
-        if (getActionBar() != null) {
-            getActionBar().setTitle(mTitle);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(mTitle);
         }
 
     }

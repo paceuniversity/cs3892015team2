@@ -18,6 +18,7 @@
 
 package pace.cs389.team2.quickfitness.adapter;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -29,10 +30,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
+import pace.cs389.team2.quickfitness.ActivityExerciseDetails;
 import pace.cs389.team2.quickfitness.R;
 import pace.cs389.team2.quickfitness.data.QuickFitnessDAO;
 import pace.cs389.team2.quickfitness.model.CategoryItem;
@@ -40,6 +41,7 @@ import pace.cs389.team2.quickfitness.model.ExercisesItem;
 
 public class CustomExercisesListAdapter extends RecyclerView.Adapter<CustomExercisesListAdapter.ExercisesViewHolder> implements View.OnClickListener {
 
+    public static final String EXERCISE_TAG = "exercise_ref";
     private List<ExercisesItem> mExercisesList;
     private View itemView;
     ExercisesItem exercisesItem;
@@ -119,7 +121,10 @@ public class CustomExercisesListAdapter extends RecyclerView.Adapter<CustomExerc
     public void onClick(final View view) {
         int itemPosition = mRecyclerView.getChildPosition(view);
         ExercisesItem mItem = mExercisesList.get(itemPosition);
-        Toast.makeText(itemView.getContext(), mItem.getName(), Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(itemView.getContext(), ActivityExerciseDetails.class);
+        intent.putExtra(EXERCISE_TAG, mItem);
+        itemView.getContext().startActivity(intent);
+
     }
 
     private class ImageLoader extends AsyncTask<Integer, Void, Integer> {
@@ -146,6 +151,5 @@ public class CustomExercisesListAdapter extends RecyclerView.Adapter<CustomExerc
             lastPosition = position;
         }
     }
-
 
 }
