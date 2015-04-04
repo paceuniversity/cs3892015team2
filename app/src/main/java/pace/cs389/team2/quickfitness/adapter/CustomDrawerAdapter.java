@@ -30,23 +30,23 @@ import android.widget.TextView;
 import java.util.List;
 
 import pace.cs389.team2.quickfitness.R;
-import pace.cs389.team2.quickfitness.model.ItemDrawer;
+import pace.cs389.team2.quickfitness.model.DrawerItem;
 
 /**
  * Created by Luiz on 25/03/2015.
  * <p/>
  * This class creates an adapter of type ItemDrawer to display in a ListView
  */
-public class CustomDrawerAdapter extends ArrayAdapter<ItemDrawer> {
+public class CustomDrawerAdapter extends ArrayAdapter<DrawerItem> {
 
     Context mContext;
     private int mIconRes;
-    private List<ItemDrawer> mListDrawer;
+    private List<DrawerItem> mListDrawer;
     private LayoutInflater mInflater;
 
     // Default class constructor with the application context, item icon, and the items list
     // Makes a copy of these attributes to local variables and initialize the LayoutInflater
-    public CustomDrawerAdapter(Context context, int mIconRes, List<ItemDrawer> mListItems) {
+    public CustomDrawerAdapter(Context context, int mIconRes, List<DrawerItem> mListItems) {
         super(context, mIconRes, mListItems);
         this.mContext = context;
         this.mIconRes = mIconRes;
@@ -85,11 +85,11 @@ public class CustomDrawerAdapter extends ArrayAdapter<ItemDrawer> {
 
         }
 
-        ItemDrawer mItemDrawer = (ItemDrawer) this.mListDrawer.get(position);
+        DrawerItem mDrawerItem = (DrawerItem) this.mListDrawer.get(position);
         mDrawerHolder.mItemLayout.setVisibility(LinearLayout.VISIBLE);
         mDrawerHolder.mItemIcon.setImageDrawable(mView.getResources().getDrawable(
-                mItemDrawer.getmIconRes()));
-        mDrawerHolder.mItemText.setText(mItemDrawer.getmNameItem());
+                mDrawerItem.getmIconRes()));
+        mDrawerHolder.mItemText.setText(mDrawerItem.getmNameItem());
 
 
         return mView;

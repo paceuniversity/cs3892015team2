@@ -18,12 +18,8 @@
 
 package pace.cs389.team2.quickfitness;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -42,7 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pace.cs389.team2.quickfitness.adapter.CustomDrawerAdapter;
-import pace.cs389.team2.quickfitness.model.ItemDrawer;
+import pace.cs389.team2.quickfitness.model.DrawerItem;
 
 /**
  * MainActivity will launch the app's home screen
@@ -66,7 +62,7 @@ public class MainActivity extends ActionBarActivity {
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private LinearLayout mGroupView;
-    private List<ItemDrawer> mDataList;
+    private List<DrawerItem> mDataList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,13 +98,13 @@ public class MainActivity extends ActionBarActivity {
                 GravityCompat.START);
 
         //Adds items to the left menu drawer
-        mDataList.add(new ItemDrawer(getResources().getString(R.string.list_drawer_item_home), R.mipmap.ic_home_grey600_24dp));
-        mDataList.add(new ItemDrawer(getResources().getString(R.string.list_drawer_item_set_goal), R.mipmap.ic_goal24dp));
-        mDataList.add(new ItemDrawer(getResources().getString(R.string.list_drawer_item_workouts), R.mipmap.ic_workouts24dp));
-        mDataList.add(new ItemDrawer(getResources().getString(R.string.list_drawer_item_profile), R.mipmap.ic_person_grey600_24dp));
-        mDataList.add(new ItemDrawer(getResources().getString(R.string.list_drawer_item_statistics), R.mipmap.ic_trending_up_grey600_24dp));
-        mDataList.add(new ItemDrawer(getResources().getString(R.string.list_drawer_item_settings), R.mipmap.ic_settings_grey600_24dp));
-        mDataList.add(new ItemDrawer(getResources().getString(R.string.list_drawer_item_help), R.mipmap.ic_help_grey600_24dp));
+        mDataList.add(new DrawerItem(getResources().getString(R.string.list_drawer_item_home), R.mipmap.ic_home_grey600_24dp));
+        mDataList.add(new DrawerItem(getResources().getString(R.string.list_drawer_item_set_goal), R.mipmap.ic_goal24dp));
+        mDataList.add(new DrawerItem(getResources().getString(R.string.list_drawer_item_workouts), R.mipmap.ic_workouts24dp));
+        mDataList.add(new DrawerItem(getResources().getString(R.string.list_drawer_item_profile), R.mipmap.ic_person_grey600_24dp));
+        mDataList.add(new DrawerItem(getResources().getString(R.string.list_drawer_item_statistics), R.mipmap.ic_trending_up_grey600_24dp));
+        mDataList.add(new DrawerItem(getResources().getString(R.string.list_drawer_item_settings), R.mipmap.ic_settings_grey600_24dp));
+        mDataList.add(new DrawerItem(getResources().getString(R.string.list_drawer_item_help), R.mipmap.ic_help_grey600_24dp));
 
         //Makes a reference to the menu drawer adapter, which will show them items with an icon on the left.
         //CustomDrawerAdapter receives the context, the custom xml layout adapter and the list of items to be displayed.
@@ -172,7 +168,7 @@ public class MainActivity extends ActionBarActivity {
 
     public void selectItem(int position) {
 
-        Fragment fragment;
+        Fragment fragment = null;
         Bundle args = new Bundle();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
 
@@ -186,11 +182,7 @@ public class MainActivity extends ActionBarActivity {
                 fragment = new ActivitySetGoal.FragmentSetGoal();
                 break;
             case 2:
-                fragment = new FragmentMainContent();
-                args.putString(FragmentMainContent.ITEM_NAME, mDataList.get(position)
-                        .getmNameItem());
-                args.putInt(FragmentMainContent.IMAGE_RESOURCE_ID, mDataList
-                        .get(position).getmIconRes());
+                fragment = new ActivityWorkoutsList.FragmentWorkouts();
                 break;
             case 3:
                 fragment = new FragmentMainContent();

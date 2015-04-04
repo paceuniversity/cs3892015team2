@@ -37,7 +37,7 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
 
     private static QuickFitnessDbHelper instance;
     public static final String DATABASE_NAME = "fitness.db";
-    private static final int DB_VERSION = 38;
+    private static final int DB_VERSION = 40;
     static Context mContext;
 
     //private static final String SQL_DROP_DATABASE = "DROP DATABASE " + DATABASE_NAME;
@@ -134,8 +134,6 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
             values.put(QuickFitnessContract.ExerciseCategoryEntry.COLUMN_CATEGORY_ICON, exerciseCategories.get(i).getIcon());
             db.insert(QuickFitnessContract.ExerciseCategoryEntry.TABLE_NAME, null, values);
         }
-
-
     }
 
     private void workoutStatusBulkInsert(SQLiteDatabase db) {
@@ -157,8 +155,6 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
             values.put(QuickFitnessContract.StatusEntry.COLUMN_STATUS_NAME, workoutStatuses.get(i).getStatus());
             db.insert(QuickFitnessContract.StatusEntry.TABLE_NAME, null, values);
         }
-
-
     }
 
     private void exercisesBulkInsert(SQLiteDatabase db) {
@@ -291,7 +287,6 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
         //Insert all the workout statuses on the status table in the first time the app runs
         workoutStatusBulkInsert(sqLiteDatabase);
         Log.i(MainActivity.APP_TAG, "Workout Statuses Inserted");
-
 
     }
 

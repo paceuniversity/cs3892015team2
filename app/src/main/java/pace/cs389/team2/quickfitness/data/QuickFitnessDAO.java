@@ -18,6 +18,7 @@
 
 package pace.cs389.team2.quickfitness.data;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -30,6 +31,8 @@ import java.util.List;
 import pace.cs389.team2.quickfitness.MainActivity;
 import pace.cs389.team2.quickfitness.model.CategoryItem;
 import pace.cs389.team2.quickfitness.model.ExercisesItem;
+import pace.cs389.team2.quickfitness.model.WorkoutItem;
+import pace.cs389.team2.quickfitness.model.WorkoutStatusItem;
 
 public class QuickFitnessDAO {
 
@@ -40,6 +43,16 @@ public class QuickFitnessDAO {
     private static final String[] PROJECTION = {QuickFitnessContract.ExerciseCategoryEntry.COLUMN_CATEGORY_ID,
             QuickFitnessContract.ExerciseCategoryEntry.COLUMN_CATEGORY_NAME,
             QuickFitnessContract.ExerciseCategoryEntry.COLUMN_CATEGORY_ICON
+    };
+
+    private static final String[] PROJECTION_TABLE_STATUS = {QuickFitnessContract.StatusEntry.COLUMN_STATUS_ID,
+            QuickFitnessContract.StatusEntry.COLUMN_STATUS_NAME
+    };
+
+    private static final String[] PROJECTION_TABLE_WORKOUT = {QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_ID,
+            QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_NAME,
+            QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_TIME,
+            QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_STATUS_KEY
     };
 
     private static final String[] PROJECTION_TABLE_EXERCISE = {QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_ID,
@@ -168,6 +181,65 @@ public class QuickFitnessDAO {
         }
 
         return exercises;
+    }
+
+    public List<WorkoutItem> listWorkouts() {
+        List<WorkoutItem> workouts = new ArrayList<>();
+
+        Cursor cursor = sqLiteDatabase.query(QuickFitnessContract.WorkoutSetEntry.TABLE_NAME, PROJECTION_TABLE_WORKOUT,
+                null, null, null, null, QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_NAME);
+        WorkoutItem itemWorkout;
+
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    itemWorkout = new WorkoutItem(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3));
+                    workouts.add(itemWorkout);
+                } while (cursor.moveToNext());
+            }
+        } catch (SQLiteDatabaseLockedException exception) {
+            Log.e(MainActivity.APP_TAG, exception.getMessage());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        return workouts;
+    }
+
+    public WorkoutStatusItem statusById(int id) {
+
+        Cursor cursor = sqLiteDatabase.query(QuickFitnessContract.StatusEntry.TABLE_NAME, PROJECTION_TABLE_STATUS,
+                QuickFitnessContract.StatusEntry.COLUMN_STATUS_ID + " = ?", new String[]{String.valueOf(id)}, null, null, QuickFitnessContract.StatusEntry.COLUMN_STATUS_NAME);
+
+        WorkoutStatusItem itemStatus = null;
+
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    itemStatus = new WorkoutStatusItem(cursor.getInt(0), cursor.getString(1));
+                } while (cursor.moveToNext());
+            }
+        } catch (SQLiteDatabaseLockedException exception) {
+            Log.e(MainActivity.APP_TAG, exception.getMessage());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return itemStatus;
+    }
+
+    public long insertWorkoutSet(WorkoutItem mItemWorkout) {
+        ContentValues values = new ContentValues();
+        values.put(QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_NAME, mItemWorkout.getName());
+        values.put(QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_TIME, mItemWorkout.getTime());
+        values.put(QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_STATUS_KEY, mItemWorkout.getStatusKey());
+
+        long rowInserted = sqLiteDatabase.insert(QuickFitnessContract.WorkoutSetEntry.TABLE_NAME, null, values);
+
+        return rowInserted;
     }
 
 }
