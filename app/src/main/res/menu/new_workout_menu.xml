@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<!--
   ~ /*
   ~  * Copyright (C) 2014 The Android Open Source Project
   ~  *
@@ -16,17 +16,14 @@
   ~  */
   -->
 
-<resources>
-    <color name="background_light_gray">#eeeeee</color>
-    <color name="background_list_item_gray">#cccccc</color>
-    <color name="background_white">#fff</color>
-    <color name="text_color_dark_grey">#212121</color>
-    <color name="text_color_lighter_grey">#616161</color>
-    <color name="material_orange">#ff9800</color>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:pace.cs389.team2.quickfitness="http://schemas.android.com/apk/res-auto"
+    tools:context=".ActivityExerciseDetails">
 
-    <color name="material_purple">#7b1fa2</color>
-    <color name="material_green">#43a047</color>
-    <color name="material_blue_grey">#546e7a</color>
-    <color name="material_blue">#1976d2</color>
-
-</resources>
+    <item
+        android:id="@+id/action_add_workout"
+        android:title="@string/menu_new_workout"
+        android:icon="@mipmap/ic_add_black_36dp"
+        pace.cs389.team2.quickfitness:showAsAction="ifRoom|withText" />
+</menu>

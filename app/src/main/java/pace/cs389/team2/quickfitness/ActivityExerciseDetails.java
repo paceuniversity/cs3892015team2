@@ -46,7 +46,6 @@ public class ActivityExerciseDetails extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise_details);
 
-
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction().replace(R.id.exercise_detail_place_holder, new FragmentExerciseDetails()).commit();
         } else {
@@ -54,11 +53,8 @@ public class ActivityExerciseDetails extends ActionBarActivity {
         }
 
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.material_green)));
             getSupportActionBar().setDisplayShowTitleEnabled(true);
         }
-
-
     }
 
     @Override
@@ -93,9 +89,27 @@ public class ActivityExerciseDetails extends ActionBarActivity {
 
             android.support.v7.app.ActionBar actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
 
+            mExerciseItem = (ExercisesItem) getActivity().getIntent().getSerializableExtra(CustomExercisesListAdapter.EXERCISE_TAG);
+
             if (getActivity().getActionBar() != null) {
                 if (OrientationUtils.isPortrait(getActivity().getResources().getConfiguration())) {
                     actionBar.show();
+
+                    if (mExerciseItem != null) {
+                        if (mExerciseItem.getCategoryKey() == 2) {
+                            actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.material_green)));
+                            //getSupportActionBar().setTitle(Html.fromHtml("<font color='#ffffff'>" + appName + " </font>"));
+                        } else if (mExerciseItem.getCategoryKey() == 3) {
+                            actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.material_orange)));
+                        } else if (mExerciseItem.getCategoryKey() == 4) {
+                            actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.material_purple)));
+                        } else if (mExerciseItem.getCategoryKey() == 5) {
+                            actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.material_blue_grey)));
+                        }
+                    } else {
+                        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.background_light_gray)));
+                    }
+
 
                 } else {
                     actionBar.hide();
@@ -108,20 +122,20 @@ public class ActivityExerciseDetails extends ActionBarActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
             mExerciseItem = (ExercisesItem) getActivity().getIntent().getSerializableExtra(CustomExercisesListAdapter.EXERCISE_TAG);
+
             View mView = inflater.inflate(R.layout.fragment_exercises_detail, container,
                     false);
-
+            TextView mExerciseVideo;
             if (OrientationUtils.isPortrait(getActivity().getResources().getConfiguration())) {
+                CategoryItem categoryItem = QuickFitnessDAO.getInstance(getActivity()).categoryById(mExerciseItem.getCategoryKey());
 
-                TextView mExerciseVideo = (TextView) mView.findViewById(R.id.txt_video_placeholder);
+                mExerciseVideo = (TextView) mView.findViewById(R.id.txt_video_placeholder);
                 TextView mExerciseTitle = (TextView) mView.findViewById(R.id.txt_video_title);
                 TextView mExerciseDescription = (TextView) mView.findViewById(R.id.txt_video_description);
                 TextView mExerciseCategory = (TextView) mView.findViewById(R.id.txt_exercise_category);
                 TextView mExerciseSets = (TextView) mView.findViewById(R.id.txt_workout_sets);
                 TextView mExerciseReps = (TextView) mView.findViewById(R.id.txt_workout_reps);
                 TextView mExerciseCalories = (TextView) mView.findViewById(R.id.txt_workout_calories);
-
-                CategoryItem categoryItem = QuickFitnessDAO.getInstance(getActivity()).categoryById(mExerciseItem.getCategoryKey());
 
                 mExerciseVideo.setText(mExerciseItem.getVideoAnimation());
                 mExerciseTitle.setText(mExerciseItem.getName());
@@ -131,7 +145,7 @@ public class ActivityExerciseDetails extends ActionBarActivity {
                 mExerciseReps.setText(String.valueOf(mExerciseItem.getReps()) + " Reps");
                 mExerciseCalories.setText(String.valueOf(mExerciseItem.getCalories()) + " Calories");
             } else {
-                TextView mExerciseVideo = (TextView) mView.findViewById(R.id.txt_video_placeholder);
+                mExerciseVideo = (TextView) mView.findViewById(R.id.txt_video_placeholder);
                 mExerciseVideo.setText(mExerciseItem.getVideoAnimation());
             }
 

@@ -26,7 +26,6 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -68,24 +67,6 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-       /* if (QuickFitnessDbHelper.getInstance(getApplicationContext()) != null) {
-            Toast.makeText(this, "Database Created.", Toast.LENGTH_LONG).show();
-        }*/
-
-      /*  QuickFitnessDAO dao = QuickFitnessDAO.getInstance(getApplicationContext());
-        dao.categoryBulkInsert();
-        Toast.makeText(this, "Categories inserted.", Toast.LENGTH_LONG).show();
-
-
-        List<CategoryItem> items = dao.listExercisesCategories();
-
-        for (int i = 0; i < items.size(); i++) {
-            Log.i("TABLE CATEGORY", items.get(i).getName());
-            Log.i("TABLE CATEGORY", String.valueOf(items.get(i).getIcon()));
-        }*/
-
 
         // Copies references to local variables
         mDataList = new ArrayList<>();
@@ -146,16 +127,6 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if (!mDrawerLayout.isDrawerOpen(mGroupView)) {
-            getMenuInflater().inflate(R.menu.menu_main, menu);
-            return true;
-        }
-        return false;
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -192,12 +163,7 @@ public class MainActivity extends ActionBarActivity {
                         .get(position).getmIconRes());
                 break;
             case 4:
-
-                fragment = new FragmentMainContent();
-                args.putString(FragmentMainContent.ITEM_NAME, mDataList.get(position)
-                        .getmNameItem());
-                args.putInt(FragmentMainContent.IMAGE_RESOURCE_ID, mDataList
-                        .get(position).getmIconRes());
+                fragment = new ActivityStatistics.StatisticsFragment();
                 break;
             case 5:
                 fragment = new FragmentMainContent();
@@ -217,6 +183,8 @@ public class MainActivity extends ActionBarActivity {
                 fragment = new FragmentMainContent();
                 break;
         }
+
+
         ft.replace(R.id.content_place_holder, fragment)
                 .commit();
 

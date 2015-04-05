@@ -1,38 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="pace.cs389.team2.quickfitness">
+    package="pace.cs389.team2.quickfitness" >
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.AppCompat.Light">
+        android:theme="@style/Theme.AppCompat.Light" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ActivitySetGoal"
             android:label="@string/app_name"
-            android:parentActivityName=".MainActivity">
-
+            android:parentActivityName=".MainActivity" >
         </activity>
-
         <activity
             android:name=".ActivityExerciseDetails"
             android:label="@string/app_name"
-            android:parentActivityName=".ActivitySetGoal"></activity>
-
+            android:parentActivityName=".ActivitySetGoal" />
         <activity
             android:name=".ActivityWorkoutsList"
-            android:label="@string/app_name"></activity>
-
+            android:label="@string/app_name" />
+        <activity
+            android:name=".ActivityAddWorkout"
+            android:label="@string/title_activity_activity_add_workout"
+            android:parentActivityName=".ActivityWorkoutsList" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pace.cs389.team2.quickfitness.ActivityWorkoutsList" />
+        </activity>
+        <activity
+            android:name=".ActivityStatistics"
+            android:label="@string/title_activity_activity_statistics" >
+        </activity>
     </application>
 
 </manifest>

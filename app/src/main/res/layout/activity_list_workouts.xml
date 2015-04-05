@@ -17,6 +17,7 @@
   -->
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -36,5 +37,14 @@
         android:fontFamily="sans-serif-condensed"
         android:text="@string/workouts_list_empty" />
 
+    <com.shamanland.fab.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:id="@+id/action_button"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:src="@mipmap/ic_add_black_24dp"
+        android:layout_marginBottom="15dp"
+        app:floatingActionButtonColor="@color/material_blue"
+        app:floatingActionButtonSize="normal" />
 
 </FrameLayout>

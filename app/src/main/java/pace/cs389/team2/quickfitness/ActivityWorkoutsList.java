@@ -19,13 +19,12 @@
 package pace.cs389.team2.quickfitness;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -49,40 +48,35 @@ public class ActivityWorkoutsList extends ActionBarActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.add_to_workout_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_add_exercise) {
-            Toast.makeText(this, "Add Exercise Clicked.", Toast.LENGTH_LONG).show();
-            return true;
-        }
-
-        return false;
-    }
-
-    public static class FragmentWorkouts extends Fragment {
+    public static class FragmentWorkouts extends Fragment implements View.OnClickListener {
 
 
         private RecyclerView mRecyclerView;
         private QuickFitnessDAO dao;
         CustomWorkoutsListAdapter mWorkoutsAdapter;
         private TextView mListEmpty;
+        private com.shamanland.fab.FloatingActionButton actionButton;
 
         public FragmentWorkouts() {
         }
 
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            if (requestCode == 100 && resultCode == RESULT_OK) {
+                if (mWorkoutsAdapter != null) {
+                    mWorkoutsAdapter.notifyDataSetChanged();
+                }
+                setListExercisesAdapter(dao.listWorkouts());
+                Toast.makeText(getActivity().getApplicationContext(), "Workout created.", Toast.LENGTH_LONG).show();
+            }
+        }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
 
+
+            setHasOptionsMenu(true);
 
             View view = inflater.inflate(R.layout.activity_list_workouts, container,
                     false);
@@ -90,6 +84,7 @@ public class ActivityWorkoutsList extends ActionBarActivity {
 
             mListEmpty = (TextView) view.findViewById(R.id.txt_list_empty);
             mRecyclerView = (RecyclerView) view.findViewById(R.id.workout_list);
+            actionButton = (com.shamanland.fab.FloatingActionButton) view.findViewById(R.id.action_button);
             mRecyclerView.setHasFixedSize(true);
             LinearLayoutManager llm = new LinearLayoutManager(getActivity());
             llm.setOrientation(LinearLayoutManager.VERTICAL);
@@ -100,6 +95,8 @@ public class ActivityWorkoutsList extends ActionBarActivity {
             dao = QuickFitnessDAO.getInstance(getActivity());
 
             setListExercisesAdapter(dao.listWorkouts());
+
+            actionButton.setOnClickListener(this);
 
             return view;
         }
@@ -119,6 +116,10 @@ public class ActivityWorkoutsList extends ActionBarActivity {
 
         }
 
+        @Override
+        public void onClick(View v) {
+            startActivityForResult(new Intent(getActivity(), ActivityAddWorkout.class), 100);
+        }
     }
 }
 
