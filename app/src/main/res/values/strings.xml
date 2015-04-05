@@ -55,13 +55,13 @@
     An hour of jumping rope burns over 800 calories and works the arms, legs, and core, as well as strengthens bones and joints.
     </string>
 
-    <integer name="weight_loss_exercise_sets_cycling">60</integer>
-    <integer name="weight_loss_exercise_sets_treadmill_rounds">60</integer>
-    <integer name="weight_loss_exercise_sets_jumping_rope">20</integer>
+    <string name="weight_loss_exercise_level_cycling">Beginner</string>
+    <string name="weight_loss_exercise_level_treadmill_rounds">Beginner</string>
+    <string name="weight_loss_exercise_level_jumping_rope">Intermediate</string>
 
-    <integer name="weight_loss_exercise_reps_cycling">0</integer>
-    <integer name="weight_loss_exercise_reps_treadmill_rounds">0</integer>
-    <integer name="weight_loss_exercise_reps_jumping_rope">0</integer>
+    <integer name="weight_loss_exercise_duration_cycling">10</integer>
+    <integer name="weight_loss_exercise_duration_treadmill_rounds">15</integer>
+    <integer name="weight_loss_exercise_duration_jumping_rope">10</integer>
 
     <integer name="weight_loss_exercise_calories_cycling">700</integer>
     <integer name="weight_loss_exercise_calories_treadmill_rounds">500</integer>
@@ -76,13 +76,13 @@
     <string name="strength_exercise_description_pallof_press">The Pallof press is one of those movements that looks confusing, but is actually incredibly simple and beneficial, says Mike Campbell, personal trainer and owner of Unleash Your Alpha. While you may not be hoisting heavy weight, the real challenge lies in resisting movement — in this case, rotation</string>
     <string name="strength_exercise_description_dumbbell_row">Most of us spend more time training the mirror muscles on the front of the body, and neglect what we can’t see, according to Campbell. But developing a strong back is key to balance things out, improve posture and avoid injury. The dumbbell row can help achieve all that, in addition building strong arms and a strong core</string>
 
-    <integer name="strength_exercise_sets_globet_squat">3</integer>
-    <integer name="strength_exercise_sets_pallof_pres">3</integer>
-    <integer name="strength_exercise_sets_dumbbell_row">3</integer>
+    <string name="strength_exercise_level_globet_squat">Beginner</string>
+    <string name="strength_exercise_level_pallof_pres">Intermediate</string>
+    <string name="strength_exercise_level_dumbbell_row">Intermediate</string>
 
-    <integer name="strength_exercise_reps_globet_squat">15</integer>
-    <integer name="strength_exercise_reps_pallof_pres">10</integer>
-    <integer name="strength_exercise_reps_dumbbell_row">12</integer>
+    <integer name="strength_exercise_duration_globet_squat">10</integer>
+    <integer name="strength_exercise_duration_pallof_pres">10</integer>
+    <integer name="strength_exercise_duration_dumbbell_row">12</integer>
 
     <integer name="strength_exercise_calories_globet_squat">500</integer>
     <integer name="strength_exercise_calories_pallof_pres">200</integer>
@@ -98,13 +98,13 @@
     <string name="cardio_exercise_description_stationary_bike">All our experts agree that the stationary bike offers the workout with the least impact on the joints. People with knee pain are often steered toward these bikes, since the impact of body weight is not a concern as it is on a treadmill, elliptical trainer, or stair stepper</string>
     <string name="cardio_exercise_description_rowing">Don’t be fooled into thinking this machine gives you only an upper-body workout. Rowers are more advanced cardiovascular machines. Because you must push with the legs while you pull with the arms, rowers require coordination. They also you require you to engage your core abdominal muscles to support and protect your back.</string>
 
-    <integer name="cardio_exercise_sets_elliptical">3</integer>
-    <integer name="cardio_exercise_sets_stationary_bike">3</integer>
-    <integer name="cardio_exercise_sets_rowing">3</integer>
+    <string name="cardio_exercise_level_elliptical">Beginner</string>
+    <string name="cardio_exercise_level_stationary_bike">Beginner</string>
+    <string name="cardio_exercise_level_rowing">Beginner</string>
 
-    <integer name="cardio_exercise_reps_elliptical">20</integer>
-    <integer name="cardio_exercise_reps_stationary_bike">20</integer>
-    <integer name="cardio_exercise_reps_rowing">20</integer>
+    <integer name="cardio_exercise_duration_elliptical">10</integer>
+    <integer name="cardio_exercise_duration_stationary_bike">10</integer>
+    <integer name="cardio_exercise_duration_rowing">10</integer>
 
     <integer name="cardio_exercise_calories_elliptical">900</integer>
     <integer name="cardio_exercise_calories_stationary_bike">490</integer>
@@ -119,13 +119,13 @@
     <string name="endurance_exercise_description_stair_machines">Stair machines elevate your rate up by duplicating the motion of climbing up stairs. Although this is an excellent choice for cardiovascular endurance training, it might not be the best choice for a beginner or those with bad knees. The stair machine focuses on your lower body while your upper body tries not to hold on for dear life.</string>
     <string name="endurance_exercise_description_push_ups">The beauty of the push-up is that you can do it anywhere, anytime. It is a great all-encompassing exercise that hits not only your arms and chest but also gets a burn going in your core. The only downside is that busting out the same old up-and-down routine day after day can start to feel tedious.</string>
 
-    <integer name="endurance_exercise_sets_swimming_laps">0</integer>
-    <integer name="endurance_exercise_sets_stair_machines">0</integer>
-    <integer name="endurance_exercise_sets_push_ups">3</integer>
+    <string name="endurance_exercise_level_swimming_laps">Beginner</string>
+    <string name="endurance_exercise_level_stair_machines">Intermediate</string>
+    <string name="endurance_exercise_level_push_ups">Beginner</string>
 
-    <integer name="endurance_exercise_reps_swimming_laps">0</integer>
-    <integer name="endurance_exercise_reps_stair_machines">0</integer>
-    <integer name="endurance_exercise_reps_push_ups">20</integer>
+    <integer name="endurance_exercise_duration_swimming_laps">10</integer>
+    <integer name="endurance_exercise_duration_stair_machines">10</integer>
+    <integer name="endurance_exercise_duration_push_ups">15</integer>
 
     <integer name="endurance_exercise_calories_swimming_laps">600</integer>
     <integer name="endurance_exercise_calories_stair_machines">500</integer>

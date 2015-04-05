@@ -26,31 +26,31 @@ public class ExercisesItem implements Serializable {
     private String name;
     private String description;
     private int icon;
-    private int sets;
-    private int reps;
+    private String level;
+    private int duration;
     private int calories;
     private String videoAnimation;
     private int categoryKey;
 
 
-    public ExercisesItem(String name, String description, int icon, int sets, int reps, int calories, String videoAnimation, int category) {
+    public ExercisesItem(String name, String description, int icon, String level, int duration, int calories, String videoAnimation, int category) {
         this.name = name;
         this.description = description;
         this.icon = icon;
-        this.sets = sets;
-        this.reps = reps;
+        this.level = level;
+        this.duration = duration;
         this.calories = calories;
         this.videoAnimation = videoAnimation;
         this.categoryKey = category;
     }
 
-    public ExercisesItem(int id, String name, String description, int icon, int sets, int reps, int calories, String videoAnimation, int category) {
+    public ExercisesItem(int id, String name, String description, int icon, String level, int duration, int calories, String videoAnimation, int category) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.icon = icon;
-        this.sets = sets;
-        this.reps = reps;
+        this.level = level;
+        this.duration = duration;
         this.calories = calories;
         this.videoAnimation = videoAnimation;
         this.categoryKey = category;
@@ -86,15 +86,13 @@ public class ExercisesItem implements Serializable {
         this.icon = icon;
     }
 
-    public int getSets() {
-        return sets;
+    public String getLevel() {
+        return level;
     }
 
-
-    public int getReps() {
-        return reps;
+    public int getDuration() {
+        return duration;
     }
-
 
     public int getCalories() {
         return calories;

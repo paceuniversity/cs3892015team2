@@ -133,17 +133,17 @@ public class ActivityExerciseDetails extends ActionBarActivity {
                 TextView mExerciseTitle = (TextView) mView.findViewById(R.id.txt_video_title);
                 TextView mExerciseDescription = (TextView) mView.findViewById(R.id.txt_video_description);
                 TextView mExerciseCategory = (TextView) mView.findViewById(R.id.txt_exercise_category);
-                TextView mExerciseSets = (TextView) mView.findViewById(R.id.txt_workout_sets);
-                TextView mExerciseReps = (TextView) mView.findViewById(R.id.txt_workout_reps);
+                TextView mExerciseLevel = (TextView) mView.findViewById(R.id.txt_workout_level);
+                TextView mExerciseDuration = (TextView) mView.findViewById(R.id.txt_workout_duration);
                 TextView mExerciseCalories = (TextView) mView.findViewById(R.id.txt_workout_calories);
 
                 mExerciseVideo.setText(mExerciseItem.getVideoAnimation());
                 mExerciseTitle.setText(mExerciseItem.getName());
                 mExerciseDescription.setText(mExerciseItem.getDescription());
                 mExerciseCategory.setText(categoryItem.getName());
-                mExerciseSets.setText(String.valueOf(mExerciseItem.getSets()) + " Sets");
-                mExerciseReps.setText(String.valueOf(mExerciseItem.getReps()) + " Reps");
-                mExerciseCalories.setText(String.valueOf(mExerciseItem.getCalories()) + " Calories");
+                mExerciseLevel.setText(mExerciseItem.getLevel());
+                mExerciseDuration.setText(String.valueOf(mExerciseItem.getDuration()));
+                mExerciseCalories.setText(String.valueOf(mExerciseItem.getCalories()) + "g");
             } else {
                 mExerciseVideo = (TextView) mView.findViewById(R.id.txt_video_placeholder);
                 mExerciseVideo.setText(mExerciseItem.getVideoAnimation());

@@ -42,9 +42,9 @@
         android:id="@+id/action_button"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
-        android:src="@mipmap/ic_add_black_24dp"
+        android:src="@mipmap/ic_add_white_24dp"
         android:layout_marginBottom="15dp"
-        app:floatingActionButtonColor="@color/material_blue"
+        app:floatingActionButtonColor="@color/material_blue_500"
         app:floatingActionButtonSize="normal" />
 
 </FrameLayout>

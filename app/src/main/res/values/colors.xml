@@ -27,6 +27,7 @@
     <color name="material_purple">#7b1fa2</color>
     <color name="material_green">#43a047</color>
     <color name="material_blue_grey">#546e7a</color>
-    <color name="material_blue">#1976d2</color>
+    <color name="material_blue_500">#1976d2</color>
+    <color name="material_blue_700">#2196f3</color>
 
 </resources>

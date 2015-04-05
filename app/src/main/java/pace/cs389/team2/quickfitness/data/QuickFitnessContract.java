@@ -91,11 +91,11 @@ public class QuickFitnessContract {
         //Exercise description column will the exercise's icon as an integer
         public static final String COLUMN_EXERCISE_ICON = "exercise_icon";
 
-        //Sets will represent how many times each exercise will be done. Stored as integer
-        public static final String COLUMN_EXERCISE_SETS = "exercise_sets";
+        //Reps will represent how many times an exercise will be repeated for each set. Stored as integer
+        public static final String COLUMN_EXERCISE_LEVEL = "exercise_level";
 
         //Reps will represent how many times an exercise will be repeated for each set. Stored as integer
-        public static final String COLUMN_EXERCISE_REPS = "exercise_reps";
+        public static final String COLUMN_EXERCISE_DURATION = "exercise_duration";
 
         //Calories column will store how many calories each exercise burns. Stored as interger
         public static final String COLUMN_EXERCISE_CALORIES = "exercise_calories";
@@ -135,6 +135,12 @@ public class QuickFitnessContract {
         //Workout set name, stored as string
         public static final String COLUMN_WORKOUT_SET_NAME = "workout_set_name";
 
+        //Workout duration in terms of days, stored as integer, starting from Monday to Sunday
+        public static final String COLUMN_WORKOUT_DAYS_OF_WEEK = "workout_days";
+
+        //Workout duration, stored as integer
+        public static final String COLUMN_WORKOUT_DURATION = "workout_duration";
+
         //Workout preferred time, stored as string in "hh:mm" format
         public static final String COLUMN_WORKOUT_SET_TIME = "workout_set_time";
 
@@ -154,6 +160,20 @@ public class QuickFitnessContract {
         //Status name, stored as string
         public static final String COLUMN_STATUS_NAME = "status_name";
     }
+
+    /* Inner class that defines the table contents of the status table */
+   /* public static final class LevelEntry implements BaseColumns {
+
+        //Table name
+        public static final String TABLE_NAME = "level";
+
+        //Status primary key stored as an integer
+        public static final String COLUMN_LEVEL_ID = "_id";
+
+        //Status name, stored as string
+        public static final String COLUMN_LEVEL_NAME = "status_name";
+    }*/
+
 
     /* Inner class that defines the table contents of the workout_set_exercise table */
     public static final class WorkoutExerciseEntry implements BaseColumns {

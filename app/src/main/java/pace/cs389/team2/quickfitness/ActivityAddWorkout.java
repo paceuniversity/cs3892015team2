@@ -30,8 +30,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import org.w3c.dom.Text;
-
 import pace.cs389.team2.quickfitness.data.QuickFitnessDAO;
 import pace.cs389.team2.quickfitness.dialog.TimeDialogFragment;
 import pace.cs389.team2.quickfitness.model.WorkoutItem;
@@ -41,6 +39,8 @@ public class ActivityAddWorkout extends ActionBarActivity implements TimeDialogF
 
     private static EditText edtSetName;
     private static EditText edtSetTime;
+    private static EditText edtSetDaysOfWeek;
+    private static EditText edtSetWorkoutDuration;
 
 
     @Override
@@ -92,12 +92,20 @@ public class ActivityAddWorkout extends ActionBarActivity implements TimeDialogF
                     edtSetName.setError("Please, type workout name.");
                 } else if (TextUtils.isEmpty(edtSetTime.getText())) {
                     edtSetTime.setError("Please, set workout time.");
+                } else if (TextUtils.isEmpty(edtSetTime.getText())) {
+                    edtSetDaysOfWeek.setError("Please, set week days.");
+                } else if (TextUtils.isEmpty(edtSetTime.getText())) {
+                    edtSetWorkoutDuration.setError("Please, set workout duration.");
                 } else {
-                    WorkoutItem workoutItem = new WorkoutItem(edtSetName.getText().toString(), edtSetTime.getText().toString(), 1);
-                    QuickFitnessDAO.getInstance(getActivity().getApplicationContext()).insertWorkoutSet(workoutItem);
-                    getActivity().setResult(RESULT_OK);
-                    getActivity().finish();
-                    return true;
+                    WorkoutItem workoutItem = new WorkoutItem(edtSetName.getText().toString(), Integer.parseInt(edtSetDaysOfWeek.getText().toString()), Integer.parseInt(edtSetWorkoutDuration.getText().toString()), edtSetTime.getText().toString(), 1);
+                    long rowsInserted = QuickFitnessDAO.getInstance(getActivity().getApplicationContext()).insertWorkoutSet(workoutItem);
+
+                    if (rowsInserted == 1) {
+                        getActivity().setResult(RESULT_OK);
+                        getActivity().finish();
+                        return true;
+                    }
+
                 }
             }
 
@@ -117,6 +125,8 @@ public class ActivityAddWorkout extends ActionBarActivity implements TimeDialogF
             View rootView = inflater.inflate(R.layout.fragment_add_workout, container, false);
             edtSetName = (EditText) rootView.findViewById(R.id.edt_set_workout_name);
             edtSetTime = (EditText) rootView.findViewById(R.id.edt_set_workout_time);
+            edtSetDaysOfWeek = (EditText) rootView.findViewById(R.id.edt_set_workout_days);
+            edtSetWorkoutDuration = (EditText) rootView.findViewById(R.id.edt_set_workout_duration);
             edtSetTime.setFocusable(false);
 
             return rootView;
@@ -124,6 +134,5 @@ public class ActivityAddWorkout extends ActionBarActivity implements TimeDialogF
 
 
     }
-
 
 }

@@ -37,7 +37,7 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
 
     private static QuickFitnessDbHelper instance;
     public static final String DATABASE_NAME = "fitness.db";
-    private static final int DB_VERSION = 42;
+    private static final int DB_VERSION = 46;
     static Context mContext;
 
     //private static final String SQL_DROP_DATABASE = "DROP DATABASE " + DATABASE_NAME;
@@ -78,8 +78,8 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
             QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_NAME + " TEXT NOT NULL, " +
             QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_DESCRIPTION + " TEXT NOT NULL, " +
             QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_ICON + " INTEGER NOT NULL, " +
-            QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_SETS + " INTEGER NOT NULL, " +
-            QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_REPS + " INTEGER, " +
+            QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_LEVEL + " TEXT NOT NULL, " +
+            QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_DURATION + " INTEGER NOT NULL, " +
             QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_CALORIES + " INTEGER NOT NULL, " +
             QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_VIDEO + " TEXT NOT NULL, " +
             QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_CATEGORY_KEY + " INTEGER NOT NULL, " +
@@ -91,12 +91,17 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
             QuickFitnessContract.StatusEntry.COLUMN_STATUS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             QuickFitnessContract.StatusEntry.COLUMN_STATUS_NAME + " TEXT NOT NULL);";
 
+   /* private static final String SQL_CREATE_LEVEL_TABLE = "CREATE TABLE " + QuickFitnessContract.LevelEntry.TABLE_NAME + "(" +
+            QuickFitnessContract.LevelEntry.COLUMN_LEVEL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            QuickFitnessContract.LevelEntry.COLUMN_LEVEL_NAME + " TEXT NOT NULL);";*/
+
     private static final String SQL_CREATE_WORKOUT_SET_TABLE = "CREATE TABLE " + QuickFitnessContract.WorkoutSetEntry.TABLE_NAME + "(" +
             QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_NAME + " TEXT NOT NULL, " +
+            QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_DAYS_OF_WEEK + " INTEGER NOT NULL, " +
+            QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_DURATION + " INTEGER NOT NULL, " +
             QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_TIME + " TEXT NOT NULL, " +
             QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_STATUS_KEY + " INTEGER NOT NULL, " +
-
             " FOREIGN KEY (" + QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_STATUS_KEY + ") REFERENCES " +
             QuickFitnessContract.StatusEntry.TABLE_NAME + " (" + QuickFitnessContract.StatusEntry.COLUMN_STATUS_ID + "));";
 
@@ -160,43 +165,43 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
     private void exercisesBulkInsert(SQLiteDatabase db) {
 
         ExercisesItem weightLossCycling = new ExercisesItem(mContext.getResources().getString(R.string.weight_loss_exercise_title_cycling), mContext.getResources().getString(R.string.weight_loss_exercise_description_cycling),
-                R.drawable.cycling, mContext.getResources().getInteger(R.integer.weight_loss_exercise_sets_cycling), mContext.getResources().getInteger(R.integer.weight_loss_exercise_reps_cycling), mContext.getResources().getInteger(R.integer.weight_loss_exercise_calories_cycling), "video_path", 5);
+                R.drawable.cycling, mContext.getResources().getString(R.string.weight_loss_exercise_level_cycling), mContext.getResources().getInteger(R.integer.weight_loss_exercise_duration_cycling), mContext.getResources().getInteger(R.integer.weight_loss_exercise_calories_cycling), "video_path", 5);
 
         ExercisesItem weightLossTreadmillRounds = new ExercisesItem(mContext.getResources().getString(R.string.weight_loss_exercise_title_treadmill_rounds), mContext.getResources().getString(R.string.weight_loss_exercise_description_treadmill_rounds),
-                R.drawable.treadmill_rounds, mContext.getResources().getInteger(R.integer.weight_loss_exercise_sets_treadmill_rounds), mContext.getResources().getInteger(R.integer.weight_loss_exercise_reps_treadmill_rounds), mContext.getResources().getInteger(R.integer.weight_loss_exercise_calories_treadmill_rounds), "video_path", 5);
+                R.drawable.treadmill_rounds, mContext.getResources().getString(R.string.weight_loss_exercise_level_treadmill_rounds), mContext.getResources().getInteger(R.integer.weight_loss_exercise_duration_treadmill_rounds), mContext.getResources().getInteger(R.integer.weight_loss_exercise_calories_treadmill_rounds), "video_path", 5);
 
         ExercisesItem weightLossJumpRope = new ExercisesItem(mContext.getResources().getString(R.string.weight_loss_exercise_title_jumping_rope), mContext.getResources().getString(R.string.weight_loss_exercise_description_jumping_rope),
-                R.drawable.jumping_rope, mContext.getResources().getInteger(R.integer.weight_loss_exercise_sets_jumping_rope), mContext.getResources().getInteger(R.integer.weight_loss_exercise_reps_jumping_rope), mContext.getResources().getInteger(R.integer.weight_loss_exercise_calories_jumping_rope), "video_path", 5);
+                R.drawable.jumping_rope, mContext.getResources().getString(R.string.weight_loss_exercise_level_jumping_rope), mContext.getResources().getInteger(R.integer.weight_loss_exercise_duration_jumping_rope), mContext.getResources().getInteger(R.integer.weight_loss_exercise_calories_jumping_rope), "video_path", 5);
 
         ExercisesItem strengthGlobetSquat = new ExercisesItem(mContext.getResources().getString(R.string.strength_exercise_title_globet_squat), mContext.getResources().getString(R.string.strength_exercise_title_globet_squat),
-                R.drawable.globet_squat, mContext.getResources().getInteger(R.integer.strength_exercise_sets_globet_squat), mContext.getResources().getInteger(R.integer.strength_exercise_reps_globet_squat), mContext.getResources().getInteger(R.integer.strength_exercise_calories_globet_squat), "video_path", 4);
+                R.drawable.globet_squat, mContext.getResources().getString(R.string.strength_exercise_level_globet_squat), mContext.getResources().getInteger(R.integer.strength_exercise_duration_globet_squat), mContext.getResources().getInteger(R.integer.strength_exercise_calories_globet_squat), "video_path", 4);
 
         ExercisesItem strengthPallofPress = new ExercisesItem(mContext.getResources().getString(R.string.strength_exercise_title_pallof_press), mContext.getResources().getString(R.string.strength_exercise_description_pallof_press),
-                R.drawable.pallof_press, mContext.getResources().getInteger(R.integer.strength_exercise_sets_pallof_pres), mContext.getResources().getInteger(R.integer.strength_exercise_reps_pallof_pres), mContext.getResources().getInteger(R.integer.strength_exercise_calories_pallof_pres), "video_path", 4);
+                R.drawable.pallof_press, mContext.getResources().getString(R.string.strength_exercise_level_pallof_pres), mContext.getResources().getInteger(R.integer.strength_exercise_duration_pallof_pres), mContext.getResources().getInteger(R.integer.strength_exercise_calories_pallof_pres), "video_path", 4);
 
         ExercisesItem strengthDumbbellRow = new ExercisesItem(mContext.getResources().getString(R.string.strength_exercise_title_dumbbell_row), mContext.getResources().getString(R.string.strength_exercise_description_dumbbell_row),
-                R.drawable.dumbbell_row, mContext.getResources().getInteger(R.integer.strength_exercise_sets_dumbbell_row), mContext.getResources().getInteger(R.integer.strength_exercise_reps_dumbbell_row), mContext.getResources().getInteger(R.integer.strength_exercise_calories_dumbbell_row), "video_path", 4);
+                R.drawable.dumbbell_row, mContext.getResources().getString(R.string.strength_exercise_level_dumbbell_row), mContext.getResources().getInteger(R.integer.strength_exercise_duration_dumbbell_row), mContext.getResources().getInteger(R.integer.strength_exercise_calories_dumbbell_row), "video_path", 4);
 
         ExercisesItem cardioElliptical = new ExercisesItem(mContext.getResources().getString(R.string.cardio_exercise_title_elliptical), mContext.getResources().getString(R.string.cardio_exercise_description_elliptical),
-                R.drawable.elliptical, mContext.getResources().getInteger(R.integer.cardio_exercise_sets_elliptical), mContext.getResources().getInteger(R.integer.strength_exercise_reps_globet_squat), mContext.getResources().getInteger(R.integer.cardio_exercise_calories_elliptical), "video_path", 2);
+                R.drawable.elliptical, mContext.getResources().getString(R.string.cardio_exercise_level_elliptical), mContext.getResources().getInteger(R.integer.strength_exercise_duration_globet_squat), mContext.getResources().getInteger(R.integer.cardio_exercise_calories_elliptical), "video_path", 2);
 
         ExercisesItem cardioStationaryBike = new ExercisesItem(mContext.getResources().getString(R.string.cardio_exercise_title_stationary_bike), mContext.getResources().getString(R.string.cardio_exercise_description_stationary_bike),
-                R.drawable.stationary_bike, mContext.getResources().getInteger(R.integer.cardio_exercise_sets_stationary_bike), mContext.getResources().getInteger(R.integer.cardio_exercise_reps_stationary_bike), mContext.getResources().getInteger(R.integer.cardio_exercise_calories_stationary_bike), "video_path", 2);
+                R.drawable.stationary_bike, mContext.getResources().getString(R.string.cardio_exercise_level_stationary_bike), mContext.getResources().getInteger(R.integer.cardio_exercise_duration_stationary_bike), mContext.getResources().getInteger(R.integer.cardio_exercise_calories_stationary_bike), "video_path", 2);
 
         ExercisesItem cardioRowing = new ExercisesItem(mContext.getResources().getString(R.string.cardio_exercise_title_rowing), mContext.getResources().getString(R.string.cardio_exercise_description_rowing),
-                R.drawable.rowing_machines, mContext.getResources().getInteger(R.integer.cardio_exercise_sets_rowing), mContext.getResources().getInteger(R.integer.cardio_exercise_reps_rowing), mContext.getResources().getInteger(R.integer.cardio_exercise_calories_stationary_bike), "video_path", 2);
+                R.drawable.rowing_machines, mContext.getResources().getString(R.string.cardio_exercise_level_rowing), mContext.getResources().getInteger(R.integer.cardio_exercise_duration_rowing), mContext.getResources().getInteger(R.integer.cardio_exercise_calories_stationary_bike), "video_path", 2);
 
 
         ExercisesItem enduranceSwimmingLaps = new ExercisesItem(mContext.getResources().getString(R.string.endurance_exercise_title_swimming_laps), mContext.getResources().getString(R.string.endurance_exercise_description_swimming_laps),
-                R.drawable.swimming_laps, mContext.getResources().getInteger(R.integer.endurance_exercise_sets_swimming_laps), mContext.getResources().getInteger(R.integer.endurance_exercise_reps_swimming_laps), mContext.getResources().getInteger(R.integer.endurance_exercise_calories_swimming_laps), "video_path", 3);
+                R.drawable.swimming_laps, mContext.getResources().getString(R.string.endurance_exercise_level_swimming_laps), mContext.getResources().getInteger(R.integer.endurance_exercise_duration_swimming_laps), mContext.getResources().getInteger(R.integer.endurance_exercise_calories_swimming_laps), "video_path", 3);
 
 
         ExercisesItem enduranceStairMachine = new ExercisesItem(mContext.getResources().getString(R.string.endurance_exercise_title_stair_machines), mContext.getResources().getString(R.string.endurance_exercise_description_stair_machines),
-                R.drawable.stair_machine, mContext.getResources().getInteger(R.integer.endurance_exercise_sets_stair_machines), mContext.getResources().getInteger(R.integer.endurance_exercise_reps_stair_machines), mContext.getResources().getInteger(R.integer.endurance_exercise_calories_stair_machines), "video_path", 3);
+                R.drawable.stair_machine, mContext.getResources().getString(R.string.endurance_exercise_level_stair_machines), mContext.getResources().getInteger(R.integer.endurance_exercise_duration_stair_machines), mContext.getResources().getInteger(R.integer.endurance_exercise_calories_stair_machines), "video_path", 3);
 
 
         ExercisesItem endurancePushUps = new ExercisesItem(mContext.getResources().getString(R.string.endurance_exercise_title_push_ups), mContext.getResources().getString(R.string.endurance_exercise_description_push_ups),
-                R.drawable.push_ups, mContext.getResources().getInteger(R.integer.endurance_exercise_sets_push_ups), mContext.getResources().getInteger(R.integer.endurance_exercise_reps_push_ups), mContext.getResources().getInteger(R.integer.endurance_exercise_calories_push_ups), "video_path", 3);
+                R.drawable.push_ups, mContext.getResources().getString(R.string.endurance_exercise_level_push_ups), mContext.getResources().getInteger(R.integer.endurance_exercise_duration_push_ups), mContext.getResources().getInteger(R.integer.endurance_exercise_calories_push_ups), "video_path", 3);
 
 
         List<ExercisesItem> exercises = new ArrayList<>();
@@ -222,8 +227,8 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
             values.put(QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_NAME, exercises.get(i).getName());
             values.put(QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_DESCRIPTION, exercises.get(i).getDescription());
             values.put(QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_ICON, exercises.get(i).getIcon());
-            values.put(QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_SETS, exercises.get(i).getSets());
-            values.put(QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_REPS, exercises.get(i).getReps());
+            values.put(QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_LEVEL, exercises.get(i).getLevel());
+            values.put(QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_DURATION, exercises.get(i).getDuration());
             values.put(QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_CALORIES, exercises.get(i).getCalories());
             values.put(QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_VIDEO, exercises.get(i).getVideoAnimation());
             values.put(QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_CATEGORY_KEY, exercises.get(i).getCategoryKey());

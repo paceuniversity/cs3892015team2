@@ -19,6 +19,8 @@
 package pace.cs389.team2.quickfitness.adapter;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -47,6 +49,8 @@ public class CustomExercisesListAdapter extends RecyclerView.Adapter<CustomExerc
     ExercisesItem exercisesItem;
     private int lastPosition = -1;
     RecyclerView mRecyclerView;
+    static Bitmap exerciseIcon;
+    static Bitmap exerciseIconResized;
 
     public CustomExercisesListAdapter(List<ExercisesItem> exercisesList, RecyclerView mRecyclerView) {
         this.mRecyclerView = mRecyclerView;
@@ -85,7 +89,22 @@ public class CustomExercisesListAdapter extends RecyclerView.Adapter<CustomExerc
             exercisesViewHolder.mCardTopLayout.setBackgroundResource(R.color.background_list_item_gray);
         }
 
-        exercisesViewHolder.mImageExerciseTop.setImageResource(exercisesItem.getIcon());
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                exerciseIcon = BitmapFactory.decodeResource(itemView.getResources(), exercisesItem.getIcon());
+
+                exerciseIconResized = Bitmap.createScaledBitmap(exerciseIcon,
+                        100, 100, false);
+
+            }
+        }).start();
+
+        if (exerciseIconResized != null) {
+            exercisesViewHolder.mImageExerciseTop.setImageBitmap(exerciseIconResized);
+        }
+
         exercisesViewHolder.mExerciseTitle.setText(exercisesItem.getName());
 
         CategoryItem category = QuickFitnessDAO.getInstance(itemView.getContext()).categoryById(exercisesItem.getCategoryKey());

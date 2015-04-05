@@ -24,18 +24,24 @@ public class WorkoutItem implements Serializable {
 
     private int id;
     private String name;
+    private int workoutDays;
+    private int workoutDuration;
     private String time;
     private int statusKey;
 
-    public WorkoutItem(int id, String name, String time, int statusKey) {
+    public WorkoutItem(int id, String name, int workoutDays, int workoutDuration, String time, int statusKey) {
         this.id = id;
         this.name = name;
+        this.workoutDays = workoutDays;
+        this.workoutDuration = workoutDuration;
         this.time = time;
         this.statusKey = statusKey;
     }
 
-    public WorkoutItem(String name, String time, int statusKey) {
+    public WorkoutItem(String name, int workoutDays, int workoutDuration, String time, int statusKey) {
         this.name = name;
+        this.workoutDays = workoutDays;
+        this.workoutDuration = workoutDuration;
         this.time = time;
         this.statusKey = statusKey;
     }
@@ -60,15 +66,18 @@ public class WorkoutItem implements Serializable {
         return statusKey;
     }
 
-    public void setStatusKey(int statusKey) {
-        this.statusKey = statusKey;
-    }
 
     public String getTime() {
         return time;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public int getWorkoutDays() {
+        return workoutDays;
     }
+
+    public int getWorkoutDuration() {
+        return workoutDuration;
+    }
+
+
 }

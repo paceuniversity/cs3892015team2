@@ -51,6 +51,8 @@ public class QuickFitnessDAO {
 
     private static final String[] PROJECTION_TABLE_WORKOUT = {QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_ID,
             QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_NAME,
+            QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_DAYS_OF_WEEK,
+            QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_DURATION,
             QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_TIME,
             QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_STATUS_KEY
     };
@@ -59,8 +61,8 @@ public class QuickFitnessDAO {
             QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_NAME,
             QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_DESCRIPTION,
             QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_ICON,
-            QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_SETS,
-            QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_REPS,
+            QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_LEVEL,
+            QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_DURATION,
             QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_CALORIES,
             QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_VIDEO,
             QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_CATEGORY_KEY
@@ -142,7 +144,7 @@ public class QuickFitnessDAO {
         try {
             if (cursor.moveToFirst()) {
                 do {
-                    itemExercise = new ExercisesItem(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getInt(6), cursor.getString(7), cursor.getInt(8));
+                    itemExercise = new ExercisesItem(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getString(4), cursor.getInt(5), cursor.getInt(6), cursor.getString(7), cursor.getInt(8));
                     exercises.add(itemExercise);
                 } while (cursor.moveToNext());
             }
@@ -168,7 +170,7 @@ public class QuickFitnessDAO {
         try {
             if (cursor.moveToFirst()) {
                 do {
-                    itemExercise = new ExercisesItem(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getInt(6), cursor.getString(7), cursor.getInt(8));
+                    itemExercise = new ExercisesItem(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getString(4), cursor.getInt(5), cursor.getInt(6), cursor.getString(7), cursor.getInt(8));
                     exercises.add(itemExercise);
                 } while (cursor.moveToNext());
             }
@@ -193,7 +195,7 @@ public class QuickFitnessDAO {
         try {
             if (cursor.moveToFirst()) {
                 do {
-                    itemWorkout = new WorkoutItem(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3));
+                    itemWorkout = new WorkoutItem(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getInt(3), cursor.getString(4), cursor.getInt(5));
                     workouts.add(itemWorkout);
                 } while (cursor.moveToNext());
             }
@@ -233,13 +235,14 @@ public class QuickFitnessDAO {
 
     public long insertWorkoutSet(WorkoutItem mItemWorkout) {
         ContentValues values = new ContentValues();
+
         values.put(QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_NAME, mItemWorkout.getName());
+        values.put(QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_DAYS_OF_WEEK, mItemWorkout.getWorkoutDays());
+        values.put(QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_DURATION, mItemWorkout.getWorkoutDuration());
         values.put(QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_TIME, mItemWorkout.getTime());
         values.put(QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_STATUS_KEY, mItemWorkout.getStatusKey());
 
-        long rowInserted = sqLiteDatabase.insert(QuickFitnessContract.WorkoutSetEntry.TABLE_NAME, null, values);
-
-        return rowInserted;
+        return sqLiteDatabase.insert(QuickFitnessContract.WorkoutSetEntry.TABLE_NAME, null, values);
     }
 
 }
