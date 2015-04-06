@@ -18,6 +18,7 @@
 
 package pace.cs389.team2.quickfitness.adapter;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -51,10 +52,12 @@ public class CustomExercisesListAdapter extends RecyclerView.Adapter<CustomExerc
     RecyclerView mRecyclerView;
     static Bitmap exerciseIcon;
     static Bitmap exerciseIconResized;
+    private Activity mActivity;
 
-    public CustomExercisesListAdapter(List<ExercisesItem> exercisesList, RecyclerView mRecyclerView) {
+    public CustomExercisesListAdapter(Activity mActivity, List<ExercisesItem> exercisesList, RecyclerView mRecyclerView) {
         this.mRecyclerView = mRecyclerView;
         this.mExercisesList = exercisesList;
+        this.mActivity = mActivity;
     }
 
     @Override
@@ -89,21 +92,16 @@ public class CustomExercisesListAdapter extends RecyclerView.Adapter<CustomExerc
             exercisesViewHolder.mCardTopLayout.setBackgroundResource(R.color.background_list_item_gray);
         }
 
+        exerciseIcon = BitmapFactory.decodeResource(itemView.getResources(), exercisesItem.getIcon());
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                exerciseIcon = BitmapFactory.decodeResource(itemView.getResources(), exercisesItem.getIcon());
+        exerciseIconResized = Bitmap.createScaledBitmap(exerciseIcon,
+                100, 100, false);
 
-                exerciseIconResized = Bitmap.createScaledBitmap(exerciseIcon,
-                        100, 100, false);
-
-            }
-        }).start();
 
         if (exerciseIconResized != null) {
             exercisesViewHolder.mImageExerciseTop.setImageBitmap(exerciseIconResized);
         }
+
 
         exercisesViewHolder.mExerciseTitle.setText(exercisesItem.getName());
 

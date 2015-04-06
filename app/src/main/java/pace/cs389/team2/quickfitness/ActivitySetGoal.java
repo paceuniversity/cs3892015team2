@@ -181,7 +181,7 @@ public class ActivitySetGoal extends ActionBarActivity {
 
 
         private void setListExercisesAdapter(List<ExercisesItem> mListAdapter) {
-            mExercisesAdapter = new CustomExercisesListAdapter(mListAdapter, mRecyclerView);
+            mExercisesAdapter = new CustomExercisesListAdapter(getActivity(), mListAdapter, mRecyclerView);
             mRecyclerView.setAdapter(mExercisesAdapter);
 
         }

@@ -18,6 +18,8 @@
 
 package pace.cs389.team2.quickfitness;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -29,6 +31,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.NumberPicker;
+import android.widget.TextView;
 
 import pace.cs389.team2.quickfitness.data.QuickFitnessDAO;
 import pace.cs389.team2.quickfitness.dialog.TimeDialogFragment;
@@ -41,7 +45,6 @@ public class ActivityAddWorkout extends ActionBarActivity implements TimeDialogF
     private static EditText edtSetTime;
     private static EditText edtSetDaysOfWeek;
     private static EditText edtSetWorkoutDuration;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +64,61 @@ public class ActivityAddWorkout extends ActionBarActivity implements TimeDialogF
         TimeDialogFragment timeDialogFragment = new TimeDialogFragment();
         timeDialogFragment.show(getFragmentManager(), "set_time_fragment");
     }
+
+    public void promptSetDaysDialog(View view) {
+
+        buildNumberPickerDialog("Number of days", "Set number of days", 1, 7);
+    }
+
+    public void promptSetDurationDialog(View view) {
+
+        buildNumberPickerDialog("Workout duration", "Set workout duration.", 10, 45);
+    }
+
+    public void buildNumberPickerDialog(String dialogTitle, String dialogDesc, int minValue, int maxValue) {
+
+        final AlertDialog.Builder mNumberPickerDialog = new AlertDialog.Builder(this);
+
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+
+        View mView = inflater.inflate(R.layout.numberpicker_dialog_adapter, null);
+
+        mNumberPickerDialog.setTitle(dialogTitle);
+
+        mNumberPickerDialog.setView(mView);
+
+        TextView mTextDialogDesc = (TextView) mView.findViewById(R.id.txt_number_picker_desc);
+        final NumberPicker mNumberPicker = (NumberPicker) mView.findViewById(R.id.numberPicker);
+
+        mTextDialogDesc.setText(dialogDesc);
+
+        mNumberPicker.setMaxValue(maxValue);
+        mNumberPicker.setMinValue(minValue);
+        mNumberPicker.setWrapSelectorWheel(false);
+
+        mNumberPickerDialog.setPositiveButton("Set", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (mNumberPicker.getMinValue() == 1 && mNumberPicker.getMaxValue() == 7) {
+                    edtSetDaysOfWeek.setText(String.valueOf(mNumberPicker.getValue()));
+
+                } else {
+                    edtSetWorkoutDuration.setText(String.valueOf(mNumberPicker.getValue()));
+                }
+
+                dialog.dismiss();
+            }
+        });
+
+        mNumberPickerDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        mNumberPickerDialog.show();
+    }
+
 
     @Override
     public void onSetTimeChanged(String time) {
@@ -127,7 +185,10 @@ public class ActivityAddWorkout extends ActionBarActivity implements TimeDialogF
             edtSetTime = (EditText) rootView.findViewById(R.id.edt_set_workout_time);
             edtSetDaysOfWeek = (EditText) rootView.findViewById(R.id.edt_set_workout_days);
             edtSetWorkoutDuration = (EditText) rootView.findViewById(R.id.edt_set_workout_duration);
+
             edtSetTime.setFocusable(false);
+            edtSetDaysOfWeek.setFocusable(false);
+            edtSetWorkoutDuration.setFocusable(false);
 
             return rootView;
         }
