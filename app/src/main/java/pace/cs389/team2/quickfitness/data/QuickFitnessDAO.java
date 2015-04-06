@@ -87,7 +87,7 @@ public class QuickFitnessDAO {
         List<CategoryItem> categories = new ArrayList<>();
 
         Cursor cursor = sqLiteDatabase.query(QuickFitnessContract.ExerciseCategoryEntry.TABLE_NAME, PROJECTION,
-                null, null, null, null, QuickFitnessContract.ExerciseCategoryEntry.COLUMN_CATEGORY_NAME);
+                null, null, null, null, null);
 
         CategoryItem itemCategory;
         try {

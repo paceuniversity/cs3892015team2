@@ -31,11 +31,11 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="greetings">Hi! Welcome to Quickfitness</string>
 
-    <string name="category_all">All Categories</string>
-    <string name="category_cardio">Cardio</string>
-    <string name="category_endurance">Endurance</string>
-    <string name="category_strength">Strength</string>
-    <string name="category_weight_loss">Weight Loss</string>
+    <string name="category_all">Select a Goal</string>
+    <string name="category_cardio">Improve Cardio</string>
+    <string name="category_endurance">Improve Endurance</string>
+    <string name="category_strength">Increase Strength</string>
+    <string name="category_weight_loss">Lose Weight</string>
 
 
     <string name="workout_status_start">Start</string>
