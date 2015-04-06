@@ -23,9 +23,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
+import pace.cs389.team2.quickfitness.ActivityWorkoutsList;
 import pace.cs389.team2.quickfitness.R;
 import pace.cs389.team2.quickfitness.data.QuickFitnessDAO;
 import pace.cs389.team2.quickfitness.model.WorkoutItem;
@@ -84,11 +86,15 @@ public class CustomWorkoutsListAdapter extends RecyclerView.Adapter<CustomWorkou
 
     @Override
     public void onClick(final View view) {
-      /*  int itemPosition = mRecyclerView.getChildPosition(view);
+        int itemPosition = mRecyclerView.getChildPosition(view);
         WorkoutItem mItem = mWorkoutList.get(itemPosition);
-        Intent intent = new Intent(itemView.getContext(), ActivityExerciseDetails.class);
+/*        Intent intent = new Intent(itemView.getContext(), ActivityExerciseDetails.class);
         intent.putExtra(EXERCISE_TAG, mItem);
         itemView.getContext().startActivity(intent);*/
+        ActivityWorkoutsList activityWorkoutsList = new ActivityWorkoutsList();
+        activityWorkoutsList.setWorkoutId(mItem.getId());
+
+        Toast.makeText(itemView.getContext(), "Id: " + activityWorkoutsList.getWorkoutId(), Toast.LENGTH_LONG).show();
 
     }
 }

@@ -29,10 +29,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import pace.cs389.team2.quickfitness.adapter.CustomExercisesListAdapter;
 import pace.cs389.team2.quickfitness.data.QuickFitnessDAO;
+import pace.cs389.team2.quickfitness.dialog.WorkoutsListDialog;
 import pace.cs389.team2.quickfitness.model.CategoryItem;
 import pace.cs389.team2.quickfitness.model.ExercisesItem;
 import pace.cs389.team2.quickfitness.utils.OrientationUtils;
@@ -68,7 +68,9 @@ public class ActivityExerciseDetails extends ActionBarActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_add_exercise) {
-            Toast.makeText(this, "Clicked at Do Exercise", Toast.LENGTH_LONG).show();
+            WorkoutsListDialog workoutsListDialog = new WorkoutsListDialog();
+            workoutsListDialog.setmExerciseId(mExerciseItem.getId());
+            workoutsListDialog.show(getFragmentManager(), "workouts_list");
             return true;
         }
 

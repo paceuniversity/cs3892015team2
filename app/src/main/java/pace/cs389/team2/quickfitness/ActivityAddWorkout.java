@@ -156,13 +156,11 @@ public class ActivityAddWorkout extends ActionBarActivity implements TimeDialogF
                     edtSetWorkoutDuration.setError("Please, set workout duration.");
                 } else {
                     WorkoutItem workoutItem = new WorkoutItem(edtSetName.getText().toString(), Integer.parseInt(edtSetDaysOfWeek.getText().toString()), Integer.parseInt(edtSetWorkoutDuration.getText().toString()), edtSetTime.getText().toString(), 1);
-                    long rowsInserted = QuickFitnessDAO.getInstance(getActivity().getApplicationContext()).insertWorkoutSet(workoutItem);
+                    QuickFitnessDAO.getInstance(getActivity().getApplicationContext()).insertWorkoutSet(workoutItem);
 
-                    if (rowsInserted == 1) {
-                        getActivity().setResult(RESULT_OK);
-                        getActivity().finish();
-                        return true;
-                    }
+                    getActivity().setResult(RESULT_OK);
+                    getActivity().finish();
+                    return true;
 
                 }
             }

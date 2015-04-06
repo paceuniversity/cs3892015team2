@@ -233,7 +233,7 @@ public class QuickFitnessDAO {
         return itemStatus;
     }
 
-    public long insertWorkoutSet(WorkoutItem mItemWorkout) {
+    public void insertWorkoutSet(WorkoutItem mItemWorkout) {
         ContentValues values = new ContentValues();
 
         values.put(QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_NAME, mItemWorkout.getName());
@@ -242,7 +242,7 @@ public class QuickFitnessDAO {
         values.put(QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_TIME, mItemWorkout.getTime());
         values.put(QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_STATUS_KEY, mItemWorkout.getStatusKey());
 
-        return sqLiteDatabase.insert(QuickFitnessContract.WorkoutSetEntry.TABLE_NAME, null, values);
+        sqLiteDatabase.insert(QuickFitnessContract.WorkoutSetEntry.TABLE_NAME, null, values);
     }
 
 }

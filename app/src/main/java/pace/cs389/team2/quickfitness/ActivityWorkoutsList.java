@@ -38,6 +38,17 @@ import pace.cs389.team2.quickfitness.model.WorkoutItem;
 
 public class ActivityWorkoutsList extends ActionBarActivity {
 
+    private int workoutId;
+
+    public int getWorkoutId() {
+        return workoutId;
+    }
+
+    public void setWorkoutId(int workoutId) {
+        this.workoutId = workoutId;
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +57,7 @@ public class ActivityWorkoutsList extends ActionBarActivity {
         if (savedInstanceState != null) {
             getFragmentManager().beginTransaction().replace(R.id.content_place_holder, new FragmentWorkouts()).commit();
         }
+
     }
 
     public static class FragmentWorkouts extends Fragment implements View.OnClickListener {
@@ -59,6 +71,7 @@ public class ActivityWorkoutsList extends ActionBarActivity {
 
         public FragmentWorkouts() {
         }
+
 
         @Override
         public void onActivityResult(int requestCode, int resultCode, Intent data) {

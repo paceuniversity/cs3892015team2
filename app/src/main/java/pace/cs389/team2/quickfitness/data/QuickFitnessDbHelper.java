@@ -37,7 +37,7 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
 
     private static QuickFitnessDbHelper instance;
     public static final String DATABASE_NAME = "fitness.db";
-    private static final int DB_VERSION = 48;
+    private static final int DB_VERSION = 49;
     static Context mContext;
 
     //private static final String SQL_DROP_DATABASE = "DROP DATABASE " + DATABASE_NAME;
