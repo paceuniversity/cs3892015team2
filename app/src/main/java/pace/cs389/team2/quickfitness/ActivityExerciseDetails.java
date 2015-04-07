@@ -71,6 +71,7 @@ public class ActivityExerciseDetails extends ActionBarActivity {
             WorkoutsListDialog workoutsListDialog = new WorkoutsListDialog();
             workoutsListDialog.setmExerciseId(mExerciseItem.getId());
             workoutsListDialog.show(getFragmentManager(), "workouts_list");
+
             return true;
         }
 

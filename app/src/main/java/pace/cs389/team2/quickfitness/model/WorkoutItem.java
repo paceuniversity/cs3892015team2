@@ -46,6 +46,10 @@ public class WorkoutItem implements Serializable {
         this.statusKey = statusKey;
     }
 
+    public WorkoutItem(String name) {
+        this.name = name;
+    }
+
     public int getId() {
         return id;
     }

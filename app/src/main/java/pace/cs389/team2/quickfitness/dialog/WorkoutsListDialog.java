@@ -23,22 +23,32 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.ContextThemeWrapper;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import pace.cs389.team2.quickfitness.data.QuickFitnessDAO;
+import pace.cs389.team2.quickfitness.model.WorkoutExercisesItem;
 import pace.cs389.team2.quickfitness.model.WorkoutItem;
 
 public class WorkoutsListDialog extends DialogFragment implements
         DialogInterface.OnClickListener {
 
-    private WorkoutItem workoutItem;
-    private List<WorkoutItem> workoutItemList;
-    List<String> listAdapter;
+    WorkoutItem workoutItem;
+    List<WorkoutItem> workoutItemList;
     private int mExerciseId;
+    ArrayAdapter<CharSequence> adapter;
+    private int mWorkoutId;
+
+    public int getmWorkoutId() {
+        return mWorkoutId;
+    }
+
+    public void setmWorkoutId(int mWorkoutId) {
+        this.mWorkoutId = mWorkoutId;
+    }
 
     public int getmExerciseId() {
         return mExerciseId;
@@ -52,30 +62,46 @@ public class WorkoutsListDialog extends DialogFragment implements
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         workoutItemList = QuickFitnessDAO.getInstance(getActivity()).listWorkouts();
-        listAdapter = new ArrayList<>();
+
+        adapter = new ArrayAdapter<>(getActivity(), android.R.layout.select_dialog_singlechoice);
 
         for (int i = 0; i < workoutItemList.size(); i++) {
-            listAdapter.add(workoutItemList.get(i).getName());
+            adapter.add(workoutItemList.get(i).getName());
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, listAdapter);
+        ContextThemeWrapper context = new ContextThemeWrapper(getActivity(), android.R.style.Theme_DeviceDefault_Light_DarkActionBar);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
         builder.setTitle("Select workout: ");
 
         builder.setSingleChoiceItems(adapter, -1, this);
+        builder.setPositiveButton("Choose", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog,
+                                int whichButton) {
+                WorkoutExercisesItem mItem = new WorkoutExercisesItem(getmWorkoutId(), getmExerciseId());
+                QuickFitnessDAO.getInstance(getActivity()).insertExerciseWorkout(mItem);
+                Toast.makeText(getActivity(), "Exercise added to workout.", Toast.LENGTH_LONG).show();
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
 
         return builder.create();
     }
 
     @Override
     public void onClick(DialogInterface dialog, int which) {
+        workoutItem = new WorkoutItem((String) adapter.getItem(which));
+        int mWorkoutId = QuickFitnessDAO.getInstance(getActivity()).workoutId(workoutItem).getId();
 
-        String workout = listAdapter.get(which);
-
-        Toast.makeText(getActivity(), "Workout id: " + workout + " - Exercise id: " + getmExerciseId(), Toast.LENGTH_LONG).show();
-
-        dialog.dismiss();
+        setmWorkoutId(mWorkoutId);
     }
 
 }

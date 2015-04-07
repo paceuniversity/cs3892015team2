@@ -25,24 +25,25 @@
     tools:context="pace.cs389.team2.quickfitness.ActivityAddWorkout$PlaceholderFragment">
 
     <TextView
-        android:text="Create Workout"
-        android:textSize="23sp"
+        android:text="Create a new workout"
+        android:textSize="25sp"
         android:fontFamily="sans-serif-condensed"
-        android:background="@color/material_blue_grey"
+        android:background="@color/material_blue_500"
         android:layout_width="match_parent"
         android:textColor="@color/background_white"
         android:gravity="bottom"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:paddingBottom="5dp"
-        android:layout_height="60dp" />
+        android:layout_height="140dp" />
 
     <EditText
         android:id="@+id/edt_set_workout_name"
+        android:textColorHint="@color/text_color_lighter_grey"
         android:layout_marginTop="20dp"
         android:inputType="textCapWords"
         android:layout_marginStart="10dp"
-        android:hint="Name"
+        android:hint="Workout Name"
         android:fontFamily="sans-serif-condensed"
         android:textSize="20sp"
         android:layout_marginEnd="10dp"
@@ -58,10 +59,10 @@
             android:id="@+id/edt_set_workout_days"
             android:layout_marginTop="20dp"
             android:layout_marginStart="10dp"
+            android:textColorHint="@color/text_color_lighter_grey"
             android:hint="Times per week"
             android:fontFamily="sans-serif-condensed"
             android:textSize="20sp"
-            android:gravity="center"
             android:onClick="promptSetDaysDialog"
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
@@ -75,8 +76,8 @@
             android:hint="Duration"
             android:fontFamily="sans-serif-condensed"
             android:textSize="20sp"
-            android:gravity="center"
             android:layout_weight="1"
+            android:textColorHint="@color/text_color_lighter_grey"
             android:onClick="promptSetDurationDialog"
             android:layout_marginEnd="10dp"
             android:layout_width="0dp"
@@ -88,6 +89,7 @@
     <EditText
         android:id="@+id/edt_set_workout_time"
         android:layout_marginTop="20dp"
+        android:textColorHint="@color/text_color_lighter_grey"
         android:layout_marginStart="10dp"
         android:hint="Set Time"
         android:fontFamily="sans-serif-condensed"
@@ -96,5 +98,4 @@
         android:layout_marginEnd="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
 </LinearLayout>

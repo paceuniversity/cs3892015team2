@@ -31,6 +31,7 @@ import java.util.List;
 import pace.cs389.team2.quickfitness.MainActivity;
 import pace.cs389.team2.quickfitness.model.CategoryItem;
 import pace.cs389.team2.quickfitness.model.ExercisesItem;
+import pace.cs389.team2.quickfitness.model.WorkoutExercisesItem;
 import pace.cs389.team2.quickfitness.model.WorkoutItem;
 import pace.cs389.team2.quickfitness.model.WorkoutStatusItem;
 
@@ -47,6 +48,10 @@ public class QuickFitnessDAO {
 
     private static final String[] PROJECTION_TABLE_STATUS = {QuickFitnessContract.StatusEntry.COLUMN_STATUS_ID,
             QuickFitnessContract.StatusEntry.COLUMN_STATUS_NAME
+    };
+
+    private static final String[] PROJECTION_TABLE_WORKOUT_X_EXERCISES = {QuickFitnessContract.WorkoutExerciseEntry.COLUMN_WORKOUT_KEY,
+            QuickFitnessContract.WorkoutExerciseEntry.COLUMN_EXERCISE_KEY
     };
 
     private static final String[] PROJECTION_TABLE_WORKOUT = {QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_ID,
@@ -185,6 +190,30 @@ public class QuickFitnessDAO {
         return exercises;
     }
 
+    public WorkoutItem workoutId(WorkoutItem workoutItem) {
+
+        Cursor cursor = sqLiteDatabase.query(QuickFitnessContract.WorkoutSetEntry.TABLE_NAME, PROJECTION_TABLE_WORKOUT,
+                QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_NAME + " = ?", new String[]{workoutItem.getName()}, null, null, QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_NAME);
+
+        WorkoutItem itemWorkout = null;
+
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    itemWorkout = new WorkoutItem(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getInt(3), cursor.getString(4), cursor.getInt(5));
+                } while (cursor.moveToNext());
+            }
+        } catch (SQLiteDatabaseLockedException exception) {
+            Log.e(MainActivity.APP_TAG, exception.getMessage());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        return itemWorkout;
+    }
+
     public List<WorkoutItem> listWorkouts() {
         List<WorkoutItem> workouts = new ArrayList<>();
 
@@ -208,6 +237,33 @@ public class QuickFitnessDAO {
         }
 
         return workouts;
+    }
+
+
+    public List<WorkoutExercisesItem> listExercisesByWorkout() {
+        List<WorkoutExercisesItem> mExercisesByWorkout = new ArrayList<>();
+
+        Cursor cursor = sqLiteDatabase.query(QuickFitnessContract.WorkoutExerciseEntry.TABLE_NAME, PROJECTION_TABLE_WORKOUT_X_EXERCISES,
+                null, null, null, null, null);
+
+        WorkoutExercisesItem mWorkoutExerciseitem;
+
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    mWorkoutExerciseitem = new WorkoutExercisesItem(cursor.getInt(0), cursor.getInt(1));
+                    mExercisesByWorkout.add(mWorkoutExerciseitem);
+                } while (cursor.moveToNext());
+            }
+        } catch (SQLiteDatabaseLockedException exception) {
+            Log.e(MainActivity.APP_TAG, exception.getMessage());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        return mExercisesByWorkout;
     }
 
     public WorkoutStatusItem statusById(int id) {
@@ -243,6 +299,15 @@ public class QuickFitnessDAO {
         values.put(QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_STATUS_KEY, mItemWorkout.getStatusKey());
 
         sqLiteDatabase.insert(QuickFitnessContract.WorkoutSetEntry.TABLE_NAME, null, values);
+    }
+
+    public void insertExerciseWorkout(WorkoutExercisesItem workoutExercisesItem) {
+        ContentValues values = new ContentValues();
+
+        values.put(QuickFitnessContract.WorkoutExerciseEntry.COLUMN_WORKOUT_KEY, workoutExercisesItem.getWorkoutId());
+        values.put(QuickFitnessContract.WorkoutExerciseEntry.COLUMN_EXERCISE_KEY, workoutExercisesItem.getExerciseId());
+
+        sqLiteDatabase.insert(QuickFitnessContract.WorkoutExerciseEntry.TABLE_NAME, null, values);
     }
 
 }
