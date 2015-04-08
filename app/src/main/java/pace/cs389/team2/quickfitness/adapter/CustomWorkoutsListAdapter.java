@@ -18,16 +18,17 @@
 
 package pace.cs389.team2.quickfitness.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
-import pace.cs389.team2.quickfitness.ActivityWorkoutsList;
+import pace.cs389.team2.quickfitness.ActivityExercisesByWorkoutList;
 import pace.cs389.team2.quickfitness.R;
 import pace.cs389.team2.quickfitness.data.QuickFitnessDAO;
 import pace.cs389.team2.quickfitness.model.WorkoutItem;
@@ -40,8 +41,10 @@ public class CustomWorkoutsListAdapter extends RecyclerView.Adapter<CustomWorkou
     View itemView;
     WorkoutItem mWorkoutItem;
     RecyclerView mRecyclerView;
+    private Context mContext;
 
-    public CustomWorkoutsListAdapter(List<WorkoutItem> mWorkoutList, RecyclerView mRecyclerView) {
+    public CustomWorkoutsListAdapter(Context mContext, List<WorkoutItem> mWorkoutList, RecyclerView mRecyclerView) {
+        this.mContext = mContext;
         this.mRecyclerView = mRecyclerView;
         this.mWorkoutList = mWorkoutList;
     }
@@ -69,6 +72,7 @@ public class CustomWorkoutsListAdapter extends RecyclerView.Adapter<CustomWorkou
 
         workoutsViewHolder.mWorkoutTitle.setText(mWorkoutItem.getName());
         workoutsViewHolder.mWorkoutStatus.setText(itemStatus.getStatus());
+
     }
 
 
@@ -80,7 +84,6 @@ public class CustomWorkoutsListAdapter extends RecyclerView.Adapter<CustomWorkou
             super(v);
             mWorkoutTitle = (TextView) v.findViewById(R.id.txt_workout_name);
             mWorkoutStatus = (TextView) v.findViewById(R.id.txt_workout_status);
-
         }
     }
 
@@ -88,13 +91,8 @@ public class CustomWorkoutsListAdapter extends RecyclerView.Adapter<CustomWorkou
     public void onClick(final View view) {
         int itemPosition = mRecyclerView.getChildPosition(view);
         WorkoutItem mItem = mWorkoutList.get(itemPosition);
-/*        Intent intent = new Intent(itemView.getContext(), ActivityExerciseDetails.class);
-        intent.putExtra(EXERCISE_TAG, mItem);
-        itemView.getContext().startActivity(intent);*/
-        ActivityWorkoutsList activityWorkoutsList = new ActivityWorkoutsList();
-        activityWorkoutsList.setWorkoutId(mItem.getId());
-
-        Toast.makeText(itemView.getContext(), "Id: " + activityWorkoutsList.getWorkoutId(), Toast.LENGTH_LONG).show();
-
+        Intent intent = new Intent(mContext, ActivityExercisesByWorkoutList.class);
+        intent.putExtra(CustomWorkoutsListAdapter.EXERCISE_TAG, mItem);
+        mContext.startActivity(intent);
     }
 }

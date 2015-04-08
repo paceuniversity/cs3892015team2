@@ -39,6 +39,11 @@
             android:name=".ActivityStatistics"
             android:label="@string/title_activity_activity_statistics" />
 
+        <activity
+            android:name=".ActivityExercisesByWorkoutList"
+            android:parentActivityName=".ActivityWorkoutsList"
+            android:label="@string/exercises_by_workout_label" />
+
     </application>
 
 </manifest>

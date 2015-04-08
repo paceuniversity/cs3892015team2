@@ -145,7 +145,7 @@ public class ActivityExerciseDetails extends ActionBarActivity {
                 mExerciseDescription.setText(mExerciseItem.getDescription());
                 mExerciseCategory.setText(categoryItem.getName());
                 mExerciseLevel.setText(mExerciseItem.getLevel());
-                mExerciseDuration.setText(String.valueOf(mExerciseItem.getDuration()));
+                mExerciseDuration.setText(String.valueOf(mExerciseItem.getDuration()) + " minutes");
                 mExerciseCalories.setText(String.valueOf(mExerciseItem.getCalories()) + "g");
             } else {
                 mExerciseVideo = (TextView) mView.findViewById(R.id.txt_video_placeholder);

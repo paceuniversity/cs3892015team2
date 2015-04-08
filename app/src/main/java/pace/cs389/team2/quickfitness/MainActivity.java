@@ -157,10 +157,10 @@ public class MainActivity extends ActionBarActivity {
                 break;
             case 3:
                 fragment = new FragmentMainContent();
-                args.putString(FragmentMainContent.ITEM_NAME, mDataList.get(position)
+              /*  args.putString(FragmentMainContent.ITEM_NAME, mDataList.get(position)
                         .getmNameItem());
                 args.putInt(FragmentMainContent.IMAGE_RESOURCE_ID, mDataList
-                        .get(position).getmIconRes());
+                        .get(position).getmIconRes());*/
                 break;
             case 4:
                 fragment = new ActivityStatistics.StatisticsFragment();

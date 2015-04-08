@@ -122,7 +122,7 @@ public class ActivityWorkoutsList extends ActionBarActivity {
             } else {
                 mListEmpty.setVisibility(View.GONE);
                 mRecyclerView.setVisibility(View.VISIBLE);
-                mWorkoutsAdapter = new CustomWorkoutsListAdapter(mListAdapter, mRecyclerView);
+                mWorkoutsAdapter = new CustomWorkoutsListAdapter(getActivity(), mListAdapter, mRecyclerView);
                 mRecyclerView.setAdapter(mWorkoutsAdapter);
             }
 
