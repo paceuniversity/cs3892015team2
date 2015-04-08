@@ -88,6 +88,18 @@ public class QuickFitnessDAO {
         sqLiteDatabase = helper.getWritableDatabase();
     }
 
+    public void insertWorkoutSet(WorkoutItem mItemWorkout) {
+        ContentValues values = new ContentValues();
+
+        values.put(QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_NAME, mItemWorkout.getName());
+        values.put(QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_DAYS_OF_WEEK, mItemWorkout.getWorkoutDays());
+        values.put(QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_DURATION, mItemWorkout.getWorkoutDuration());
+        values.put(QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_TIME, mItemWorkout.getTime());
+        values.put(QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_STATUS_KEY, mItemWorkout.getStatusKey());
+
+        sqLiteDatabase.insert(QuickFitnessContract.WorkoutSetEntry.TABLE_NAME, null, values);
+    }
+
     public List<CategoryItem> listExercisesCategories() {
         List<CategoryItem> categories = new ArrayList<>();
 
@@ -164,7 +176,7 @@ public class QuickFitnessDAO {
         return exercises;
     }
 
-    public ExercisesItem exercisesById(int id) {
+   /* public ExercisesItem exercisesById(int id) {
 
         Cursor cursor = sqLiteDatabase.query(QuickFitnessContract.ExerciseEntry.TABLE_NAME, PROJECTION_TABLE_EXERCISE,
                 QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_ID + " = ?", new String[]{String.valueOf(id)}, null, null, QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_NAME);
@@ -186,7 +198,7 @@ public class QuickFitnessDAO {
 
         return itemExercise;
     }
-
+*/
 
     public List<ExercisesItem> listExercises() {
         List<ExercisesItem> exercises = new ArrayList<>();
@@ -239,33 +251,6 @@ public class QuickFitnessDAO {
 
         return exercises;
     }
-
-
-   /* public List<WorkoutExercisesItem> listExercisesByWorkout(int workoutId) {
-        List<WorkoutExercisesItem> exercisesIds = new ArrayList<>();
-
-        Cursor cursor = sqLiteDatabase.query(QuickFitnessContract.WorkoutExerciseEntry.TABLE_NAME, PROJECTION_TABLE_WORKOUT_X_EXERCISES,
-                QuickFitnessContract.WorkoutExerciseEntry.COLUMN_WORKOUT_KEY + " = ? ", new String[]{String.valueOf(workoutId)}, null, null, null);
-
-        WorkoutExercisesItem workoutExercisesItem;
-
-        try {
-            if (cursor.moveToFirst()) {
-                do {
-                    workoutExercisesItem = new WorkoutExercisesItem(cursor.getInt(0), cursor.getInt(1));
-                    exercisesIds.add(workoutExercisesItem);
-                } while (cursor.moveToNext());
-            }
-        } catch (SQLiteDatabaseLockedException exception) {
-            Log.e(MainActivity.APP_TAG, exception.getMessage());
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
-
-        return exercisesIds;
-    }*/
 
     public WorkoutItem workoutId(WorkoutItem workoutItem) {
 
@@ -339,18 +324,6 @@ public class QuickFitnessDAO {
         return itemStatus;
     }
 
-    public void insertWorkoutSet(WorkoutItem mItemWorkout) {
-        ContentValues values = new ContentValues();
-
-        values.put(QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_NAME, mItemWorkout.getName());
-        values.put(QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_DAYS_OF_WEEK, mItemWorkout.getWorkoutDays());
-        values.put(QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_DURATION, mItemWorkout.getWorkoutDuration());
-        values.put(QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_TIME, mItemWorkout.getTime());
-        values.put(QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_STATUS_KEY, mItemWorkout.getStatusKey());
-
-        sqLiteDatabase.insert(QuickFitnessContract.WorkoutSetEntry.TABLE_NAME, null, values);
-    }
-
     public void insertExerciseWorkout(WorkoutExercisesItem workoutExercisesItem) {
         ContentValues values = new ContentValues();
 
@@ -358,6 +331,32 @@ public class QuickFitnessDAO {
         values.put(QuickFitnessContract.WorkoutExerciseEntry.COLUMN_EXERCISE_KEY, workoutExercisesItem.getExerciseId());
 
         sqLiteDatabase.insert(QuickFitnessContract.WorkoutExerciseEntry.TABLE_NAME, null, values);
+    }
+
+
+    public List<WorkoutExercisesItem> listExercisesByWorkout() {
+        List<WorkoutExercisesItem> workouts = new ArrayList<>();
+
+        Cursor cursor = sqLiteDatabase.query(QuickFitnessContract.WorkoutExerciseEntry.TABLE_NAME, PROJECTION_TABLE_WORKOUT_X_EXERCISES,
+                null, null, null, null, null);
+        WorkoutExercisesItem workoutExercisesItem;
+
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    workoutExercisesItem = new WorkoutExercisesItem(cursor.getInt(0), cursor.getInt(1));
+                    workouts.add(workoutExercisesItem);
+                } while (cursor.moveToNext());
+            }
+        } catch (SQLiteDatabaseLockedException exception) {
+            Log.e(MainActivity.APP_TAG, exception.getMessage());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        return workouts;
     }
 
 }

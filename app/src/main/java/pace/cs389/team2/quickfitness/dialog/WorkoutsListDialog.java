@@ -77,21 +77,36 @@ public class WorkoutsListDialog extends DialogFragment implements
 
         builder.setSingleChoiceItems(adapter, -1, this);
         builder.setPositiveButton("Choose", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog,
-                                int whichButton) {
-                WorkoutExercisesItem mItem = new WorkoutExercisesItem(getmWorkoutId(), getmExerciseId());
-                QuickFitnessDAO.getInstance(getActivity()).insertExerciseWorkout(mItem);
-                Toast.makeText(getActivity(), "Exercise added to workout.", Toast.LENGTH_LONG).show();
-                dialog.dismiss();
-            }
-        });
+                    public void onClick(DialogInterface dialog,
+                                        int whichButton) {
 
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
+                        WorkoutExercisesItem mItem = new WorkoutExercisesItem(getmWorkoutId(), getmExerciseId());
+
+                        if (isAlreadyRegistered()) {
+                            Toast.makeText(getActivity(), "You've already added this exercise.", Toast.LENGTH_LONG).show();
+
+                        } else {
+                            QuickFitnessDAO.getInstance(getActivity()).insertExerciseWorkout(mItem);
+                            Toast.makeText(getActivity(), "Exercise added to workout.", Toast.LENGTH_LONG).show();
+
+                        }
+
+                        dialog.dismiss();
+                    }
+                }
+
+        );
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
+
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }
+
+        );
 
         return builder.create();
     }
@@ -102,6 +117,21 @@ public class WorkoutsListDialog extends DialogFragment implements
         int mWorkoutId = QuickFitnessDAO.getInstance(getActivity()).workoutId(workoutItem).getId();
 
         setmWorkoutId(mWorkoutId);
+    }
+
+    private boolean isAlreadyRegistered() {
+
+        List<WorkoutExercisesItem> workoutExercisesItems = QuickFitnessDAO.getInstance(getActivity()).listExercisesByWorkout();
+
+        for (int i = 0; i < workoutExercisesItems.size(); i++) {
+
+            if (workoutExercisesItems.get(i).getWorkoutId() == getmWorkoutId() && workoutExercisesItems.get(i).getExerciseId() == getmExerciseId()) {
+                return true;
+            }
+        }
+
+        return false;
+
     }
 
 }

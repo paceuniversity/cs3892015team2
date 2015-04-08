@@ -19,7 +19,6 @@
 package pace.cs389.team2.quickfitness;
 
 import android.app.Fragment;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.ActionBarActivity;
@@ -29,12 +28,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.List;
 
 import pace.cs389.team2.quickfitness.adapter.CustomExercisesListAdapter;
 import pace.cs389.team2.quickfitness.data.QuickFitnessDAO;
 import pace.cs389.team2.quickfitness.dialog.WorkoutsListDialog;
 import pace.cs389.team2.quickfitness.model.CategoryItem;
 import pace.cs389.team2.quickfitness.model.ExercisesItem;
+import pace.cs389.team2.quickfitness.model.WorkoutItem;
 import pace.cs389.team2.quickfitness.utils.OrientationUtils;
 
 public class ActivityExerciseDetails extends ActionBarActivity {
@@ -68,9 +71,16 @@ public class ActivityExerciseDetails extends ActionBarActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_add_exercise) {
-            WorkoutsListDialog workoutsListDialog = new WorkoutsListDialog();
-            workoutsListDialog.setmExerciseId(mExerciseItem.getId());
-            workoutsListDialog.show(getFragmentManager(), "workouts_list");
+
+            List<WorkoutItem> workoutItemList = QuickFitnessDAO.getInstance(getApplicationContext()).listWorkouts();
+
+            if (workoutItemList.size() > 0) {
+                WorkoutsListDialog workoutsListDialog = new WorkoutsListDialog();
+                workoutsListDialog.setmExerciseId(mExerciseItem.getId());
+                workoutsListDialog.show(getFragmentManager(), "workouts_list");
+            } else {
+                Toast.makeText(this, "You don't have any workout.", Toast.LENGTH_LONG).show();
+            }
 
             return true;
         }
@@ -97,22 +107,6 @@ public class ActivityExerciseDetails extends ActionBarActivity {
             if (getActivity().getActionBar() != null) {
                 if (OrientationUtils.isPortrait(getActivity().getResources().getConfiguration())) {
                     actionBar.show();
-
-                    if (mExerciseItem != null) {
-                        if (mExerciseItem.getCategoryKey() == 2) {
-                            actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.material_green)));
-                            //getSupportActionBar().setTitle(Html.fromHtml("<font color='#ffffff'>" + appName + " </font>"));
-                        } else if (mExerciseItem.getCategoryKey() == 3) {
-                            actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.material_orange)));
-                        } else if (mExerciseItem.getCategoryKey() == 4) {
-                            actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.material_purple)));
-                        } else if (mExerciseItem.getCategoryKey() == 5) {
-                            actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.material_blue_grey)));
-                        }
-                    } else {
-                        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.background_light_gray)));
-                    }
-
 
                 } else {
                     actionBar.hide();

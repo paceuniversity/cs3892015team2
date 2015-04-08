@@ -11,6 +11,12 @@
     <string name="exercises_by_workout_list_empty">No Exercises to display.</string>
     <string name="exercises_by_workout_label">Workout Exercises</string>
 
+
+    <string name="exercise_details">Exercise Details</string>
+    <string name="exercise_details_level">Level:</string>
+    <string name="exercise_details_duration">Duration: </string>
+    <string name="exercise_details_calories">Calories: </string>
+
     <string name="list_drawer_item_home">Home</string>
     <string name="list_drawer_item_set_goal">Select an Goal</string>
     <string name="list_drawer_item_workouts">Workout Sets</string>
