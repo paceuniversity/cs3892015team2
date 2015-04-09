@@ -11,6 +11,8 @@
     <string name="exercises_by_workout_list_empty">No Exercises to display.</string>
     <string name="exercises_by_workout_label">Workout Exercises</string>
 
+    <string name="action_delete">Delete</string>
+
 
     <string name="exercise_details">Exercise Details</string>
     <string name="exercise_details_level">Level:</string>

@@ -92,7 +92,7 @@ public class ExercisesByWorkoutCustomAdapter extends BaseAdapter {
         Bitmap exerciseIcon = BitmapFactory.decodeResource(view.getResources(), exercisesItem.getIcon());
 
         Bitmap exerciseIconResized = Bitmap.createScaledBitmap(exerciseIcon,
-                100, 100, false);
+                70, 70, false);
 
 
         if (exerciseIconResized != null) {
@@ -109,7 +109,6 @@ public class ExercisesByWorkoutCustomAdapter extends BaseAdapter {
 
         return view;
     }
-
 
     public class AdapterViewHolder {
 

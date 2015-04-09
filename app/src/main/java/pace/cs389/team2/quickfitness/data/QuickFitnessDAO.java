@@ -37,23 +37,16 @@ import pace.cs389.team2.quickfitness.model.WorkoutStatusItem;
 
 public class QuickFitnessDAO {
 
-    private static QuickFitnessDAO instance;
-    private static SQLiteDatabase sqLiteDatabase;
-    QuickFitnessDbHelper helper;
-
     private static final String[] PROJECTION = {QuickFitnessContract.ExerciseCategoryEntry.COLUMN_CATEGORY_ID,
             QuickFitnessContract.ExerciseCategoryEntry.COLUMN_CATEGORY_NAME,
             QuickFitnessContract.ExerciseCategoryEntry.COLUMN_CATEGORY_ICON
     };
-
     private static final String[] PROJECTION_TABLE_STATUS = {QuickFitnessContract.StatusEntry.COLUMN_STATUS_ID,
             QuickFitnessContract.StatusEntry.COLUMN_STATUS_NAME
     };
-
     private static final String[] PROJECTION_TABLE_WORKOUT_X_EXERCISES = {QuickFitnessContract.WorkoutExerciseEntry.COLUMN_WORKOUT_KEY,
             QuickFitnessContract.WorkoutExerciseEntry.COLUMN_EXERCISE_KEY
     };
-
     private static final String[] PROJECTION_TABLE_WORKOUT = {QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_ID,
             QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_NAME,
             QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_DAYS_OF_WEEK,
@@ -61,7 +54,6 @@ public class QuickFitnessDAO {
             QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_TIME,
             QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_STATUS_KEY
     };
-
     private static final String[] PROJECTION_TABLE_EXERCISE = {QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_ID,
             QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_NAME,
             QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_DESCRIPTION,
@@ -72,6 +64,14 @@ public class QuickFitnessDAO {
             QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_VIDEO,
             QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_CATEGORY_KEY
     };
+    private static QuickFitnessDAO instance;
+    private static SQLiteDatabase sqLiteDatabase;
+    QuickFitnessDbHelper helper;
+
+    private QuickFitnessDAO(Context context) {
+        helper = QuickFitnessDbHelper.getInstance(context);
+        sqLiteDatabase = helper.getWritableDatabase();
+    }
 
     public static QuickFitnessDAO getInstance(Context mContext) {
 
@@ -83,9 +83,8 @@ public class QuickFitnessDAO {
 
     }
 
-    private QuickFitnessDAO(Context context) {
-        helper = QuickFitnessDbHelper.getInstance(context);
-        sqLiteDatabase = helper.getWritableDatabase();
+    public void deleteExercise(long id) {
+        sqLiteDatabase.delete(QuickFitnessContract.WorkoutExerciseEntry.TABLE_NAME, QuickFitnessContract.WorkoutExerciseEntry.COLUMN_EXERCISE_KEY + " = ?", new String[]{String.valueOf(id)});
     }
 
     public void insertWorkoutSet(WorkoutItem mItemWorkout) {
