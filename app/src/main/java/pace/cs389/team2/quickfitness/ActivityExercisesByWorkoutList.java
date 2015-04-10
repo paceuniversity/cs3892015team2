@@ -25,25 +25,32 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import pace.cs389.team2.quickfitness.adapter.CustomWorkoutsListAdapter;
 import pace.cs389.team2.quickfitness.adapter.ExercisesByWorkoutCustomAdapter;
 import pace.cs389.team2.quickfitness.data.QuickFitnessDAO;
 import pace.cs389.team2.quickfitness.dialog.DeleteExerciseDialog;
 import pace.cs389.team2.quickfitness.model.ExercisesItem;
+import pace.cs389.team2.quickfitness.model.WorkoutExercisesItem;
 import pace.cs389.team2.quickfitness.model.WorkoutItem;
 
 public class ActivityExercisesByWorkoutList extends ActionBarActivity implements AbsListView.MultiChoiceModeListener, DeleteExerciseDialog.OnDeleteExerciseListener {
 
     static WorkoutItem mWorkoutItem;
-    List<Integer> selectedExercises;
+    List<ExercisesItem> selectedExercises;
     private ListView mListExercises;
     private TextView mTextListEmpty;
+    private ExercisesByWorkoutCustomAdapter adapter;
+    private int count = 0;
+    private QuickFitnessDAO dao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,14 +62,25 @@ public class ActivityExercisesByWorkoutList extends ActionBarActivity implements
 
         selectedExercises = new ArrayList<>();
 
+
         mWorkoutItem = (WorkoutItem) getIntent().getSerializableExtra(CustomWorkoutsListAdapter.EXERCISE_TAG);
 
-        QuickFitnessDAO dao = QuickFitnessDAO.getInstance(getApplicationContext());
+        dao = QuickFitnessDAO.getInstance(getApplicationContext());
 
         setListExercisesAdapter(dao.listExercisesByWorkout(mWorkoutItem.getId()));
 
         mListExercises.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
         mListExercises.setMultiChoiceModeListener(this);
+
+        mListExercises.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                                           int position, long arg3) {
+                mListExercises.setItemChecked(position, !adapter.isPositionChecked(position));
+                return false;
+            }
+        });
 
 
     }
@@ -70,29 +88,22 @@ public class ActivityExercisesByWorkoutList extends ActionBarActivity implements
 
     private void setListExercisesAdapter(List<ExercisesItem> mListAdapter) {
 
+        adapter = new ExercisesByWorkoutCustomAdapter(this, mListAdapter);
+
         if (mListAdapter.isEmpty()) {
             mTextListEmpty.setVisibility(View.VISIBLE);
             mListExercises.setVisibility(View.GONE);
         } else {
             mTextListEmpty.setVisibility(View.GONE);
             mListExercises.setVisibility(View.VISIBLE);
-            mListExercises.setAdapter(new ExercisesByWorkoutCustomAdapter(this, mListAdapter));
-
+            mListExercises.setAdapter(adapter);
         }
     }
 
-
-    @Override
-    public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
-        if (checked) {
-            selectedExercises.add(position);
-        } else {
-            selectedExercises.remove((Integer) position);
-        }
-    }
 
     @Override
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+        count = 0;
         getMenuInflater().inflate(R.menu.actionmode, menu);
         return true;
     }
@@ -105,8 +116,10 @@ public class ActivityExercisesByWorkoutList extends ActionBarActivity implements
     @Override
     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
         if (item.getItemId() == R.id.action_delete) {
-            DeleteExerciseDialog dialog = DeleteExerciseDialog.newInstance(mListExercises.getCheckedItemIds(), this);
+            DeleteExerciseDialog dialog = DeleteExerciseDialog.newInstance(adapter.getCurrentCheckedPosition(), this);
             dialog.show(getFragmentManager(), "deleteDialog");
+            // Toast.makeText(this, "ids: " + adapter.getCurrentCheckedPosition(), Toast.LENGTH_LONG).show();
+            mode.finish();
             return true;
         }
 
@@ -115,23 +128,52 @@ public class ActivityExercisesByWorkoutList extends ActionBarActivity implements
 
     @Override
     public void onDestroyActionMode(ActionMode mode) {
-        unselectItems();
-    }
-
-    private void unselectItems() {
-        for (int i = 0; i < mListExercises.getCount(); i++) {
-            mListExercises.setItemChecked(i, false);
-        }
+        adapter.clearSelection();
     }
 
     @Override
-    public void onDeleteExercise(long[] ids) {
+    public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
+
+        if (checked) {
+            count++;
+            adapter.setNewSelection(position, true);
+        } else {
+            count--;
+            adapter.removeSelection(position);
+        }
+        mode.setTitle(count + " selected");
+
+    }
+
+
+    @Override
+    public void onDeleteExercise(Set<Integer> selectedItems) {
 
         QuickFitnessDAO dao = QuickFitnessDAO.getInstance(getApplicationContext());
 
-        for (long id : ids) {
-            dao.deleteExercise(id);
+        String msg = "";
+
+        for (Integer id : selectedItems) {
+            ExercisesItem itemId = (ExercisesItem) adapter.getItem(id);
+            WorkoutExercisesItem workoutExercisesItem = dao.workoutExerciseById(itemId.getId());
+            //dao.deleteExercise(workoutExercisesItem.getWorkoutExerciseId(), mWorkoutItem.getId());
+            dao.deleteExercise(workoutExercisesItem.getWorkoutExerciseId());
+
+            if (count == 1) {
+                msg = "Item deleted.";
+
+            } else {
+                msg = count + " items deleted.";
+            }
+
         }
-        unselectItems();
+
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+
+
+        setListExercisesAdapter(dao.listExercisesByWorkout(mWorkoutItem.getId()));
+        adapter.clearSelection();
+
+        count = 0;
     }
 }

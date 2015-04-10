@@ -21,6 +21,7 @@ package pace.cs389.team2.quickfitness.adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +29,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import pace.cs389.team2.quickfitness.R;
 import pace.cs389.team2.quickfitness.data.QuickFitnessDAO;
@@ -40,6 +43,8 @@ public class ExercisesByWorkoutCustomAdapter extends BaseAdapter {
     Context mContext;
     private List<ExercisesItem> exercisesItemList;
     private LayoutInflater inflater;
+    private HashMap<Integer, Boolean> mSelection = new HashMap<>();
+
 
     public ExercisesByWorkoutCustomAdapter(Context mContext, List<ExercisesItem> exercisesItemList) {
         this.mContext = mContext;
@@ -62,6 +67,31 @@ public class ExercisesByWorkoutCustomAdapter extends BaseAdapter {
     public long getItemId(int position) {
         return exercisesItemList.get(position).getId();
     }
+
+    public void setNewSelection(int position, boolean value) {
+        mSelection.put(position, value);
+        notifyDataSetChanged();
+    }
+
+    public boolean isPositionChecked(int position) {
+        Boolean result = mSelection.get(position);
+        return result == null ? false : result;
+    }
+
+    public Set<Integer> getCurrentCheckedPosition() {
+        return mSelection.keySet();
+    }
+
+    public void removeSelection(int position) {
+        mSelection.remove(position);
+        notifyDataSetChanged();
+    }
+
+    public void clearSelection() {
+        mSelection = new HashMap<>();
+        notifyDataSetChanged();
+    }
+
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -87,6 +117,8 @@ public class ExercisesByWorkoutCustomAdapter extends BaseAdapter {
             holder = (AdapterViewHolder) view.getTag();
         }
 
+        view.setBackgroundColor(Color.TRANSPARENT);
+
         ExercisesItem exercisesItem = exercisesItemList.get(position);
 
         Bitmap exerciseIcon = BitmapFactory.decodeResource(view.getResources(), exercisesItem.getIcon());
@@ -106,6 +138,10 @@ public class ExercisesByWorkoutCustomAdapter extends BaseAdapter {
         holder.mTextExerciseCategory.setText(categoryItem.getName());
         holder.mTextExerciseDuration.setText(String.valueOf(exercisesItem.getDuration()) + " min");
         holder.mTextExerciseLevel.setText(exercisesItem.getLevel());
+
+        if (mSelection.get(position) != null) {
+            view.setBackgroundColor(Color.LTGRAY);
+        }
 
         return view;
     }

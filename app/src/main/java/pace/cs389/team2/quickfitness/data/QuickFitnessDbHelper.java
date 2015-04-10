@@ -35,10 +35,9 @@ import pace.cs389.team2.quickfitness.model.WorkoutStatusItem;
 
 public class QuickFitnessDbHelper extends SQLiteOpenHelper {
 
-    private static QuickFitnessDbHelper instance;
     public static final String DATABASE_NAME = "fitness.db";
-    private static final int DB_VERSION = 54;
-    static Context mContext;
+    private static final int DB_VERSION = 58;
+
 
     //private static final String SQL_DROP_DATABASE = "DROP DATABASE " + DATABASE_NAME;
     private static final String SQL_DROP_USER_TABLE = "DROP TABLE IF EXISTS " + QuickFitnessContract.UserEntry.TABLE_NAME;
@@ -48,14 +47,12 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
     private static final String SQL_DROP_STATUS_TABLE = "DROP TABLE IF EXISTS " + QuickFitnessContract.StatusEntry.TABLE_NAME;
     private static final String SQL_DROP_WORKOUT_SET_TABLE = "DROP TABLE IF EXISTS " + QuickFitnessContract.WorkoutSetEntry.TABLE_NAME;
     private static final String SQL_DROP_WORKOUT_EXERCISE_TABLE = "DROP TABLE IF EXISTS " + QuickFitnessContract.WorkoutExerciseEntry.TABLE_NAME;
-
     private static final String SQL_CREATE_USER_TABLE = "CREATE TABLE " + QuickFitnessContract.UserEntry.TABLE_NAME + "(" +
             QuickFitnessContract.UserEntry.COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             QuickFitnessContract.UserEntry.COLUMN_USER_NAME + " TEXT NOT NULL," +
             QuickFitnessContract.UserEntry.COLUMN_USER_SURNAME + " TEXT NOT NULL, " +
             QuickFitnessContract.UserEntry.COLUMN_USER_AGE + " INTEGER NOT NULL, " +
             QuickFitnessContract.UserEntry.COLUMN_USER_PICTURE + " TEXT NOT NULL);";
-
     private static final String SQL_CREATE_BODY_TABLE = "CREATE TABLE " + QuickFitnessContract.BodyEntry.TABLE_NAME + "(" +
             QuickFitnessContract.BodyEntry.COLUMN_BODY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             QuickFitnessContract.BodyEntry.COLUMN_BODY_HEIGHT + " INTEGER NOT NULL, " +
@@ -65,14 +62,10 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
             QuickFitnessContract.BodyEntry.COLUMN_BODY_USER_ID_KEY + " INTEGER NOT NULL, " +
             " FOREIGN KEY (" + QuickFitnessContract.BodyEntry.COLUMN_BODY_USER_ID_KEY + ") REFERENCES " +
             QuickFitnessContract.UserEntry.TABLE_NAME + " (" + QuickFitnessContract.UserEntry.COLUMN_USER_ID + "));";
-
-
     private static final String SQL_CREATE_CATEGORY_TABLE = "CREATE TABLE " + QuickFitnessContract.ExerciseCategoryEntry.TABLE_NAME + "(" +
             QuickFitnessContract.ExerciseCategoryEntry.COLUMN_CATEGORY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             QuickFitnessContract.ExerciseCategoryEntry.COLUMN_CATEGORY_ICON + " INTEGER, " +
             QuickFitnessContract.ExerciseCategoryEntry.COLUMN_CATEGORY_NAME + " TEXT NOT NULL);";
-
-
     private static final String SQL_CREATE_EXERCISE_TABLE = "CREATE TABLE " + QuickFitnessContract.ExerciseEntry.TABLE_NAME + "(" +
             QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_NAME + " TEXT NOT NULL, " +
@@ -86,15 +79,9 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
 
             " FOREIGN KEY (" + QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_CATEGORY_KEY + ") REFERENCES " +
             QuickFitnessContract.ExerciseCategoryEntry.TABLE_NAME + " (" + QuickFitnessContract.ExerciseCategoryEntry.COLUMN_CATEGORY_ID + "));";
-
     private static final String SQL_CREATE_STATUS_TABLE = "CREATE TABLE " + QuickFitnessContract.StatusEntry.TABLE_NAME + "(" +
             QuickFitnessContract.StatusEntry.COLUMN_STATUS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             QuickFitnessContract.StatusEntry.COLUMN_STATUS_NAME + " TEXT NOT NULL);";
-
-   /* private static final String SQL_CREATE_LEVEL_TABLE = "CREATE TABLE " + QuickFitnessContract.LevelEntry.TABLE_NAME + "(" +
-            QuickFitnessContract.LevelEntry.COLUMN_LEVEL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            QuickFitnessContract.LevelEntry.COLUMN_LEVEL_NAME + " TEXT NOT NULL);";*/
-
     private static final String SQL_CREATE_WORKOUT_SET_TABLE = "CREATE TABLE " + QuickFitnessContract.WorkoutSetEntry.TABLE_NAME + "(" +
             QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_NAME + " TEXT NOT NULL, " +
@@ -104,8 +91,8 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
             QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_STATUS_KEY + " INTEGER NOT NULL, " +
             " FOREIGN KEY (" + QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_STATUS_KEY + ") REFERENCES " +
             QuickFitnessContract.StatusEntry.TABLE_NAME + " (" + QuickFitnessContract.StatusEntry.COLUMN_STATUS_ID + "));";
-
     private static final String SQL_CREATE_WORKOUT_EXERCISE_TABLE = "CREATE TABLE " + QuickFitnessContract.WorkoutExerciseEntry.TABLE_NAME + "(" +
+            QuickFitnessContract.WorkoutExerciseEntry.COLUMN_WORKOUT_EXERCISE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             QuickFitnessContract.WorkoutExerciseEntry.COLUMN_EXERCISE_KEY + " INTEGER NOT NULL, " +
             QuickFitnessContract.WorkoutExerciseEntry.COLUMN_WORKOUT_KEY + " INTEGER NOT NULL, " +
             " FOREIGN KEY (" + QuickFitnessContract.WorkoutExerciseEntry.COLUMN_EXERCISE_KEY + ") REFERENCES " +
@@ -113,6 +100,24 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
             "), FOREIGN KEY (" + QuickFitnessContract.WorkoutExerciseEntry.COLUMN_WORKOUT_KEY + ") REFERENCES " +
             QuickFitnessContract.WorkoutExerciseEntry.TABLE_NAME + " (" + QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_ID +
             "));";
+
+    static Context mContext;
+    private static QuickFitnessDbHelper instance;
+
+    private QuickFitnessDbHelper(Context context) {
+        super(context, DATABASE_NAME, null, DB_VERSION);
+    }
+
+    //Singleton method to create an instance of the QuickFitnessDbHelper class. If this instance had been already created any time by the app, the instance is returned
+    //Only one instance is shared throughout the app
+    public static QuickFitnessDbHelper getInstance(Context context) {
+        mContext = context;
+        if (instance == null) {
+            instance = new QuickFitnessDbHelper(context.getApplicationContext());
+        }
+
+        return instance;
+    }
 
     //SQLite script to insert all categories into category table on database
     //This script will run only on the first time the app runs. If the user runs the app for the second time, for example, this script is skipped, once the table is already filled.
@@ -234,22 +239,6 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
             values.put(QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_CATEGORY_KEY, exercises.get(i).getCategoryKey());
             db.insert(QuickFitnessContract.ExerciseEntry.TABLE_NAME, null, values);
         }
-    }
-
-
-    //Singleton method to create an instance of the QuickFitnessDbHelper class. If this instance had been already created any time by the app, the instance is returned
-    //Only one instance is shared throughout the app
-    public static QuickFitnessDbHelper getInstance(Context context) {
-        mContext = context;
-        if (instance == null) {
-            instance = new QuickFitnessDbHelper(context.getApplicationContext());
-        }
-
-        return instance;
-    }
-
-    private QuickFitnessDbHelper(Context context) {
-        super(context, DATABASE_NAME, null, DB_VERSION);
     }
 
     @Override

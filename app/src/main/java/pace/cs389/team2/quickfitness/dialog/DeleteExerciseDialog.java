@@ -25,14 +25,17 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 
+import java.util.Set;
+
 public class DeleteExerciseDialog extends DialogFragment implements OnClickListener {
 
-    private long[] ids;
+    // private long[] ids;
     private OnDeleteExerciseListener listener;
+    private Set<Integer> selectedItems;
 
-    public static DeleteExerciseDialog newInstance(long[] ids, OnDeleteExerciseListener listener) {
+    public static DeleteExerciseDialog newInstance(Set<Integer> selectedItems, OnDeleteExerciseListener listener) {
         DeleteExerciseDialog dialog = new DeleteExerciseDialog();
-        dialog.ids = ids;
+        dialog.selectedItems = selectedItems;
         dialog.listener = listener;
         return dialog;
     }
@@ -43,10 +46,10 @@ public class DeleteExerciseDialog extends DialogFragment implements OnClickListe
 
         builder.setTitle("Delete Exercise");
 
-        if (ids.length == 1) {
+        if (selectedItems.size() == 1) {
             builder.setMessage("Delete selected exercise?");
         } else {
-            builder.setMessage("Delete " + ids.length + " selected exercises?");
+            builder.setMessage("Delete " + selectedItems.size() + " selected exercises?");
         }
 
         builder.setNegativeButton("No", this);
@@ -58,11 +61,11 @@ public class DeleteExerciseDialog extends DialogFragment implements OnClickListe
     @Override
     public void onClick(DialogInterface dialog, int which) {
         if (which == DialogInterface.BUTTON_POSITIVE && listener != null) {
-            listener.onDeleteExercise(ids);
+            listener.onDeleteExercise(selectedItems);
         }
     }
 
     public interface OnDeleteExerciseListener {
-        void onDeleteExercise(long[] ids);
+        void onDeleteExercise(Set<Integer> selectedItems);
     }
 }

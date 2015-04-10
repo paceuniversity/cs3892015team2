@@ -20,6 +20,7 @@ package pace.cs389.team2.quickfitness.model;
 
 public class WorkoutExercisesItem {
 
+    private int workoutExerciseId;
     private int workoutId;
     private int exerciseId;
 
@@ -27,6 +28,16 @@ public class WorkoutExercisesItem {
     public WorkoutExercisesItem(int workoutId, int exerciseId) {
         this.workoutId = workoutId;
         this.exerciseId = exerciseId;
+    }
+
+    public WorkoutExercisesItem(int workoutExerciseId, int workoutId, int exerciseId) {
+        this.workoutExerciseId = workoutExerciseId;
+        this.workoutId = workoutId;
+        this.exerciseId = exerciseId;
+    }
+
+    public int getWorkoutExerciseId() {
+        return workoutExerciseId;
     }
 
     public int getWorkoutId() {

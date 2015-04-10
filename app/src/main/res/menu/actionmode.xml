@@ -21,7 +21,7 @@
 
     <item
         android:id="@+id/action_delete"
-        android:icon="@android:drawable/ic_menu_delete"
+        android:icon="@mipmap/ic_delete_white_36dp"
         ace.cs389.team2.quickfitness:showAsAction="ifRoom|withText"
         android:title="@string/action_delete" />
 

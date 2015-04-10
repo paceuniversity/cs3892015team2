@@ -20,9 +20,6 @@ package pace.cs389.team2.quickfitness.data;
 
 import android.provider.BaseColumns;
 
-/**
- * Created by Luiz on 29/03/2015.
- */
 public class QuickFitnessContract {
 
     /* Inner class that defines the table contents of the user table */
@@ -180,6 +177,9 @@ public class QuickFitnessContract {
 
         //Table name
         public static final String TABLE_NAME = "workout_set_exercise";
+
+        //WorkoutExercise primary key stored as an integer
+        public static final String COLUMN_WORKOUT_EXERCISE_ID = "_id_workouts_exercise";
 
         // Column with the foreign key into the exercise table
         public static final String COLUMN_EXERCISE_KEY = "workout_set_exercise_id";
