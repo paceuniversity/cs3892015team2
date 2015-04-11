@@ -24,6 +24,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -31,17 +32,19 @@ import java.util.List;
 import pace.cs389.team2.quickfitness.ActivityExercisesByWorkoutList;
 import pace.cs389.team2.quickfitness.R;
 import pace.cs389.team2.quickfitness.data.QuickFitnessDAO;
+import pace.cs389.team2.quickfitness.model.ExercisesItem;
 import pace.cs389.team2.quickfitness.model.WorkoutItem;
 import pace.cs389.team2.quickfitness.model.WorkoutStatusItem;
 
 public class CustomWorkoutsListAdapter extends RecyclerView.Adapter<CustomWorkoutsListAdapter.WorkoutsViewHolder> implements View.OnClickListener {
 
     public static final String EXERCISE_TAG = "exercise_ref";
-    private List<WorkoutItem> mWorkoutList;
     View itemView;
     WorkoutItem mWorkoutItem;
     RecyclerView mRecyclerView;
+    private List<WorkoutItem> mWorkoutList;
     private Context mContext;
+    private QuickFitnessDAO dao;
 
     public CustomWorkoutsListAdapter(Context mContext, List<WorkoutItem> mWorkoutList, RecyclerView mRecyclerView) {
         this.mContext = mContext;
@@ -68,23 +71,49 @@ public class CustomWorkoutsListAdapter extends RecyclerView.Adapter<CustomWorkou
     public void onBindViewHolder(WorkoutsViewHolder workoutsViewHolder, int i) {
         mWorkoutItem = mWorkoutList.get(i);
 
-        WorkoutStatusItem itemStatus = QuickFitnessDAO.getInstance(itemView.getContext()).statusById(mWorkoutItem.getStatusKey());
+        dao = QuickFitnessDAO.getInstance(itemView.getContext());
+
+        WorkoutStatusItem itemStatus = dao.statusById(mWorkoutItem.getStatusKey());
+
+        List<ExercisesItem> exercisesItems = dao.listExercisesByWorkout(mWorkoutItem.getId());
+
+        int sum = 0;
+        int hour;
+        int minutes;
+
+        for (int index = 0; index < exercisesItems.size(); index++) {
+            sum += exercisesItems.get(index).getDuration();
+        }
 
         workoutsViewHolder.mWorkoutTitle.setText(mWorkoutItem.getName());
+
+        hour = sum / 60;
+        minutes = sum % 60;
+
+        if (hour == 0 && minutes == 0) {
+
+            workoutsViewHolder.mWorkoutDuration.setVisibility(View.GONE);
+            workoutsViewHolder.mWorkoutDurationIcon.setVisibility(View.GONE);
+
+        } else {
+            workoutsViewHolder.mWorkoutDuration.setVisibility(View.VISIBLE);
+            workoutsViewHolder.mWorkoutDurationIcon.setVisibility(View.VISIBLE);
+
+            if (hour == 0) {
+                workoutsViewHolder.mWorkoutDuration.setText(String.valueOf(minutes) + "min");
+
+            } else if (minutes == 0) {
+                workoutsViewHolder.mWorkoutDuration.setText(String.valueOf(hour) + "h");
+
+            } else {
+                workoutsViewHolder.mWorkoutDuration.setText(String.valueOf(hour) + "h:" + String.valueOf(minutes) + "min");
+
+            }
+        }
+
+
         workoutsViewHolder.mWorkoutStatus.setText(itemStatus.getStatus());
 
-    }
-
-
-    public static class WorkoutsViewHolder extends RecyclerView.ViewHolder {
-        protected TextView mWorkoutTitle;
-        protected TextView mWorkoutStatus;
-
-        public WorkoutsViewHolder(View v) {
-            super(v);
-            mWorkoutTitle = (TextView) v.findViewById(R.id.txt_workout_name);
-            mWorkoutStatus = (TextView) v.findViewById(R.id.txt_workout_status);
-        }
     }
 
     @Override
@@ -94,5 +123,20 @@ public class CustomWorkoutsListAdapter extends RecyclerView.Adapter<CustomWorkou
         Intent intent = new Intent(mContext, ActivityExercisesByWorkoutList.class);
         intent.putExtra(CustomWorkoutsListAdapter.EXERCISE_TAG, mItem);
         mContext.startActivity(intent);
+    }
+
+    public static class WorkoutsViewHolder extends RecyclerView.ViewHolder {
+        protected TextView mWorkoutTitle;
+        protected TextView mWorkoutDuration;
+        protected ImageView mWorkoutDurationIcon;
+        protected TextView mWorkoutStatus;
+
+        public WorkoutsViewHolder(View v) {
+            super(v);
+            mWorkoutTitle = (TextView) v.findViewById(R.id.txt_workout_name);
+            mWorkoutDuration = (TextView) v.findViewById(R.id.txt_workout_time);
+            mWorkoutDurationIcon = (ImageView) v.findViewById(R.id.img_workout_duration);
+            mWorkoutStatus = (TextView) v.findViewById(R.id.txt_workout_status);
+        }
     }
 }

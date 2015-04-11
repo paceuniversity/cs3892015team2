@@ -69,9 +69,9 @@
     <string name="weight_loss_exercise_level_treadmill_rounds">Beginner</string>
     <string name="weight_loss_exercise_level_jumping_rope">Intermediate</string>
 
-    <integer name="weight_loss_exercise_duration_cycling">10</integer>
-    <integer name="weight_loss_exercise_duration_treadmill_rounds">15</integer>
-    <integer name="weight_loss_exercise_duration_jumping_rope">10</integer>
+    <integer name="weight_loss_exercise_duration_cycling">8</integer>
+    <integer name="weight_loss_exercise_duration_treadmill_rounds">25</integer>
+    <integer name="weight_loss_exercise_duration_jumping_rope">5</integer>
 
     <integer name="weight_loss_exercise_calories_cycling">700</integer>
     <integer name="weight_loss_exercise_calories_treadmill_rounds">500</integer>
@@ -90,9 +90,9 @@
     <string name="strength_exercise_level_pallof_pres">Intermediate</string>
     <string name="strength_exercise_level_dumbbell_row">Intermediate</string>
 
-    <integer name="strength_exercise_duration_globet_squat">10</integer>
+    <integer name="strength_exercise_duration_globet_squat">13</integer>
     <integer name="strength_exercise_duration_pallof_pres">10</integer>
-    <integer name="strength_exercise_duration_dumbbell_row">12</integer>
+    <integer name="strength_exercise_duration_dumbbell_row">8</integer>
 
     <integer name="strength_exercise_calories_globet_squat">500</integer>
     <integer name="strength_exercise_calories_pallof_pres">200</integer>
@@ -112,9 +112,9 @@
     <string name="cardio_exercise_level_stationary_bike">Beginner</string>
     <string name="cardio_exercise_level_rowing">Beginner</string>
 
-    <integer name="cardio_exercise_duration_elliptical">10</integer>
-    <integer name="cardio_exercise_duration_stationary_bike">10</integer>
-    <integer name="cardio_exercise_duration_rowing">10</integer>
+    <integer name="cardio_exercise_duration_elliptical">25</integer>
+    <integer name="cardio_exercise_duration_stationary_bike">23</integer>
+    <integer name="cardio_exercise_duration_rowing">15</integer>
 
     <integer name="cardio_exercise_calories_elliptical">900</integer>
     <integer name="cardio_exercise_calories_stationary_bike">490</integer>
@@ -133,9 +133,9 @@
     <string name="endurance_exercise_level_stair_machines">Intermediate</string>
     <string name="endurance_exercise_level_push_ups">Beginner</string>
 
-    <integer name="endurance_exercise_duration_swimming_laps">10</integer>
-    <integer name="endurance_exercise_duration_stair_machines">10</integer>
-    <integer name="endurance_exercise_duration_push_ups">15</integer>
+    <integer name="endurance_exercise_duration_swimming_laps">20</integer>
+    <integer name="endurance_exercise_duration_stair_machines">15</integer>
+    <integer name="endurance_exercise_duration_push_ups">5</integer>
 
     <integer name="endurance_exercise_calories_swimming_laps">600</integer>
     <integer name="endurance_exercise_calories_stair_machines">500</integer>

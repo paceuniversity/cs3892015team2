@@ -158,20 +158,6 @@ public class QuickFitnessContract {
         public static final String COLUMN_STATUS_NAME = "status_name";
     }
 
-    /* Inner class that defines the table contents of the status table */
-   /* public static final class LevelEntry implements BaseColumns {
-
-        //Table name
-        public static final String TABLE_NAME = "level";
-
-        //Status primary key stored as an integer
-        public static final String COLUMN_LEVEL_ID = "_id";
-
-        //Status name, stored as string
-        public static final String COLUMN_LEVEL_NAME = "status_name";
-    }*/
-
-
     /* Inner class that defines the table contents of the workout_set_exercise table */
     public static final class WorkoutExerciseEntry implements BaseColumns {
 

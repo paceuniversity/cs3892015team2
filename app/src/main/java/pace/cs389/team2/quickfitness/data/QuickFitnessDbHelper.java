@@ -35,11 +35,13 @@ import pace.cs389.team2.quickfitness.model.WorkoutStatusItem;
 
 public class QuickFitnessDbHelper extends SQLiteOpenHelper {
 
+    //Database name
     public static final String DATABASE_NAME = "fitness.db";
-    private static final int DB_VERSION = 58;
 
+    //Database version. If database has been changed, increment version in 1 to recreate database.
+    private static final int DB_VERSION = 62;
 
-    //private static final String SQL_DROP_DATABASE = "DROP DATABASE " + DATABASE_NAME;
+    /*SQL scripts to delete database tables*/
     private static final String SQL_DROP_USER_TABLE = "DROP TABLE IF EXISTS " + QuickFitnessContract.UserEntry.TABLE_NAME;
     private static final String SQL_DROP_BODY_TABLE = "DROP TABLE IF EXISTS " + QuickFitnessContract.BodyEntry.TABLE_NAME;
     private static final String SQL_DROP_CATEGORY_TABLE = "DROP TABLE IF EXISTS " + QuickFitnessContract.ExerciseCategoryEntry.TABLE_NAME;
@@ -47,12 +49,16 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
     private static final String SQL_DROP_STATUS_TABLE = "DROP TABLE IF EXISTS " + QuickFitnessContract.StatusEntry.TABLE_NAME;
     private static final String SQL_DROP_WORKOUT_SET_TABLE = "DROP TABLE IF EXISTS " + QuickFitnessContract.WorkoutSetEntry.TABLE_NAME;
     private static final String SQL_DROP_WORKOUT_EXERCISE_TABLE = "DROP TABLE IF EXISTS " + QuickFitnessContract.WorkoutExerciseEntry.TABLE_NAME;
+
+    /*SQL script to create table 'user' on the database*/
     private static final String SQL_CREATE_USER_TABLE = "CREATE TABLE " + QuickFitnessContract.UserEntry.TABLE_NAME + "(" +
             QuickFitnessContract.UserEntry.COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             QuickFitnessContract.UserEntry.COLUMN_USER_NAME + " TEXT NOT NULL," +
             QuickFitnessContract.UserEntry.COLUMN_USER_SURNAME + " TEXT NOT NULL, " +
             QuickFitnessContract.UserEntry.COLUMN_USER_AGE + " INTEGER NOT NULL, " +
             QuickFitnessContract.UserEntry.COLUMN_USER_PICTURE + " TEXT NOT NULL);";
+
+    /*SQL script to create table 'body' on the database. This table contains a foreign key linked to table 'user' */
     private static final String SQL_CREATE_BODY_TABLE = "CREATE TABLE " + QuickFitnessContract.BodyEntry.TABLE_NAME + "(" +
             QuickFitnessContract.BodyEntry.COLUMN_BODY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             QuickFitnessContract.BodyEntry.COLUMN_BODY_HEIGHT + " INTEGER NOT NULL, " +
@@ -62,10 +68,14 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
             QuickFitnessContract.BodyEntry.COLUMN_BODY_USER_ID_KEY + " INTEGER NOT NULL, " +
             " FOREIGN KEY (" + QuickFitnessContract.BodyEntry.COLUMN_BODY_USER_ID_KEY + ") REFERENCES " +
             QuickFitnessContract.UserEntry.TABLE_NAME + " (" + QuickFitnessContract.UserEntry.COLUMN_USER_ID + "));";
+
+    /*SQL script to create table 'exercise_category' on the database*/
     private static final String SQL_CREATE_CATEGORY_TABLE = "CREATE TABLE " + QuickFitnessContract.ExerciseCategoryEntry.TABLE_NAME + "(" +
             QuickFitnessContract.ExerciseCategoryEntry.COLUMN_CATEGORY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             QuickFitnessContract.ExerciseCategoryEntry.COLUMN_CATEGORY_ICON + " INTEGER, " +
             QuickFitnessContract.ExerciseCategoryEntry.COLUMN_CATEGORY_NAME + " TEXT NOT NULL);";
+
+    /*SQL script to create table 'exercise' on the database. This table contains a foreign key linked to 'exercise_category' table*/
     private static final String SQL_CREATE_EXERCISE_TABLE = "CREATE TABLE " + QuickFitnessContract.ExerciseEntry.TABLE_NAME + "(" +
             QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_NAME + " TEXT NOT NULL, " +
@@ -79,9 +89,13 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
 
             " FOREIGN KEY (" + QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_CATEGORY_KEY + ") REFERENCES " +
             QuickFitnessContract.ExerciseCategoryEntry.TABLE_NAME + " (" + QuickFitnessContract.ExerciseCategoryEntry.COLUMN_CATEGORY_ID + "));";
+
+    /*SQL script to create table 'status' on the database*/
     private static final String SQL_CREATE_STATUS_TABLE = "CREATE TABLE " + QuickFitnessContract.StatusEntry.TABLE_NAME + "(" +
             QuickFitnessContract.StatusEntry.COLUMN_STATUS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             QuickFitnessContract.StatusEntry.COLUMN_STATUS_NAME + " TEXT NOT NULL);";
+
+    /*SQL script to create table 'workout_set' on the database. This table has a foreign key linked to 'status' table*/
     private static final String SQL_CREATE_WORKOUT_SET_TABLE = "CREATE TABLE " + QuickFitnessContract.WorkoutSetEntry.TABLE_NAME + "(" +
             QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_NAME + " TEXT NOT NULL, " +
@@ -91,6 +105,9 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
             QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_STATUS_KEY + " INTEGER NOT NULL, " +
             " FOREIGN KEY (" + QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_STATUS_KEY + ") REFERENCES " +
             QuickFitnessContract.StatusEntry.TABLE_NAME + " (" + QuickFitnessContract.StatusEntry.COLUMN_STATUS_ID + "));";
+
+    /*SQL script to create table 'workout_exercise' on the database. This table has two foreign keys, one linked to the 'exercise_id' on the 'exercise table',
+    * and the other linked to the 'workout_set_id' on the 'workout_set' table*/
     private static final String SQL_CREATE_WORKOUT_EXERCISE_TABLE = "CREATE TABLE " + QuickFitnessContract.WorkoutExerciseEntry.TABLE_NAME + "(" +
             QuickFitnessContract.WorkoutExerciseEntry.COLUMN_WORKOUT_EXERCISE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             QuickFitnessContract.WorkoutExerciseEntry.COLUMN_EXERCISE_KEY + " INTEGER NOT NULL, " +

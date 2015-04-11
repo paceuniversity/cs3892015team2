@@ -40,6 +40,16 @@ import pace.cs389.team2.quickfitness.model.ExercisesItem;
 import pace.cs389.team2.quickfitness.model.WorkoutItem;
 import pace.cs389.team2.quickfitness.utils.OrientationUtils;
 
+/**
+ * This class shows an activity to display details about an exercise. When the user clicks on one item in the 'Exercise List Screen', the app takes the user to this activity,
+ * which will show more information about the item desired. Information contains: Exercise title, description, category, calories burned, duration, and a cool video demonstration
+ * on how to do the exercise in practise.
+ *
+ * @param @ExerciseItem mExerciseItem is the object of selected item passed through the list exercise screen to the detailed screen.
+ * @author CS389 Team2
+ * @since 03/25/2015
+ */
+
 public class ActivityExerciseDetails extends ActionBarActivity {
 
     private static ExercisesItem mExerciseItem;
@@ -76,7 +86,7 @@ public class ActivityExerciseDetails extends ActionBarActivity {
 
             if (workoutItemList.size() > 0) {
                 WorkoutsListDialog workoutsListDialog = new WorkoutsListDialog();
-                workoutsListDialog.setmExerciseId(mExerciseItem.getId());
+                workoutsListDialog.setExerciseId(mExerciseItem.getId());
                 workoutsListDialog.show(getFragmentManager(), "workouts_list");
             } else {
                 Toast.makeText(this, "You don't have any workout.", Toast.LENGTH_LONG).show();
@@ -93,6 +103,13 @@ public class ActivityExerciseDetails extends ActionBarActivity {
         outState.putSerializable(MainActivity.APP_TAG, mExerciseItem);
     }
 
+    /**
+     * FragmentExerciseDetails show inflates the view to display data on the screen.
+     *
+     * @author CS389 Team2
+     * @since 03/25/2015
+     */
+
     public static class FragmentExerciseDetails extends Fragment {
 
 
@@ -107,7 +124,6 @@ public class ActivityExerciseDetails extends ActionBarActivity {
             if (getActivity().getActionBar() != null) {
                 if (OrientationUtils.isPortrait(getActivity().getResources().getConfiguration())) {
                     actionBar.show();
-
                 } else {
                     actionBar.hide();
                 }

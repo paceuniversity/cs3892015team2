@@ -38,24 +38,24 @@ public class WorkoutsListDialog extends DialogFragment implements
 
     WorkoutItem workoutItem;
     List<WorkoutItem> workoutItemList;
-    private int mExerciseId;
     ArrayAdapter<CharSequence> adapter;
-    private int mWorkoutId;
+    private int exerciseId;
+    private int workoutId;
 
-    public int getmWorkoutId() {
-        return mWorkoutId;
+    public int getWorkoutId() {
+        return workoutId;
     }
 
-    public void setmWorkoutId(int mWorkoutId) {
-        this.mWorkoutId = mWorkoutId;
+    public void setWorkoutId(int workoutId) {
+        this.workoutId = workoutId;
     }
 
-    public int getmExerciseId() {
-        return mExerciseId;
+    public int getExerciseId() {
+        return exerciseId;
     }
 
-    public void setmExerciseId(int mExerciseId) {
-        this.mExerciseId = mExerciseId;
+    public void setExerciseId(int exerciseId) {
+        this.exerciseId = exerciseId;
     }
 
     @Override
@@ -80,7 +80,7 @@ public class WorkoutsListDialog extends DialogFragment implements
                     public void onClick(DialogInterface dialog,
                                         int whichButton) {
 
-                        WorkoutExercisesItem mItem = new WorkoutExercisesItem(getmWorkoutId(), getmExerciseId());
+                        WorkoutExercisesItem mItem = new WorkoutExercisesItem(getWorkoutId(), getExerciseId());
 
                         if (isAlreadyRegistered()) {
                             Toast.makeText(getActivity(), "You've already added this exercise.", Toast.LENGTH_LONG).show();
@@ -113,10 +113,11 @@ public class WorkoutsListDialog extends DialogFragment implements
 
     @Override
     public void onClick(DialogInterface dialog, int which) {
+        
         workoutItem = new WorkoutItem((String) adapter.getItem(which));
         int mWorkoutId = QuickFitnessDAO.getInstance(getActivity()).workoutId(workoutItem).getId();
 
-        setmWorkoutId(mWorkoutId);
+        setWorkoutId(mWorkoutId);
     }
 
     private boolean isAlreadyRegistered() {
@@ -125,7 +126,7 @@ public class WorkoutsListDialog extends DialogFragment implements
 
         for (int i = 0; i < workoutExercisesItems.size(); i++) {
 
-            if (workoutExercisesItems.get(i).getWorkoutId() == getmWorkoutId() && workoutExercisesItems.get(i).getExerciseId() == getmExerciseId()) {
+            if (workoutExercisesItems.get(i).getWorkoutId() == getWorkoutId() && workoutExercisesItems.get(i).getExerciseId() == getExerciseId()) {
                 return true;
             }
         }

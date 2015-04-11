@@ -22,6 +22,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -35,6 +36,8 @@ import java.util.List;
 import pace.cs389.team2.quickfitness.adapter.CustomWorkoutsListAdapter;
 import pace.cs389.team2.quickfitness.data.QuickFitnessDAO;
 import pace.cs389.team2.quickfitness.model.WorkoutItem;
+
+import static pace.cs389.team2.quickfitness.utils.OrientationUtils.isPortrait;
 
 public class ActivityWorkoutsList extends ActionBarActivity {
 
@@ -63,9 +66,9 @@ public class ActivityWorkoutsList extends ActionBarActivity {
     public static class FragmentWorkouts extends Fragment implements View.OnClickListener {
 
 
+        CustomWorkoutsListAdapter mWorkoutsAdapter;
         private RecyclerView mRecyclerView;
         private QuickFitnessDAO dao;
-        CustomWorkoutsListAdapter mWorkoutsAdapter;
         private TextView mListEmpty;
         private com.shamanland.fab.FloatingActionButton actionButton;
 
@@ -102,7 +105,12 @@ public class ActivityWorkoutsList extends ActionBarActivity {
             LinearLayoutManager llm = new LinearLayoutManager(getActivity());
             llm.setOrientation(LinearLayoutManager.VERTICAL);
 
-            mRecyclerView.setLayoutManager(llm);
+            if (isPortrait(getActivity().getResources().getConfiguration())) {
+                mRecyclerView.setLayoutManager(llm);
+            } else {
+                ((ActionBarActivity) getActivity()).getSupportActionBar().show();
+                mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+            }
 
 
             dao = QuickFitnessDAO.getInstance(getActivity());

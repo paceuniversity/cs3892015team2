@@ -39,7 +39,6 @@ import pace.cs389.team2.quickfitness.adapter.ExercisesByWorkoutCustomAdapter;
 import pace.cs389.team2.quickfitness.data.QuickFitnessDAO;
 import pace.cs389.team2.quickfitness.dialog.DeleteExerciseDialog;
 import pace.cs389.team2.quickfitness.model.ExercisesItem;
-import pace.cs389.team2.quickfitness.model.WorkoutExercisesItem;
 import pace.cs389.team2.quickfitness.model.WorkoutItem;
 
 public class ActivityExercisesByWorkoutList extends ActionBarActivity implements AbsListView.MultiChoiceModeListener, DeleteExerciseDialog.OnDeleteExerciseListener {
@@ -118,7 +117,6 @@ public class ActivityExercisesByWorkoutList extends ActionBarActivity implements
         if (item.getItemId() == R.id.action_delete) {
             DeleteExerciseDialog dialog = DeleteExerciseDialog.newInstance(adapter.getCurrentCheckedPosition(), this);
             dialog.show(getFragmentManager(), "deleteDialog");
-            // Toast.makeText(this, "ids: " + adapter.getCurrentCheckedPosition(), Toast.LENGTH_LONG).show();
             mode.finish();
             return true;
         }
@@ -149,15 +147,13 @@ public class ActivityExercisesByWorkoutList extends ActionBarActivity implements
     @Override
     public void onDeleteExercise(Set<Integer> selectedItems) {
 
-        QuickFitnessDAO dao = QuickFitnessDAO.getInstance(getApplicationContext());
+        dao = QuickFitnessDAO.getInstance(getApplicationContext());
 
         String msg = "";
 
         for (Integer id : selectedItems) {
             ExercisesItem itemId = (ExercisesItem) adapter.getItem(id);
-            WorkoutExercisesItem workoutExercisesItem = dao.workoutExerciseById(itemId.getId());
-            //dao.deleteExercise(workoutExercisesItem.getWorkoutExerciseId(), mWorkoutItem.getId());
-            dao.deleteExercise(workoutExercisesItem.getWorkoutExerciseId());
+            dao.deleteExercise(itemId.getId(), mWorkoutItem.getId());
 
             if (count == 1) {
                 msg = "Item deleted.";
@@ -169,7 +165,6 @@ public class ActivityExercisesByWorkoutList extends ActionBarActivity implements
         }
 
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
-
 
         setListExercisesAdapter(dao.listExercisesByWorkout(mWorkoutItem.getId()));
         adapter.clearSelection();

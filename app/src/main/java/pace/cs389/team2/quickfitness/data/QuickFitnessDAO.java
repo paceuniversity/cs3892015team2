@@ -85,12 +85,8 @@ public class QuickFitnessDAO {
 
     }
 
-    public void deleteExercise(long exerciseId) {
-
-        // String sqlDelete = "DELETE FROM " + QuickFitnessContract.WorkoutExerciseEntry.TABLE_NAME + " WHERE " + QuickFitnessContract.WorkoutExerciseEntry.COLUMN_WORKOUT_EXERCISE_ID + " = " + exerciseId + " AND " + QuickFitnessContract.WorkoutExerciseEntry.COLUMN_WORKOUT_KEY + " = " + workoutId;
-
-        // sqLiteDatabase.rawQuery(sqlDelete, null);
-        sqLiteDatabase.delete(QuickFitnessContract.WorkoutExerciseEntry.TABLE_NAME, QuickFitnessContract.WorkoutExerciseEntry.COLUMN_WORKOUT_EXERCISE_ID + " = ?", new String[]{String.valueOf(exerciseId)});
+    public void deleteExercise(long exerciseId, long workoutId) {
+        sqLiteDatabase.delete(QuickFitnessContract.WorkoutExerciseEntry.TABLE_NAME, QuickFitnessContract.WorkoutExerciseEntry.COLUMN_EXERCISE_KEY + " = ?" + " AND " + QuickFitnessContract.WorkoutExerciseEntry.COLUMN_WORKOUT_KEY + " = ?", new String[]{String.valueOf(exerciseId), String.valueOf(workoutId)});
     }
 
     public void insertWorkoutSet(WorkoutItem mItemWorkout) {
@@ -350,7 +346,7 @@ public class QuickFitnessDAO {
         try {
             if (cursor.moveToFirst()) {
                 do {
-                    workoutExercisesItem = new WorkoutExercisesItem(cursor.getInt(0), cursor.getInt(1));
+                    workoutExercisesItem = new WorkoutExercisesItem(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2));
                     workouts.add(workoutExercisesItem);
                 } while (cursor.moveToNext());
             }

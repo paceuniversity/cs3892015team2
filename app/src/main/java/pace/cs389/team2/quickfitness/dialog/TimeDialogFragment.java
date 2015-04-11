@@ -18,8 +18,6 @@
 
 package pace.cs389.team2.quickfitness.dialog;
 
-import java.util.Calendar;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -28,57 +26,58 @@ import android.app.TimePickerDialog.OnTimeSetListener;
 import android.os.Bundle;
 import android.widget.TimePicker;
 
+import java.util.Calendar;
+
 public class TimeDialogFragment extends DialogFragment implements
-		OnTimeSetListener {
+        OnTimeSetListener {
 
-	private OnTimeChanged listener;
+    private OnTimeChanged listener;
 
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-		if (!(activity instanceof OnTimeChanged)) {
-			throw new IllegalArgumentException(
-					"Activity must implement the interface");
-		}
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (!(activity instanceof OnTimeChanged)) {
+            throw new IllegalArgumentException(
+                    "Activity must implement the interface");
+        }
 
-		listener = (OnTimeChanged) activity;
+        listener = (OnTimeChanged) activity;
 
-	}
+    }
 
-	@Override
-	public Dialog onCreateDialog(Bundle savedInstanceState) {
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-		Calendar calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
 
-		int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
-		int minute = calendar.get(Calendar.MINUTE);
-		boolean is24HourView = false;
+        int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
 
-		return new TimePickerDialog(getActivity(), this, hourOfDay, minute,
-				is24HourView);
-	}
+        return new TimePickerDialog(getActivity(), this, hourOfDay, minute,
+                false);
+    }
 
-	@Override
-	public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
-		String time = "";
+        String time;
 
-		if (hourOfDay < 10 && minute < 10) {
+        if (hourOfDay < 10 && minute < 10) {
 
-			time = "0" + hourOfDay + ":0" + minute;
+            time = "0" + hourOfDay + ":0" + minute;
 
-		} else {
-			time = hourOfDay + ":" + minute;
+        } else {
+            time = hourOfDay + ":" + minute;
 
-		}
+        }
 
-		listener.onSetTimeChanged(time);
+        listener.onSetTimeChanged(time);
 
-	}
+    }
 
-	public interface OnTimeChanged {
+    public interface OnTimeChanged {
 
-		public void onSetTimeChanged(String time);
-	}
+        void onSetTimeChanged(String time);
+    }
 
 }
