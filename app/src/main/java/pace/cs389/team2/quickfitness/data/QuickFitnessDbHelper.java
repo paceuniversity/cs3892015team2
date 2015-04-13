@@ -39,7 +39,7 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "fitness.db";
 
     //Database version. If database has been changed, increment version in 1 to recreate database.
-    private static final int DB_VERSION = 62;
+    private static final int DB_VERSION = 63;
 
     /*SQL scripts to delete database tables*/
     private static final String SQL_DROP_USER_TABLE = "DROP TABLE IF EXISTS " + QuickFitnessContract.UserEntry.TABLE_NAME;

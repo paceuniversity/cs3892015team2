@@ -143,5 +143,6 @@
     <string name="title_activity_exercise_details">ExerciseDetailsActivity</string>
     <string name="title_activity_activity_add_workout">New Workout</string>
     <string name="title_activity_activity_statistics">Graphs</string>
+    <string name="title_activity_activity_intro">Intro</string>
 
 </resources>

@@ -9,13 +9,7 @@
         android:theme="@style/Theme.MyTheme">
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:label="@string/app_name" />
         <activity
             android:name=".ActivitySetGoal"
             android:label="@string/app_name"
@@ -38,12 +32,19 @@
         <activity
             android:name=".ActivityStatistics"
             android:label="@string/title_activity_activity_statistics" />
-
         <activity
             android:name=".ActivityExercisesByWorkoutList"
-            android:parentActivityName=".ActivityWorkoutsList"
-            android:label="@string/exercises_by_workout_label" />
+            android:label="@string/app_name"
+            android:parentActivityName=".ActivityWorkoutsList" />
+        <activity
+            android:name=".ActivityIntro"
+            android:label="@string/title_activity_activity_intro">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

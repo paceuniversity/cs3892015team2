@@ -1,0 +1,110 @@
+<!--
+  ~ /*
+  ~  * Copyright (C) 2014 The Android Open Source Project
+  ~  *
+  ~  * Licensed under the Apache License, Version 2.0 (the "License");
+  ~  * you may not use this file except in compliance with the License.
+  ~  * You may obtain a copy of the License at
+  ~  *
+  ~  *      http://www.apache.org/licenses/LICENSE-2.0
+  ~  *
+  ~  * Unless required by applicable law or agreed to in writing, software
+  ~  * distributed under the License is distributed on an "AS IS" BASIS,
+  ~  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~  * See the License for the specific language governing permissions and
+  ~  * limitations under the License.
+  ~  */
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/text_color_lighter_grey"
+    tools:context="pace.cs389.team2.quickfitness.ActivityIntroFragment">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="460dp">
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/jumping_rope_large" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_marginTop="55dp"
+            android:textSize="30sp"
+            android:textColor="@color/background_white"
+            android:layout_height="wrap_content"
+            android:text="QuickFitness" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:textStyle="bold"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="60dp"
+            android:fontFamily="sans-serif-condensed"
+            android:textSize="25sp"
+            android:textColor="@color/background_white"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="Stay Fitness" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_marginBottom="15dp"
+            android:textSize="19sp"
+            android:fontFamily="sans-serif-condensed"
+            android:layout_marginStart="10dp"
+            android:layout_gravity="bottom"
+            android:textColor="@color/background_white"
+            android:layout_height="wrap_content"
+            android:text="Exclusive exercises to help you achieve your goal." />
+
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="bottom"
+        android:padding="0dp"
+        android:showDividers="middle"
+        style="?android:attr/buttonBarStyle"
+        android:layout_height="match_parent">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:onClick="skip"
+            android:textColor="@color/background_white"
+            android:fontFamily="sans-serif-condensed"
+            style="?android:attr/buttonBarButtonStyle"
+            android:textSize="18sp"
+            android:text="Skip"
+            android:layout_height="wrap_content" />
+
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textColor="@color/background_white"
+            android:background="?android:attr/selectableItemBackground"
+            android:fontFamily="sans-serif-condensed"
+            android:onClick="signUp"
+            android:textSize="18sp"
+            style="?android:attr/buttonBarButtonStyle"
+            android:text="Sign up"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+</LinearLayout>
