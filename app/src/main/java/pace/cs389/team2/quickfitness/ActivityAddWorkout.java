@@ -67,13 +67,13 @@ public class ActivityAddWorkout extends ActionBarActivity implements TimeDialogF
 
     public void promptSetDaysDialog(View view) {
 
-        buildNumberPickerDialog("Number of days", "Set number of days", 1, 7);
+        buildNumberPickerDialog(null, "Select the number of days (in a week) you want the workout to last", 1, 7);
     }
-
+//"Number of days"
     public void promptSetDurationDialog(View view) {
 
-        buildNumberPickerDialog("Workout duration", "Set workout duration.", 10, 45);
-    }
+        buildNumberPickerDialog(null, "Set your workout duration in minutes.", 10, 45);
+    }//"Workout duration"
 
     public void buildNumberPickerDialog(String dialogTitle, String dialogDesc, int minValue, int maxValue) {
 
