@@ -21,7 +21,6 @@ package pace.cs389.team2.quickfitness.adapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -45,13 +44,13 @@ import pace.cs389.team2.quickfitness.model.ExercisesItem;
 public class CustomExercisesListAdapter extends RecyclerView.Adapter<CustomExercisesListAdapter.ExercisesViewHolder> implements View.OnClickListener {
 
     public static final String EXERCISE_TAG = "exercise_ref";
-    private List<ExercisesItem> mExercisesList;
-    private View itemView;
-    ExercisesItem exercisesItem;
-    private int lastPosition = -1;
-    RecyclerView mRecyclerView;
     static Bitmap exerciseIcon;
     static Bitmap exerciseIconResized;
+    ExercisesItem exercisesItem;
+    RecyclerView mRecyclerView;
+    private List<ExercisesItem> mExercisesList;
+    private View itemView;
+    private int lastPosition = -1;
     private Activity mActivity;
 
     public CustomExercisesListAdapter(Activity mActivity, List<ExercisesItem> exercisesList, RecyclerView mRecyclerView) {
@@ -92,15 +91,15 @@ public class CustomExercisesListAdapter extends RecyclerView.Adapter<CustomExerc
             exercisesViewHolder.mCardTopLayout.setBackgroundResource(R.color.background_list_item_gray);
         }
 
-        exerciseIcon = BitmapFactory.decodeResource(itemView.getResources(), exercisesItem.getIcon());
+        // exerciseIcon = BitmapFactory.decodeResource(itemView.getResources(), exercisesItem.getIcon());
 
-        exerciseIconResized = Bitmap.createScaledBitmap(exerciseIcon,
-                100, 100, false);
+        // exerciseIconResized = Bitmap.createScaledBitmap(exerciseIcon,
+        //         100, 100, false);
 
 
-        if (exerciseIconResized != null) {
-            exercisesViewHolder.mImageExerciseTop.setImageBitmap(exerciseIconResized);
-        }
+        // if (exerciseIconResized != null) {
+        exercisesViewHolder.mImageExerciseTop.setImageResource(exercisesItem.getIcon());
+        // }
 
 
         exercisesViewHolder.mExerciseTitle.setText(exercisesItem.getName());
@@ -111,10 +110,28 @@ public class CustomExercisesListAdapter extends RecyclerView.Adapter<CustomExerc
         // ImageLoader task = new ImageLoader();
         // task.execute(exercisesItem.getIcon());
 
-        setAnimation(exercisesViewHolder.mCardItemLayout, i);
+        //setAnimation(exercisesViewHolder.mCardItemLayout, i);
 
     }
 
+    @Override
+    public void onClick(final View view) {
+        int itemPosition = mRecyclerView.getChildPosition(view);
+        ExercisesItem mItem = mExercisesList.get(itemPosition);
+        Intent intent = new Intent(itemView.getContext(), ActivityExerciseDetails.class);
+        intent.putExtra(EXERCISE_TAG, mItem);
+        itemView.getContext().startActivity(intent);
+
+    }
+
+    private void setAnimation(View viewToAnimate, int position) {
+        // If the bound view wasn't previously displayed on screen, it's animated
+        if (position > lastPosition) {
+            Animation animation = AnimationUtils.loadAnimation(itemView.getContext(), android.R.anim.slide_in_left);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
+        }
+    }
 
     public static class ExercisesViewHolder extends RecyclerView.ViewHolder {
         protected TextView mExerciseTitle;
@@ -134,16 +151,6 @@ public class CustomExercisesListAdapter extends RecyclerView.Adapter<CustomExerc
         }
     }
 
-    @Override
-    public void onClick(final View view) {
-        int itemPosition = mRecyclerView.getChildPosition(view);
-        ExercisesItem mItem = mExercisesList.get(itemPosition);
-        Intent intent = new Intent(itemView.getContext(), ActivityExerciseDetails.class);
-        intent.putExtra(EXERCISE_TAG, mItem);
-        itemView.getContext().startActivity(intent);
-
-    }
-
     private class ImageLoader extends AsyncTask<Integer, Void, Integer> {
 
         ExercisesViewHolder exercisesViewHolder = new ExercisesViewHolder(itemView);
@@ -158,15 +165,6 @@ public class CustomExercisesListAdapter extends RecyclerView.Adapter<CustomExerc
             exercisesViewHolder.mImageExerciseTop.setImageResource(imageResourceId);
         }
 
-    }
-
-    private void setAnimation(View viewToAnimate, int position) {
-        // If the bound view wasn't previously displayed on screen, it's animated
-        if (position > lastPosition) {
-            Animation animation = AnimationUtils.loadAnimation(itemView.getContext(), android.R.anim.slide_in_left);
-            viewToAnimate.startAnimation(animation);
-            lastPosition = position;
-        }
     }
 
 }

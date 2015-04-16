@@ -4,12 +4,12 @@
 
     <style name="Theme.MyTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- customize the color palette -->
-        <item name="colorPrimary">@color/material_blue_500</item>
-        <item name="colorPrimaryDark">@color/material_blue_700</item>
+        <item name="colorPrimary">@color/material_blue_700</item>
+        <item name="colorPrimaryDark">@color/material_blue_500</item>
         <item name="colorAccent">@color/background_white</item>
 
-        <item name="android:actionModeBackground">@color/material_blue_500</item>
-        <item name="actionModeBackground">@color/material_blue_500</item>
+        <item name="android:actionModeBackground">@color/material_blue_700</item>
+        <item name="actionModeBackground">@color/material_blue_700</item>
     </style>
 
 </resources>

@@ -19,58 +19,68 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/background_light_gray"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/text_color_lighter_grey"
     tools:context="pace.cs389.team2.quickfitness.ActivityIntroFragment">
 
-    <FrameLayout
+
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="460dp">
+        android:gravity="center"
+        android:layout_marginTop="70dp"
+        android:textStyle="bold"
+        android:textSize="35sp"
+        android:textColor="@color/material_blue_700"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_app_name_intro" />
 
+    <EditText
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="80dp"
+        android:id="@+id/edt_user_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edittext_top_bg"
+        android:padding="12dp"
+        android:hint="@string/txt_username_intro"
+        android:drawablePadding="10dp"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="20sp"
+        android:textColorHint="#cccccc"
+        android:drawableStart="@mipmap/ic_person_black_24dp" />
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/jumping_rope_large" />
+    <EditText
+        android:id="@+id/edt_password"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_width="match_parent"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="20sp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edittext_bottom_bg"
+        android:layout_marginTop="-2dp"
+        android:padding="12dp"
+        android:drawablePadding="10dp"
+        android:hint="@string/txt_password_intro"
+        android:textColorHint="#cccccc"
+        android:inputType="textPassword"
+        android:drawableStart="@mipmap/ic_lock_black_24dp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:layout_marginTop="55dp"
-            android:textSize="30sp"
-            android:textColor="@color/background_white"
-            android:layout_height="wrap_content"
-            android:text="QuickFitness" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_login_intro"
+        android:layout_marginTop="10dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-condensed"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:background="@color/material_blue_700"
+        android:textColor="@color/background_white" />
 
-
-        <TextView
-            android:layout_width="match_parent"
-            android:textStyle="bold"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="60dp"
-            android:fontFamily="sans-serif-condensed"
-            android:textSize="25sp"
-            android:textColor="@color/background_white"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:text="Stay Fitness" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_marginBottom="15dp"
-            android:textSize="19sp"
-            android:fontFamily="sans-serif-condensed"
-            android:layout_marginStart="10dp"
-            android:layout_gravity="bottom"
-            android:textColor="@color/background_white"
-            android:layout_height="wrap_content"
-            android:text="Exclusive exercises to help you achieve your goal." />
-
-
-    </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -85,24 +95,24 @@
             android:layout_weight="1"
             android:background="?android:attr/selectableItemBackground"
             android:onClick="skip"
-            android:textColor="@color/background_white"
+            android:textColor="@color/text_color_dark_grey"
             android:fontFamily="sans-serif-condensed"
             style="?android:attr/buttonBarButtonStyle"
             android:textSize="18sp"
-            android:text="Skip"
+            android:text="@string/txt_skip_intro"
             android:layout_height="wrap_content" />
 
 
         <Button
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:textColor="@color/background_white"
+            android:textColor="@color/text_color_dark_grey"
             android:background="?android:attr/selectableItemBackground"
             android:fontFamily="sans-serif-condensed"
             android:onClick="signUp"
             android:textSize="18sp"
             style="?android:attr/buttonBarButtonStyle"
-            android:text="Sign up"
+            android:text="@string/txt_sign_up_intro"
             android:layout_height="wrap_content" />
     </LinearLayout>
 

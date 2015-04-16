@@ -27,12 +27,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import pace.cs389.team2.quickfitness.R;
 import pace.cs389.team2.quickfitness.model.CategoryItem;
-import pace.cs389.team2.quickfitness.model.SpinnerNavItem;
 
 /**
  * Created by Luiz on 28/03/2015.

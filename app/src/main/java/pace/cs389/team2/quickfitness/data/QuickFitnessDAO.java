@@ -31,6 +31,7 @@ import java.util.List;
 import pace.cs389.team2.quickfitness.MainActivity;
 import pace.cs389.team2.quickfitness.model.CategoryItem;
 import pace.cs389.team2.quickfitness.model.ExercisesItem;
+import pace.cs389.team2.quickfitness.model.UserItem;
 import pace.cs389.team2.quickfitness.model.WorkoutExercisesItem;
 import pace.cs389.team2.quickfitness.model.WorkoutItem;
 import pace.cs389.team2.quickfitness.model.WorkoutStatusItem;
@@ -66,6 +67,18 @@ public class QuickFitnessDAO {
             QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_VIDEO,
             QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_CATEGORY_KEY
     };
+
+
+    private static final String[] PROJECTION_TABLE_USER = {QuickFitnessContract.UserEntry.COLUMN_USER_ID,
+            QuickFitnessContract.UserEntry.COLUMN_USER_NAME,
+            QuickFitnessContract.UserEntry.COLUMN_USER_EMAIL,
+            QuickFitnessContract.UserEntry.COLUMN_USER_PASSWORD,
+            QuickFitnessContract.UserEntry.COLUMN_USER_GENRE,
+            QuickFitnessContract.UserEntry.COLUMN_USER_PICTURE
+
+    };
+
+
     private static QuickFitnessDAO instance;
     private static SQLiteDatabase sqLiteDatabase;
     QuickFitnessDbHelper helper;
@@ -101,6 +114,18 @@ public class QuickFitnessDAO {
         sqLiteDatabase.insert(QuickFitnessContract.WorkoutSetEntry.TABLE_NAME, null, values);
     }
 
+    public void insertUser(UserItem user) {
+        ContentValues values = new ContentValues();
+
+        values.put(QuickFitnessContract.UserEntry.COLUMN_USER_NAME, user.getUsername());
+        values.put(QuickFitnessContract.UserEntry.COLUMN_USER_EMAIL, user.getEmail());
+        values.put(QuickFitnessContract.UserEntry.COLUMN_USER_PASSWORD, user.getPassword());
+        values.put(QuickFitnessContract.UserEntry.COLUMN_USER_PICTURE, user.getPicture());
+        values.put(QuickFitnessContract.UserEntry.COLUMN_USER_GENRE, user.getGenre());
+
+        sqLiteDatabase.insert(QuickFitnessContract.UserEntry.TABLE_NAME, null, values);
+    }
+
     public List<CategoryItem> listExercisesCategories() {
         List<CategoryItem> categories = new ArrayList<>();
 
@@ -125,6 +150,33 @@ public class QuickFitnessDAO {
 
 
         return categories;
+    }
+
+
+    public List<UserItem> listRegisteredUsers() {
+        List<UserItem> users = new ArrayList<>();
+
+        Cursor cursor = sqLiteDatabase.query(QuickFitnessContract.UserEntry.TABLE_NAME, PROJECTION_TABLE_USER,
+                null, null, null, null, null);
+
+        UserItem userItem;
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    userItem = new UserItem(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getInt(4), cursor.getString(5));
+                    users.add(userItem);
+                } while (cursor.moveToNext());
+            }
+        } catch (SQLiteDatabaseLockedException exception) {
+            Log.e(MainActivity.APP_TAG, exception.getMessage());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+
+        return users;
     }
 
     public CategoryItem categoryById(int id) {

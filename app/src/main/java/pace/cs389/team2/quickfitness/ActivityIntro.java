@@ -24,9 +24,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Toast;
 
 
 public class ActivityIntro extends Activity {
@@ -35,11 +32,12 @@ public class ActivityIntro extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        /*requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);*/
 
         setContentView(R.layout.activity_intro);
+
     }
 
     public void skip(View view) {
@@ -48,15 +46,14 @@ public class ActivityIntro extends Activity {
     }
 
     public void signUp(View view) {
-        Toast.makeText(this, "Sign up", Toast.LENGTH_LONG).show();
-        finish();
+        startActivity(new Intent(this, ActivitySignUpUser.class));
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_activity_intro, menu);
-        return true;
+        // getMenuInflater().inflate(R.menu.menu_activity_intro, menu);
+        return false;
     }
 
     @Override
@@ -64,12 +61,12 @@ public class ActivityIntro extends Activity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        // int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        /*if (id == R.id.action_settings) {
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }

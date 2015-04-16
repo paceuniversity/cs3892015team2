@@ -12,6 +12,7 @@
     <string name="exercises_by_workout_label">Workout Exercises</string>
 
     <string name="action_delete">Delete</string>
+    <string name="action_skip">Skip</string>
 
 
     <string name="exercise_details">Exercise Details</string>
@@ -144,5 +145,21 @@
     <string name="title_activity_activity_add_workout">New Workout</string>
     <string name="title_activity_activity_statistics">Graphs</string>
     <string name="title_activity_activity_intro">Intro</string>
+    <string name="title_activity_activity_sign_up_user">Sign up</string>
+    <string name="txt_upload_picture">Upload Picture</string>
+    <string name="edt_name">Full Name</string>
+    <string name="radio_male">Male</string>
+    <string name="txt_radio_female">Female</string>
+    <string name="txt_btn_create_account">Create Account</string>
+    <string name="edt_age">Age</string>
+    <string name="txt_genre">Genre</string>
+    <string name="txt_user_image">user_image</string>
+    <string name="txt_skip_intro">Skip</string>
+    <string name="txt_sign_up_intro">Sign up</string>
+    <string name="txt_login_intro">Login</string>
+    <string name="txt_password_intro">Password</string>
+    <string name="txt_username_intro">Username</string>
+    <string name="txt_app_name_intro">QuickFitness</string>
+    <string name="txt_email_intro">Email</string>
 
 </resources>
