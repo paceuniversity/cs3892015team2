@@ -1,6 +1,8 @@
 package pace.cs389.team2.quickfitness.model;
 
-public class UserItem {
+import java.io.Serializable;
+
+public class UserItem implements Serializable {
 
     private int id;
     private String username;
@@ -15,6 +17,11 @@ public class UserItem {
         this.password = password;
         this.genre = genre;
         this.picture = picture;
+    }
+
+    public UserItem(String email, String password) {
+        this.email = email;
+        this.password = password;
     }
 
     public UserItem(int id, String username, String email, String password, int genre, String picture) {

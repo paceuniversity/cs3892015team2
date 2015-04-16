@@ -21,27 +21,48 @@ package pace.cs389.team2.quickfitness;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import pace.cs389.team2.quickfitness.data.QuickFitnessDAO;
+import pace.cs389.team2.quickfitness.model.UserItem;
+import pace.cs389.team2.quickfitness.preferences.UserLoggedPreference;
+import pace.cs389.team2.quickfitness.utils.PasswordHashGenerator;
 
 
 public class ActivityIntro extends Activity {
+
+    private EditText mUserEmail;
+    private EditText mUserPassword;
+    public static final String USER_LOGGED_IN_KEY = "user_logged_success";
+    private UserLoggedPreference prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /*requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);*/
-
         setContentView(R.layout.activity_intro);
+
+        prefs = new UserLoggedPreference(getApplicationContext());
+
+        if (!prefs.isFirstTime()) {
+            Intent intent = new Intent(getApplicationContext(),
+                    MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(intent);
+            finish();
+        }
+
+        mUserEmail = (EditText) findViewById(R.id.edt_user_name);
+        mUserPassword = (EditText) findViewById(R.id.edt_password);
 
     }
 
     public void skip(View view) {
         startActivity(new Intent(this, MainActivity.class));
+        prefs.setOld(false);
         finish();
     }
 
@@ -49,25 +70,64 @@ public class ActivityIntro extends Activity {
         startActivity(new Intent(this, ActivitySignUpUser.class));
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        // getMenuInflater().inflate(R.menu.menu_activity_intro, menu);
-        return false;
+    public void userLogin(View view) {
+
+        QuickFitnessDAO dao = QuickFitnessDAO.getInstance(this);
+
+        if (checkForm()) {
+            String userEmail = mUserEmail.getText().toString();
+            String salt = "Random$SaltValue#WithSpecialCharacters12@$@4&#%^$*";
+            String passwordHash = PasswordHashGenerator.md5(mUserPassword.getText().toString().trim() + salt);
+
+            UserItem userItem = new UserItem(userEmail, passwordHash);
+
+            UserItem userLogged = dao.userLoginAuthentication(userItem);
+
+            if (userLogged != null) {
+                Toast.makeText(this, "User successfully logged. " + userLogged.getUsername(), Toast.LENGTH_LONG).show();
+
+                UserLoggedPreference prefs = new UserLoggedPreference(this);
+                prefs.setName(userLogged.getUsername().trim());
+                prefs.setEmail(userLogged.getEmail().trim());
+                prefs.setOld(true);
+
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.putExtra(USER_LOGGED_IN_KEY, userLogged);
+                startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(this, "Email and password entered don't match.", Toast.LENGTH_LONG).show();
+                clearFields();
+            }
+
+        }
+
+
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        // int id = item.getItemId();
+    private void clearFields() {
+        mUserEmail.setText(null);
+        mUserPassword.setText(null);
+        mUserEmail.requestFocus();
+    }
 
-        //noinspection SimplifiableIfStatement
-        /*if (id == R.id.action_settings) {
-            return true;
-        }*/
 
-        return super.onOptionsItemSelected(item);
+    private boolean checkForm() {
+
+        boolean isFieldSet;
+
+        if (TextUtils.isEmpty(mUserEmail.getText().toString())) {
+            mUserEmail.setError("Please, enter your email.");
+            isFieldSet = false;
+        } else if (TextUtils.isEmpty(mUserPassword.getText().toString())) {
+            mUserPassword.setError("Please, type your password.");
+            isFieldSet = false;
+
+        } else {
+            isFieldSet = true;
+        }
+
+        return isFieldSet;
+
     }
 }

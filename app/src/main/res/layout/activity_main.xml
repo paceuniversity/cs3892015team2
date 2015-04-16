@@ -18,8 +18,8 @@
     <LinearLayout
         android:id="@+id/group_layout"
         android:layout_width="300dp"
-        android:layout_gravity="start"
         android:orientation="vertical"
+        android:layout_gravity="start"
         android:layout_height="match_parent">
 
 
@@ -31,14 +31,15 @@
                 android:layout_width="300dp"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/drawer_header_image_content_desc"
-                android:src="@drawable/wall_back" />
+                android:scaleType="centerCrop"
+                android:background="@drawable/silver_background" />
 
             <LinearLayout
                 android:layout_width="280dp"
                 android:layout_gravity="bottom"
-                android:layout_marginBottom="65dp"
+                android:layout_marginBottom="10dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="10dp"
                 android:orientation="vertical">
 
 
@@ -51,16 +52,27 @@
                     android:src="@mipmap/ic_account_circle_white_48dp" />
 
                 <TextView
+                    android:id="@+id/txt_user_logged"
                     android:layout_gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
-                    android:layout_marginTop="10dp"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textColor="@color/text_color_dark_grey" />
+
+                <TextView
+                    android:id="@+id/txt_user_logged_email"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
                     android:textSize="15sp"
-                    android:fontFamily="sans-serif-regular"
-                    android:text="@string/drawer_txt_user_name"
-                    android:textColor="@color/background_white" />
+                    android:fontFamily="sans-serif-condensed"
+                    android:textColor="@color/text_color_lighter_grey" />
 
 
             </LinearLayout>

@@ -31,6 +31,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ import java.util.List;
 
 import pace.cs389.team2.quickfitness.adapter.CustomDrawerAdapter;
 import pace.cs389.team2.quickfitness.model.DrawerItem;
+import pace.cs389.team2.quickfitness.preferences.UserLoggedPreference;
 
 /**
  * MainActivity will launch the app's home screen
@@ -61,6 +63,8 @@ public class MainActivity extends ActionBarActivity {
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private LinearLayout mGroupView;
+    TextView txtUserLoggedIn;
+    TextView txtUserLoggedInEmail;
     private List<DrawerItem> mDataList;
 
     @Override
@@ -74,6 +78,19 @@ public class MainActivity extends ActionBarActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.container);
         mDrawerList = (ListView) findViewById(R.id.list_left_drawer);
         mGroupView = (LinearLayout) findViewById(R.id.group_layout);
+        txtUserLoggedIn = (TextView) findViewById(R.id.txt_user_logged);
+        txtUserLoggedInEmail = (TextView) findViewById(R.id.txt_user_logged_email);
+
+        UserLoggedPreference prefs = new UserLoggedPreference(getApplicationContext());
+        //UserItem userItem = (UserItem) getIntent().getSerializableExtra(ActivityIntro.USER_LOGGED_IN_KEY);
+
+        if (!prefs.isFirstTime()) {
+            txtUserLoggedIn.setText(prefs.getName());
+            txtUserLoggedInEmail.setText(prefs.getEmail());
+
+            Toast.makeText(this, "Welcome back, " + prefs.getName(),
+                    Toast.LENGTH_LONG).show();
+        }
 
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow,
                 GravityCompat.START);
@@ -139,7 +156,7 @@ public class MainActivity extends ActionBarActivity {
 
     public void selectItem(int position) {
 
-        Fragment fragment = null;
+        Fragment fragment;
         Bundle args = new Bundle();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
 

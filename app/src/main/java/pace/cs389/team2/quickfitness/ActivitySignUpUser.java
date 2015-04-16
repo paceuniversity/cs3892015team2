@@ -46,12 +46,20 @@ public class ActivitySignUpUser extends ActionBarActivity {
 
         int genre = mGenreGroup.getCheckedRadioButtonId() == R.id.radio_male ? 0 : 1;
 
+        //List<UserItem> users = dao.listRegisteredUsers();
+
         if (checkForm()) {
             UserItem mUserItem = new UserItem(mUserName.getText().toString(), mUserEmail.getText().toString(), passwordHash, genre, "picture_path");
-            dao.insertUser(mUserItem);
+            int rowsUpdated = dao.insertUser(mUserItem);
 
-            Toast.makeText(this, "Successfully registered.", Toast.LENGTH_LONG).show();
-            finish();
+            if (rowsUpdated != 0) {
+                Toast.makeText(this, "Successfully registered.", Toast.LENGTH_LONG).show();
+                finish();
+            } else {
+                Toast.makeText(this, "Couldn't process your request.", Toast.LENGTH_LONG).show();
+                clearFields();
+            }
+
         }
 
     }
@@ -106,30 +114,38 @@ public class ActivitySignUpUser extends ActionBarActivity {
         }
     }
 
+    private void clearFields() {
+        mUserName.setText(null);
+        mUserEmail.setText(null);
+        mUserPassword.setText(null);
+        mGenreGroup.clearCheck();
+        mUserEmail.requestFocus();
+    }
+
     private boolean checkForm() {
 
-        boolean isFiedSet;
+        boolean isFieldSet;
 
         if (TextUtils.isEmpty(mUserName.getText().toString())) {
             mUserName.setError("Please, enter your name.");
-            isFiedSet = false;
+            isFieldSet = false;
         } else if (TextUtils.isEmpty(mUserEmail.getText().toString())) {
             mUserEmail.setError("Please, provide a valid email address.");
-            isFiedSet = false;
+            isFieldSet = false;
 
         } else if (TextUtils.isEmpty(mUserPassword.getText().toString())) {
             mUserPassword.setError("Please, create a secure password.");
-            isFiedSet = false;
+            isFieldSet = false;
 
         } else if ((!mGenreMale.isChecked()) && (!mGenreFemale.isChecked())) {
             Toast.makeText(this, "Please, select your genre.", Toast.LENGTH_LONG).show();
-            isFiedSet = false;
+            isFieldSet = false;
 
         } else {
-            isFiedSet = true;
+            isFieldSet = true;
         }
 
-        return isFiedSet;
+        return isFieldSet;
 
     }
 

@@ -114,7 +114,7 @@ public class QuickFitnessDAO {
         sqLiteDatabase.insert(QuickFitnessContract.WorkoutSetEntry.TABLE_NAME, null, values);
     }
 
-    public void insertUser(UserItem user) {
+    public int insertUser(UserItem user) {
         ContentValues values = new ContentValues();
 
         values.put(QuickFitnessContract.UserEntry.COLUMN_USER_NAME, user.getUsername());
@@ -123,8 +123,20 @@ public class QuickFitnessDAO {
         values.put(QuickFitnessContract.UserEntry.COLUMN_USER_PICTURE, user.getPicture());
         values.put(QuickFitnessContract.UserEntry.COLUMN_USER_GENRE, user.getGenre());
 
-        sqLiteDatabase.insert(QuickFitnessContract.UserEntry.TABLE_NAME, null, values);
+        long inserted = sqLiteDatabase.insert(QuickFitnessContract.UserEntry.TABLE_NAME, null, values);
+
+        return (int) inserted;
     }
+
+    public void insertExerciseWorkout(WorkoutExercisesItem workoutExercisesItem) {
+        ContentValues values = new ContentValues();
+
+        values.put(QuickFitnessContract.WorkoutExerciseEntry.COLUMN_WORKOUT_KEY, workoutExercisesItem.getWorkoutId());
+        values.put(QuickFitnessContract.WorkoutExerciseEntry.COLUMN_EXERCISE_KEY, workoutExercisesItem.getExerciseId());
+
+        sqLiteDatabase.insert(QuickFitnessContract.WorkoutExerciseEntry.TABLE_NAME, null, values);
+    }
+
 
     public List<CategoryItem> listExercisesCategories() {
         List<CategoryItem> categories = new ArrayList<>();
@@ -330,6 +342,32 @@ public class QuickFitnessDAO {
         return itemWorkout;
     }
 
+
+    public UserItem userLoginAuthentication(UserItem userItem) {
+
+        Cursor cursor = sqLiteDatabase.query(QuickFitnessContract.UserEntry.TABLE_NAME, PROJECTION_TABLE_USER,
+                QuickFitnessContract.UserEntry.COLUMN_USER_EMAIL + " = ? " + " AND " + QuickFitnessContract.UserEntry.COLUMN_USER_PASSWORD + " = ? ", new String[]{userItem.getEmail(), userItem.getPassword()}, null, null, null);
+
+        UserItem user = null;
+
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    user = new UserItem(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getInt(4), cursor.getString(5));
+                } while (cursor.moveToNext());
+            }
+        } catch (SQLiteDatabaseLockedException exception) {
+            Log.e(MainActivity.APP_TAG, exception.getMessage());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        return user;
+    }
+
+
     public List<WorkoutItem> listWorkouts() {
         List<WorkoutItem> workouts = new ArrayList<>();
 
@@ -377,16 +415,6 @@ public class QuickFitnessDAO {
         }
         return itemStatus;
     }
-
-    public void insertExerciseWorkout(WorkoutExercisesItem workoutExercisesItem) {
-        ContentValues values = new ContentValues();
-
-        values.put(QuickFitnessContract.WorkoutExerciseEntry.COLUMN_WORKOUT_KEY, workoutExercisesItem.getWorkoutId());
-        values.put(QuickFitnessContract.WorkoutExerciseEntry.COLUMN_EXERCISE_KEY, workoutExercisesItem.getExerciseId());
-
-        sqLiteDatabase.insert(QuickFitnessContract.WorkoutExerciseEntry.TABLE_NAME, null, values);
-    }
-
 
     public List<WorkoutExercisesItem> listExercisesByWorkout() {
         List<WorkoutExercisesItem> workouts = new ArrayList<>();
