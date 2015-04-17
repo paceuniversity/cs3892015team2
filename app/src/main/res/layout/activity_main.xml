@@ -44,10 +44,11 @@
 
 
                 <ImageView
+                    android:id="@+id/img_main_user_pic"
                     android:onClick="setUserPicture"
-                    android:layout_width="wrap_content"
+                    android:layout_width="65dp"
                     android:layout_marginStart="5dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="65dp"
                     android:contentDescription="@string/drawer_set_user_picture_content_desc"
                     android:src="@mipmap/ic_account_circle_white_48dp" />
 

@@ -367,6 +367,30 @@ public class QuickFitnessDAO {
         return user;
     }
 
+    public UserItem loadLoggedUser(String userName) {
+
+        Cursor cursor = sqLiteDatabase.query(QuickFitnessContract.UserEntry.TABLE_NAME, PROJECTION_TABLE_USER,
+                QuickFitnessContract.UserEntry.COLUMN_USER_NAME + " = ? ", new String[]{userName}, null, null, null);
+
+        UserItem user = null;
+
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    user = new UserItem(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getInt(4), cursor.getString(5));
+                } while (cursor.moveToNext());
+            }
+        } catch (SQLiteDatabaseLockedException exception) {
+            Log.e(MainActivity.APP_TAG, exception.getMessage());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        return user;
+    }
+
 
     public List<WorkoutItem> listWorkouts() {
         List<WorkoutItem> workouts = new ArrayList<>();

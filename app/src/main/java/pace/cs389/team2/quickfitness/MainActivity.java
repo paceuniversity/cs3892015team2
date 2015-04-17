@@ -21,6 +21,8 @@ package pace.cs389.team2.quickfitness;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
@@ -29,6 +31,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -38,8 +41,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pace.cs389.team2.quickfitness.adapter.CustomDrawerAdapter;
+import pace.cs389.team2.quickfitness.data.QuickFitnessDAO;
 import pace.cs389.team2.quickfitness.model.DrawerItem;
+import pace.cs389.team2.quickfitness.model.UserItem;
 import pace.cs389.team2.quickfitness.preferences.UserLoggedPreference;
+import pace.cs389.team2.quickfitness.utils.BitmapUtils;
 
 /**
  * MainActivity will launch the app's home screen
@@ -66,6 +72,7 @@ public class MainActivity extends ActionBarActivity {
     TextView txtUserLoggedIn;
     TextView txtUserLoggedInEmail;
     private List<DrawerItem> mDataList;
+    ImageView mUserPicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,11 +87,24 @@ public class MainActivity extends ActionBarActivity {
         mGroupView = (LinearLayout) findViewById(R.id.group_layout);
         txtUserLoggedIn = (TextView) findViewById(R.id.txt_user_logged);
         txtUserLoggedInEmail = (TextView) findViewById(R.id.txt_user_logged_email);
+        mUserPicture = (ImageView) findViewById(R.id.img_main_user_pic);
 
         UserLoggedPreference prefs = new UserLoggedPreference(getApplicationContext());
-        //UserItem userItem = (UserItem) getIntent().getSerializableExtra(ActivityIntro.USER_LOGGED_IN_KEY);
+        UserItem userItem = QuickFitnessDAO.getInstance(this).loadLoggedUser(prefs.getName());
 
         if (!prefs.isFirstTime()) {
+
+            Bitmap mIcon = BitmapFactory
+                    .decodeFile(userItem.getPicture());
+
+            Bitmap updatedIcon = BitmapUtils.getRoundedCroppedBitmap(mIcon, 500);
+
+
+            if (updatedIcon != null) {
+                mUserPicture.setImageBitmap(updatedIcon);
+
+            }
+
             txtUserLoggedIn.setText(prefs.getName());
             txtUserLoggedInEmail.setText(prefs.getEmail());
 

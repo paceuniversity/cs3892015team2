@@ -1,7 +1,11 @@
 package pace.cs389.team2.quickfitness;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
@@ -11,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -29,6 +34,8 @@ public class ActivitySignUpUser extends ActionBarActivity {
     private static RadioButton mGenreMale;
     private static RadioButton mGenreFemale;
     private QuickFitnessDAO dao;
+    private static final int RESULT_LOAD_IMG = 100;
+    private String imgPathDecode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,16 +47,58 @@ public class ActivitySignUpUser extends ActionBarActivity {
         dao = QuickFitnessDAO.getInstance(this);
     }
 
+    public void pickImage(View view) {
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+        startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            // When an image is picked
+            if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK
+                    && null != data) {
+
+                // Get the Image from data
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+                // Get the cursor
+                Cursor cursor = getContentResolver().query(selectedImage,
+                        filePathColumn, null, null, null);
+
+                // Move to first row
+                cursor.moveToFirst();
+
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                imgPathDecode = cursor.getString(columnIndex);
+                cursor.close();
+                ImageView imgView = (ImageView) findViewById(R.id.img_user_picture);
+
+                // Set the Image in ImageView after decoding the String
+                imgView.setImageBitmap(BitmapFactory
+                        .decodeFile(imgPathDecode));
+            } else {
+                Toast.makeText(this, "You haven't picked Image",
+                        Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG)
+                    .show();
+        }
+
+    }
+
     public void userSignUp(View view) {
         String salt = "Random$SaltValue#WithSpecialCharacters12@$@4&#%^$*";
         String passwordHash = PasswordHashGenerator.md5(mUserPassword.getText().toString().trim() + salt);
 
         int genre = mGenreGroup.getCheckedRadioButtonId() == R.id.radio_male ? 0 : 1;
 
-        //List<UserItem> users = dao.listRegisteredUsers();
-
         if (checkForm()) {
-            UserItem mUserItem = new UserItem(mUserName.getText().toString(), mUserEmail.getText().toString(), passwordHash, genre, "picture_path");
+            UserItem mUserItem = new UserItem(mUserName.getText().toString(), mUserEmail.getText().toString(), passwordHash, genre, imgPathDecode);
             int rowsUpdated = dao.insertUser(mUserItem);
 
             if (rowsUpdated != 0) {

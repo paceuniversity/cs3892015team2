@@ -47,6 +47,8 @@ public class ActivityIntro extends Activity {
 
         prefs = new UserLoggedPreference(getApplicationContext());
 
+        prefs.logOut();
+
         if (!prefs.isFirstTime()) {
             Intent intent = new Intent(getApplicationContext(),
                     MainActivity.class);
