@@ -35,6 +35,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -80,6 +81,7 @@ public class MainActivity extends ActionBarActivity {
     private static final int RESULT_LOAD_IMG = 100;
     String imgPathDecode;
     private UserItem userItem;
+    FrameLayout mDrawerTop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,11 +97,13 @@ public class MainActivity extends ActionBarActivity {
         txtUserLoggedIn = (TextView) findViewById(R.id.txt_user_logged);
         txtUserLoggedInEmail = (TextView) findViewById(R.id.txt_user_logged_email);
         mUserPicture = (ImageView) findViewById(R.id.img_main_user_pic);
+        mDrawerTop = (FrameLayout) findViewById(R.id.drawer_top_place_holder);
 
         UserLoggedPreference prefs = new UserLoggedPreference(getApplicationContext());
 
         if (!prefs.isFirstTime()) {
             userItem = QuickFitnessDAO.getInstance(this).loadLoggedUser(prefs.getName());
+            mDrawerTop.setVisibility(View.VISIBLE);
             mUserPicture.setVisibility(View.VISIBLE);
 
             if (userItem != null) {
@@ -202,14 +206,17 @@ public class MainActivity extends ActionBarActivity {
                 fragment = new ActivitySetGoal.FragmentSetGoal();
                 break;
             case 2:
-                fragment = new ActivityWorkoutsList.FragmentWorkouts();
+                UserLoggedPreference prefs = new UserLoggedPreference(this);
+                if (prefs.isFirstTime()) {
+                    startActivity(new Intent(this, ActivityIntro.class));
+                    fragment = new FragmentMainContent();
+                    finish();
+                } else {
+                    fragment = new ActivityWorkoutsList.FragmentWorkouts();
+                }
                 break;
             case 3:
                 fragment = new FragmentMainContent();
-              /*  args.putString(FragmentMainContent.ITEM_NAME, mDataList.get(position)
-                        .getmNameItem());
-                args.putInt(FragmentMainContent.IMAGE_RESOURCE_ID, mDataList
-                        .get(position).getmIconRes());*/
                 break;
             case 4:
                 fragment = new ActivityStatistics.StatisticsFragment();
@@ -232,7 +239,6 @@ public class MainActivity extends ActionBarActivity {
                 fragment = new FragmentMainContent();
                 break;
         }
-
 
         ft.replace(R.id.content_place_holder, fragment)
                 .commit();

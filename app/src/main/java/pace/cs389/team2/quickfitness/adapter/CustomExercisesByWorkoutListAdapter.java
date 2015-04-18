@@ -95,7 +95,7 @@ public class CustomExercisesByWorkoutListAdapter extends RecyclerView.Adapter<Cu
         ActivityWorkoutsList activityWorkoutsList = new ActivityWorkoutsList();
         //activityWorkoutsList.setWorkoutId(mItem.getId());
 
-        Toast.makeText(itemView.getContext(), "Id: " + activityWorkoutsList.getWorkoutId(), Toast.LENGTH_LONG).show();
+      //  Toast.makeText(itemView.getContext(), "Id: " + activityWorkoutsList.getWorkoutId(), Toast.LENGTH_LONG).show();
 
     }
 }

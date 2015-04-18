@@ -45,6 +45,10 @@ public class ActivitySignUpUser extends ActionBarActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.sign_up_user_place_holder, new ActivitySignUpUserFragment()).commit();
 
         dao = QuickFitnessDAO.getInstance(this);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     public void pickImage(View view) {

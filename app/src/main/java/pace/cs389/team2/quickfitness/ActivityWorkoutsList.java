@@ -41,26 +41,15 @@ import static pace.cs389.team2.quickfitness.utils.OrientationUtils.isPortrait;
 
 public class ActivityWorkoutsList extends ActionBarActivity {
 
-    private int workoutId;
-
-    public int getWorkoutId() {
-        return workoutId;
-    }
-
-    public void setWorkoutId(int workoutId) {
-        this.workoutId = workoutId;
-    }
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         if (savedInstanceState != null) {
             getFragmentManager().beginTransaction().replace(R.id.content_place_holder, new FragmentWorkouts()).commit();
         }
-
     }
 
     public static class FragmentWorkouts extends Fragment implements View.OnClickListener {
