@@ -24,7 +24,6 @@ import android.content.SharedPreferences.Editor;
 
 /**
  * @since 04/16/2015
- * <p/>
  * This class provide methods to store in a SharedPreferences file whether the user has been already logged into the app.
  * Also, if the user is logged in, the app will not show the login screen again, once the user has done this process before.
  * This class also has a method that allows the user to logout of the application. If the user chooses to logout of the app, the SharedPreferences file is cleaned up (its content).

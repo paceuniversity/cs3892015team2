@@ -98,8 +98,20 @@ public class ActivitySignUpUser extends ActionBarActivity {
         int genre = mGenreGroup.getCheckedRadioButtonId() == R.id.radio_male ? 0 : 1;
 
         if (checkForm()) {
-            UserItem mUserItem = new UserItem(mUserName.getText().toString(), mUserEmail.getText().toString(), passwordHash, genre, imgPathDecode);
-            int rowsUpdated = dao.insertUser(mUserItem);
+
+            boolean isPictureNull = imgPathDecode == null;
+
+            UserItem mUserItem;
+            int rowsUpdated;
+
+            if (isPictureNull) {
+                mUserItem = new UserItem(mUserName.getText().toString(), mUserEmail.getText().toString(), passwordHash, genre, "");
+            } else {
+                mUserItem = new UserItem(mUserName.getText().toString(), mUserEmail.getText().toString(), passwordHash, genre, imgPathDecode);
+            }
+
+            rowsUpdated = dao.insertUser(mUserItem);
+
 
             if (rowsUpdated != 0) {
                 Toast.makeText(this, "Successfully registered.", Toast.LENGTH_LONG).show();

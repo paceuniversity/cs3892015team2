@@ -41,6 +41,10 @@ public class UserItem implements Serializable {
         this.id = id;
     }
 
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
     public String getUsername() {
         return username;
     }

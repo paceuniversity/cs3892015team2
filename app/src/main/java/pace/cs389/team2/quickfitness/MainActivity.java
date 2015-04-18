@@ -20,10 +20,14 @@ package pace.cs389.team2.quickfitness;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -73,6 +77,9 @@ public class MainActivity extends ActionBarActivity {
     TextView txtUserLoggedInEmail;
     private List<DrawerItem> mDataList;
     ImageView mUserPicture;
+    private static final int RESULT_LOAD_IMG = 100;
+    String imgPathDecode;
+    private UserItem userItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,19 +97,19 @@ public class MainActivity extends ActionBarActivity {
         mUserPicture = (ImageView) findViewById(R.id.img_main_user_pic);
 
         UserLoggedPreference prefs = new UserLoggedPreference(getApplicationContext());
-        UserItem userItem = QuickFitnessDAO.getInstance(this).loadLoggedUser(prefs.getName());
 
         if (!prefs.isFirstTime()) {
+            userItem = QuickFitnessDAO.getInstance(this).loadLoggedUser(prefs.getName());
+            mUserPicture.setVisibility(View.VISIBLE);
 
-            Bitmap mIcon = BitmapFactory
-                    .decodeFile(userItem.getPicture());
+            if (userItem != null) {
+                if (!(userItem.getPicture().equals(""))) {
+                    Bitmap mIcon = BitmapFactory
+                            .decodeFile(userItem.getPicture());
+                    Bitmap updatedIcon = BitmapUtils.getRoundedCroppedBitmap(mIcon, 500);
 
-            Bitmap updatedIcon = BitmapUtils.getRoundedCroppedBitmap(mIcon, 500);
-
-
-            if (updatedIcon != null) {
-                mUserPicture.setImageBitmap(updatedIcon);
-
+                    mUserPicture.setImageBitmap(updatedIcon);
+                }
             }
 
             txtUserLoggedIn.setText(prefs.getName());
@@ -164,6 +171,12 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+    public void userLogout(View view) {
+        UserLoggedPreference prefs = new UserLoggedPreference(this);
+        prefs.logOut();
+        Toast.makeText(this, "User logged out.", Toast.LENGTH_LONG).show();
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -181,7 +194,6 @@ public class MainActivity extends ActionBarActivity {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
 
         switch (position) {
-
 
             case 0:
                 fragment = new FragmentMainContent();
@@ -269,6 +281,58 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void setUserPicture(View view) {
-        Toast.makeText(this, "User picture.", Toast.LENGTH_LONG).show();
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+        startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
+    }
+
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            // When an image is picked
+            if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK
+                    && null != data) {
+
+                // Get the Image from data
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+                // Get the cursor
+                Cursor cursor = getContentResolver().query(selectedImage,
+                        filePathColumn, null, null, null);
+
+                // Move to first row
+                cursor.moveToFirst();
+
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                imgPathDecode = cursor.getString(columnIndex);
+                cursor.close();
+
+                // Set the Image in ImageView after decoding the String
+
+                userItem.setPicture(imgPathDecode);
+                QuickFitnessDAO.getInstance(this).updateUserPicture(userItem);
+
+                if (!(userItem.getPicture().equals(""))) {
+                    Bitmap mIcon = BitmapFactory
+                            .decodeFile(userItem.getPicture());
+                    Bitmap updatedIcon = BitmapUtils.getRoundedCroppedBitmap(mIcon, 500);
+
+                    mUserPicture.setImageBitmap(updatedIcon);
+                    Toast.makeText(this, "Picture changed.", Toast.LENGTH_LONG).show();
+                }
+
+
+            } else {
+                Toast.makeText(this, "You haven't picked an image.",
+                        Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, "Something went wrong.", Toast.LENGTH_LONG)
+                    .show();
+        }
+
     }
 }

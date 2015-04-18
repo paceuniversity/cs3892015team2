@@ -28,8 +28,8 @@ import android.widget.TextView;
 
 public class FragmentMainContent extends Fragment {
 
-    private ImageView mImageIcon;
-    private TextView mTextIcon;
+    ImageView mImageIcon;
+    TextView mTextIcon;
 
     public static final String IMAGE_RESOURCE_ID = "iconResourceID";
     public static final String ITEM_NAME = "itemName";

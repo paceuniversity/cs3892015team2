@@ -120,13 +120,21 @@ public class QuickFitnessDAO {
         values.put(QuickFitnessContract.UserEntry.COLUMN_USER_NAME, user.getUsername());
         values.put(QuickFitnessContract.UserEntry.COLUMN_USER_EMAIL, user.getEmail());
         values.put(QuickFitnessContract.UserEntry.COLUMN_USER_PASSWORD, user.getPassword());
-        values.put(QuickFitnessContract.UserEntry.COLUMN_USER_PICTURE, user.getPicture());
         values.put(QuickFitnessContract.UserEntry.COLUMN_USER_GENRE, user.getGenre());
+        values.put(QuickFitnessContract.UserEntry.COLUMN_USER_PICTURE, user.getPicture());
 
         long inserted = sqLiteDatabase.insert(QuickFitnessContract.UserEntry.TABLE_NAME, null, values);
 
         return (int) inserted;
     }
+
+    public void updateUserPicture(UserItem userItem) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(QuickFitnessContract.UserEntry.COLUMN_USER_PICTURE, userItem.getPicture());
+
+        sqLiteDatabase.update(QuickFitnessContract.UserEntry.TABLE_NAME, contentValues, QuickFitnessContract.UserEntry.COLUMN_USER_ID + " = ? ", new String[]{String.valueOf(userItem.getId())});
+    }
+
 
     public void insertExerciseWorkout(WorkoutExercisesItem workoutExercisesItem) {
         ContentValues values = new ContentValues();
@@ -165,7 +173,7 @@ public class QuickFitnessDAO {
     }
 
 
-    public List<UserItem> listRegisteredUsers() {
+   /* public List<UserItem> listRegisteredUsers() {
         List<UserItem> users = new ArrayList<>();
 
         Cursor cursor = sqLiteDatabase.query(QuickFitnessContract.UserEntry.TABLE_NAME, PROJECTION_TABLE_USER,
@@ -189,7 +197,7 @@ public class QuickFitnessDAO {
 
 
         return users;
-    }
+    }*/
 
     public CategoryItem categoryById(int id) {
 
@@ -216,7 +224,7 @@ public class QuickFitnessDAO {
         return itemCategory;
     }
 
-    public WorkoutExercisesItem workoutExerciseById(int id) {
+   /* public WorkoutExercisesItem workoutExerciseById(int id) {
 
         Cursor cursor = sqLiteDatabase.query(QuickFitnessContract.WorkoutExerciseEntry.TABLE_NAME, PROJECTION_TABLE_WORKOUT_X_EXERCISES,
                 QuickFitnessContract.WorkoutExerciseEntry.COLUMN_EXERCISE_KEY + " = ?", new String[]{String.valueOf(id)}, null, null, null);
@@ -239,7 +247,7 @@ public class QuickFitnessDAO {
 
 
         return workoutExercisesItem;
-    }
+    }*/
 
     public List<ExercisesItem> listExercisesById(int id) {
         List<ExercisesItem> exercises = new ArrayList<>();
