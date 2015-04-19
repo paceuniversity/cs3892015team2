@@ -36,7 +36,6 @@ public class ActivityIntro extends Activity {
 
     private EditText mUserEmail;
     private EditText mUserPassword;
-    public static final String USER_LOGGED_IN_KEY = "user_logged_success";
     private UserLoggedPreference prefs;
 
     @Override
@@ -74,6 +73,8 @@ public class ActivityIntro extends Activity {
 
         QuickFitnessDAO dao = QuickFitnessDAO.getInstance(this);
 
+//        String loginFlow = getIntent().getStringExtra(ActivityExerciseDetails.LOGIN_FLOW_KEY);
+
         if (checkForm()) {
             String userEmail = mUserEmail.getText().toString();
             String salt = "Random$SaltValue#WithSpecialCharacters12@$@4&#%^$*";
@@ -92,9 +93,10 @@ public class ActivityIntro extends Activity {
                 prefs.setOld(true);
 
                 Intent intent = new Intent(this, MainActivity.class);
-                intent.putExtra(USER_LOGGED_IN_KEY, userLogged);
                 startActivity(intent);
+
                 finish();
+
             } else {
                 Toast.makeText(this, "Email and password entered don't match.", Toast.LENGTH_LONG).show();
                 clearFields();

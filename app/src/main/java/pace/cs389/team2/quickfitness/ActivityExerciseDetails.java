@@ -19,6 +19,7 @@
 package pace.cs389.team2.quickfitness;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.ActionBarActivity;
@@ -38,6 +39,7 @@ import pace.cs389.team2.quickfitness.dialog.WorkoutsListDialog;
 import pace.cs389.team2.quickfitness.model.CategoryItem;
 import pace.cs389.team2.quickfitness.model.ExercisesItem;
 import pace.cs389.team2.quickfitness.model.WorkoutItem;
+import pace.cs389.team2.quickfitness.preferences.UserLoggedPreference;
 import pace.cs389.team2.quickfitness.utils.OrientationUtils;
 
 /**
@@ -45,7 +47,6 @@ import pace.cs389.team2.quickfitness.utils.OrientationUtils;
  * which will show more information about the item desired. Information contains: Exercise title, description, category, calories burned, duration, and a cool video demonstration
  * on how to do the exercise in practise.
  *
- * @param @ExerciseItem mExerciseItem is the object of selected item passed through the list exercise screen to the detailed screen.
  * @author CS389 Team2
  * @since 03/25/2015
  */
@@ -53,6 +54,8 @@ import pace.cs389.team2.quickfitness.utils.OrientationUtils;
 public class ActivityExerciseDetails extends ActionBarActivity {
 
     private static ExercisesItem mExerciseItem;
+    public static final String LOGIN_FLOW_KEY = "login_flow";
+    public static final String CLASS_NAME = ActivityExerciseDetails.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,22 +83,35 @@ public class ActivityExerciseDetails extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
+        UserLoggedPreference prefs = new UserLoggedPreference(this);
+
         if (id == R.id.action_add_exercise) {
-
-            List<WorkoutItem> workoutItemList = QuickFitnessDAO.getInstance(getApplicationContext()).listWorkouts();
-
-            if (workoutItemList.size() > 0) {
-                WorkoutsListDialog workoutsListDialog = new WorkoutsListDialog();
-                workoutsListDialog.setExerciseId(mExerciseItem.getId());
-                workoutsListDialog.show(getFragmentManager(), "workouts_list");
+            if (prefs.isFirstTime()) {
+                Toast.makeText(this, "Please, sign in before selecting this exercise.", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this, ActivityIntro.class);
+                intent.putExtra(LOGIN_FLOW_KEY, CLASS_NAME);
+                startActivity(intent);
+                finish();
             } else {
-                Toast.makeText(this, "You don't have any workout.", Toast.LENGTH_LONG).show();
+                selectWorkoutDialog();
             }
-
             return true;
         }
 
         return false;
+    }
+
+    private void selectWorkoutDialog() {
+        List<WorkoutItem> workoutItemList = QuickFitnessDAO.getInstance(getApplicationContext()).listWorkouts();
+
+        if (workoutItemList.size() > 0) {
+            WorkoutsListDialog workoutsListDialog = new WorkoutsListDialog();
+            workoutsListDialog.setExerciseId(mExerciseItem.getId());
+            workoutsListDialog.show(getFragmentManager(), "workouts_list");
+        } else {
+            Toast.makeText(this, "You don't have any workout.", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     @Override

@@ -135,6 +135,13 @@ public class QuickFitnessDAO {
         sqLiteDatabase.update(QuickFitnessContract.UserEntry.TABLE_NAME, contentValues, QuickFitnessContract.UserEntry.COLUMN_USER_ID + " = ? ", new String[]{String.valueOf(userItem.getId())});
     }
 
+    public void updateWorkoutExercise(int idWorkout, int idStatus) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_STATUS_KEY, idStatus);
+
+        sqLiteDatabase.update(QuickFitnessContract.WorkoutSetEntry.TABLE_NAME, contentValues, QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_ID + " = ? ", new String[]{String.valueOf(idWorkout)});
+    }
+
 
     public void insertExerciseWorkout(WorkoutExercisesItem workoutExercisesItem) {
         ContentValues values = new ContentValues();
@@ -224,30 +231,6 @@ public class QuickFitnessDAO {
         return itemCategory;
     }
 
-   /* public WorkoutExercisesItem workoutExerciseById(int id) {
-
-        Cursor cursor = sqLiteDatabase.query(QuickFitnessContract.WorkoutExerciseEntry.TABLE_NAME, PROJECTION_TABLE_WORKOUT_X_EXERCISES,
-                QuickFitnessContract.WorkoutExerciseEntry.COLUMN_EXERCISE_KEY + " = ?", new String[]{String.valueOf(id)}, null, null, null);
-
-        WorkoutExercisesItem workoutExercisesItem = null;
-
-        try {
-            if (cursor.moveToFirst()) {
-                do {
-                    workoutExercisesItem = new WorkoutExercisesItem(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2));
-                } while (cursor.moveToNext());
-            }
-        } catch (SQLiteDatabaseLockedException exception) {
-            Log.e(MainActivity.APP_TAG, exception.getMessage());
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
-
-
-        return workoutExercisesItem;
-    }*/
 
     public List<ExercisesItem> listExercisesById(int id) {
         List<ExercisesItem> exercises = new ArrayList<>();
@@ -425,10 +408,58 @@ public class QuickFitnessDAO {
         return workouts;
     }
 
+    public List<WorkoutItem> listStoppedWorkouts(int id) {
+        List<WorkoutItem> workouts = new ArrayList<>();
+
+        Cursor cursor = sqLiteDatabase.query(QuickFitnessContract.WorkoutSetEntry.TABLE_NAME, PROJECTION_TABLE_WORKOUT,
+                QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_ID + " != ?", new String[]{String.valueOf(id)}, null, null, QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_NAME);
+        WorkoutItem itemWorkout;
+
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    itemWorkout = new WorkoutItem(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getInt(3), cursor.getString(4), cursor.getInt(5));
+                    workouts.add(itemWorkout);
+                } while (cursor.moveToNext());
+            }
+        } catch (SQLiteDatabaseLockedException exception) {
+            Log.e(MainActivity.APP_TAG, exception.getMessage());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        return workouts;
+    }
+
     public WorkoutStatusItem statusById(int id) {
 
         Cursor cursor = sqLiteDatabase.query(QuickFitnessContract.StatusEntry.TABLE_NAME, PROJECTION_TABLE_STATUS,
                 QuickFitnessContract.StatusEntry.COLUMN_STATUS_ID + " = ?", new String[]{String.valueOf(id)}, null, null, QuickFitnessContract.StatusEntry.COLUMN_STATUS_NAME);
+
+        WorkoutStatusItem itemStatus = null;
+
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    itemStatus = new WorkoutStatusItem(cursor.getInt(0), cursor.getString(1));
+                } while (cursor.moveToNext());
+            }
+        } catch (SQLiteDatabaseLockedException exception) {
+            Log.e(MainActivity.APP_TAG, exception.getMessage());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return itemStatus;
+    }
+
+    public WorkoutStatusItem statusById(String item) {
+
+        Cursor cursor = sqLiteDatabase.query(QuickFitnessContract.StatusEntry.TABLE_NAME, PROJECTION_TABLE_STATUS,
+                QuickFitnessContract.StatusEntry.COLUMN_STATUS_NAME + " = ?", new String[]{item}, null, null, QuickFitnessContract.StatusEntry.COLUMN_STATUS_NAME);
 
         WorkoutStatusItem itemStatus = null;
 

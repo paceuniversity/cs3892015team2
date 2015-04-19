@@ -82,6 +82,7 @@ public class MainActivity extends ActionBarActivity {
     String imgPathDecode;
     private UserItem userItem;
     FrameLayout mDrawerTop;
+    private UserLoggedPreference prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,28 +100,10 @@ public class MainActivity extends ActionBarActivity {
         mUserPicture = (ImageView) findViewById(R.id.img_main_user_pic);
         mDrawerTop = (FrameLayout) findViewById(R.id.drawer_top_place_holder);
 
-        UserLoggedPreference prefs = new UserLoggedPreference(getApplicationContext());
+        prefs = new UserLoggedPreference(getApplicationContext());
 
         if (!prefs.isFirstTime()) {
-            userItem = QuickFitnessDAO.getInstance(this).loadLoggedUser(prefs.getName());
-            mDrawerTop.setVisibility(View.VISIBLE);
-            mUserPicture.setVisibility(View.VISIBLE);
-
-            if (userItem != null) {
-                if (!(userItem.getPicture().equals(""))) {
-                    Bitmap mIcon = BitmapFactory
-                            .decodeFile(userItem.getPicture());
-                    Bitmap updatedIcon = BitmapUtils.getRoundedCroppedBitmap(mIcon, 500);
-
-                    mUserPicture.setImageBitmap(updatedIcon);
-                }
-            }
-
-            txtUserLoggedIn.setText(prefs.getName());
-            txtUserLoggedInEmail.setText(prefs.getEmail());
-
-            Toast.makeText(this, "Welcome back, " + prefs.getName(),
-                    Toast.LENGTH_LONG).show();
+            showDrawerTop();
         }
 
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow,
@@ -173,6 +156,28 @@ public class MainActivity extends ActionBarActivity {
         if (savedInstanceState == null) {
             selectItem(0);
         }
+
+    }
+
+    public void showDrawerTop() {
+
+        userItem = QuickFitnessDAO.getInstance(this).loadLoggedUser(prefs.getName());
+
+        mDrawerTop.setVisibility(View.VISIBLE);
+        mUserPicture.setVisibility(View.VISIBLE);
+
+        if (userItem != null) {
+            if (!(userItem.getPicture().equals(""))) {
+                Bitmap mIcon = BitmapFactory
+                        .decodeFile(userItem.getPicture());
+                Bitmap updatedIcon = BitmapUtils.getRoundedCroppedBitmap(mIcon, 500);
+
+                mUserPicture.setImageBitmap(updatedIcon);
+            }
+        }
+
+        txtUserLoggedIn.setText(prefs.getName());
+        txtUserLoggedInEmail.setText(prefs.getEmail());
     }
 
     public void userLogout(View view) {

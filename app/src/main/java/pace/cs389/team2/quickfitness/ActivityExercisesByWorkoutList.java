@@ -40,6 +40,7 @@ import pace.cs389.team2.quickfitness.data.QuickFitnessDAO;
 import pace.cs389.team2.quickfitness.dialog.DeleteExerciseDialog;
 import pace.cs389.team2.quickfitness.model.ExercisesItem;
 import pace.cs389.team2.quickfitness.model.WorkoutItem;
+import pace.cs389.team2.quickfitness.model.WorkoutStatusItem;
 
 public class ActivityExercisesByWorkoutList extends ActionBarActivity implements AbsListView.MultiChoiceModeListener, DeleteExerciseDialog.OnDeleteExerciseListener {
 
@@ -81,9 +82,53 @@ public class ActivityExercisesByWorkoutList extends ActionBarActivity implements
             }
         });
 
-
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.workout_start, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_start_workout) {
+            startWorkout();
+            return true;
+        }
+
+        return false;
+    }
+
+    private void startWorkout() {
+
+        selectedExercises = dao.listExercisesByWorkout(mWorkoutItem.getId());
+
+        if (selectedExercises.isEmpty()) {
+            Toast.makeText(this, "Workout doesn't have any exercise.", Toast.LENGTH_LONG).show();
+        } else {
+            String statusDoing = getResources().getString(R.string.workout_status_doing);
+            String statusStopped = getResources().getString(R.string.workout_status_stopped);
+
+            WorkoutStatusItem mStatusDoing = dao.statusById(statusDoing);
+
+            WorkoutStatusItem mStatusStopped = dao.statusById(statusStopped);
+
+            dao.updateWorkoutExercise(mWorkoutItem.getId(), mStatusDoing.getId());
+
+            List<WorkoutItem> workoutItems = dao.listStoppedWorkouts(mWorkoutItem.getId());
+
+            for (WorkoutItem workout : workoutItems) {
+                dao.updateWorkoutExercise(workout.getId(), mStatusStopped.getId());
+            }
+
+            Toast.makeText(this, "Workout started.", Toast.LENGTH_LONG).show();
+
+        }
+
+    }
 
     private void setListExercisesAdapter(List<ExercisesItem> mListAdapter) {
 

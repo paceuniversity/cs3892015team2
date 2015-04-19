@@ -24,6 +24,6 @@
     <item
         android:id="@+id/action_add_exercise"
         android:title="@string/menu_do_exercise"
-        android:icon="@mipmap/ic_done_white_36dp"
+        android:icon="@mipmap/ic_add_white_48dp"
         pace.cs389.team2.quickfitness:showAsAction="ifRoom|withText" />
 </menu>

@@ -77,6 +77,12 @@ public class ActivityWorkoutsList extends ActionBarActivity {
         }
 
         @Override
+        public void onResume() {
+            super.onResume();
+            setListExercisesAdapter(dao.listWorkouts());
+        }
+
+        @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
 

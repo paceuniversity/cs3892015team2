@@ -7,6 +7,7 @@
     <string name="menu_do_exercise">Do Exercise</string>
     <string name="menu_new_workout">New Workout</string>
     <string name="menu_save_workout">Save</string>
+    <string name="menu_start_workout">Start</string>
     <string name="workouts_list_empty">No workouts to display.</string>
     <string name="exercises_by_workout_list_empty">No Exercises to display.</string>
     <string name="exercises_by_workout_label">Workout Exercises</string>
@@ -51,6 +52,7 @@
 
     <string name="workout_status_start">Start</string>
     <string name="workout_status_doing">Doing</string>
+    <string name="workout_status_stopped">Stopped</string>
     <string name="workout_status_finished">Finished</string>
 
 

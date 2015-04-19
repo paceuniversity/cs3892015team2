@@ -39,7 +39,7 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "fitness.db";
 
     //Database version. If database has been changed, increment version in 1 to recreate database.
-    private static final int DB_VERSION = 78;
+    private static final int DB_VERSION = 79;
 
     // SQL script to drop the entire database
     //private static final String SQL_DROP_DATABASE = "DROP DATABASE IF EXISTS " + DATABASE_NAME;
@@ -171,6 +171,7 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
 
         WorkoutStatusItem statusStart = new WorkoutStatusItem(mContext.getResources().getString(R.string.workout_status_start));
         WorkoutStatusItem statusDoing = new WorkoutStatusItem(mContext.getResources().getString(R.string.workout_status_doing));
+        WorkoutStatusItem statusStopped = new WorkoutStatusItem(mContext.getResources().getString(R.string.workout_status_stopped));
         WorkoutStatusItem statusFinished = new WorkoutStatusItem(mContext.getResources().getString(R.string.workout_status_finished));
 
 
@@ -178,6 +179,7 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
 
         workoutStatuses.add(statusStart);
         workoutStatuses.add(statusDoing);
+        workoutStatuses.add(statusStopped);
         workoutStatuses.add(statusFinished);
 
 
