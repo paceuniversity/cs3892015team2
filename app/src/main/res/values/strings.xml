@@ -163,5 +163,6 @@
     <string name="txt_username_intro">Username</string>
     <string name="txt_app_name_intro">QuickFitness</string>
     <string name="txt_email_intro">Email</string>
+    <string name="list_drawer_item_logout">Logout</string>
 
 </resources>
