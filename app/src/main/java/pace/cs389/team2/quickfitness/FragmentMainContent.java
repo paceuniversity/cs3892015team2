@@ -23,6 +23,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -32,11 +34,9 @@ import java.util.ArrayList;
 
 public class FragmentMainContent extends Fragment {
 
-    ImageView mImageIcon;
-    TextView mTextIcon;
-
     public static final String IMAGE_RESOURCE_ID = "iconResourceID";
     public static final String ITEM_NAME = "itemName";
+    private WebView webview;
 
     public FragmentMainContent() {
     }
@@ -48,15 +48,10 @@ public class FragmentMainContent extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main_content, container,
                 false);
 
-        mImageIcon = (ImageView) view.findViewById(R.id.fragment_one_icon);
-        mTextIcon = (TextView) view.findViewById(R.id.fragment_one_text);
-
-        mTextIcon.setText("Main content.");
-
-        mImageIcon.setImageDrawable(view.getResources().getDrawable(
-                R.mipmap.ic_launcher));
-
-
+        webview = (WebView) view.findViewById(R.id.webView);
+        webview.getSettings().setJavaScriptEnabled(true);
+        webview.setWebViewClient(new WebViewClient());
+        webview.loadUrl("https://www.google.com/maps/search/nearest+gym/");
         return view;
 
     }
