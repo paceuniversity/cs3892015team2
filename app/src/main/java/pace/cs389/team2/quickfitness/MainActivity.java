@@ -34,6 +34,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -89,7 +90,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Copies references to local variables
+                // Copies references to local variables
         mDataList = new ArrayList<>();
         mTitle = mDrawerTitle = getTitle();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.container);
@@ -117,6 +118,7 @@ public class MainActivity extends ActionBarActivity {
         mDataList.add(new DrawerItem(getResources().getString(R.string.list_drawer_item_statistics), R.mipmap.ic_trending_up_grey600_24dp));
         mDataList.add(new DrawerItem(getResources().getString(R.string.list_drawer_item_settings), R.mipmap.ic_settings_grey600_24dp));
         mDataList.add(new DrawerItem(getResources().getString(R.string.list_drawer_item_help), R.mipmap.ic_help_grey600_24dp));
+        mDataList.add(new DrawerItem(getResources().getString(R.string.list_drawer_item_logout), R.drawable.ic_logout));
 
         //Makes a reference to the menu drawer adapter, which will show them items with an icon on the left.
         //CustomDrawerAdapter receives the context, the custom xml layout adapter and the list of items to be displayed.
@@ -152,7 +154,6 @@ public class MainActivity extends ActionBarActivity {
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-
         if (savedInstanceState == null) {
             selectItem(0);
         }
@@ -181,6 +182,12 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void userLogout(View view) {
+        UserLoggedPreference prefs = new UserLoggedPreference(this);
+        prefs.logOut();
+        Toast.makeText(this, "User logged out.", Toast.LENGTH_LONG).show();
+    }
+
+    public void userLogout() {
         UserLoggedPreference prefs = new UserLoggedPreference(this);
         prefs.logOut();
         Toast.makeText(this, "User logged out.", Toast.LENGTH_LONG).show();
@@ -240,6 +247,9 @@ public class MainActivity extends ActionBarActivity {
                 args.putInt(FragmentMainContent.IMAGE_RESOURCE_ID, mDataList
                         .get(position).getmIconRes());
                 break;
+            case 7:
+                userLogout();
+                return;
             default:
                 fragment = new FragmentMainContent();
                 break;
@@ -250,7 +260,6 @@ public class MainActivity extends ActionBarActivity {
 
         mDrawerList.setItemChecked(position, true);
         setTitle(mDataList.get(position).getmNameItem());
-        mDrawerLayout.closeDrawer(mGroupView);
     }
 
     @Override
