@@ -44,7 +44,7 @@ public class CustomWorkoutsListAdapter extends RecyclerView.Adapter<CustomWorkou
     RecyclerView mRecyclerView;
     private List<WorkoutItem> mWorkoutList;
     private Context mContext;
-    private QuickFitnessDAO dao;
+    QuickFitnessDAO dao;
 
     public CustomWorkoutsListAdapter(Context mContext, List<WorkoutItem> mWorkoutList, RecyclerView mRecyclerView) {
         this.mContext = mContext;
@@ -111,7 +111,11 @@ public class CustomWorkoutsListAdapter extends RecyclerView.Adapter<CustomWorkou
             }
         }
 
-
+        if (mWorkoutItem.getStatusKey() == 2) {
+            workoutsViewHolder.mWorkoutStatusIcon.setImageResource(R.drawable.circle_tag_spinner_green);
+        } else if (mWorkoutItem.getStatusKey() == 3) {
+            workoutsViewHolder.mWorkoutStatusIcon.setImageResource(R.drawable.circle_tag_spinner_orange);
+        }
         workoutsViewHolder.mWorkoutStatus.setText(itemStatus.getStatus());
 
     }
@@ -130,6 +134,7 @@ public class CustomWorkoutsListAdapter extends RecyclerView.Adapter<CustomWorkou
         protected TextView mWorkoutDuration;
         protected ImageView mWorkoutDurationIcon;
         protected TextView mWorkoutStatus;
+        protected ImageView mWorkoutStatusIcon;
 
         public WorkoutsViewHolder(View v) {
             super(v);
@@ -137,6 +142,7 @@ public class CustomWorkoutsListAdapter extends RecyclerView.Adapter<CustomWorkou
             mWorkoutDuration = (TextView) v.findViewById(R.id.txt_workout_time);
             mWorkoutDurationIcon = (ImageView) v.findViewById(R.id.img_workout_duration);
             mWorkoutStatus = (TextView) v.findViewById(R.id.txt_workout_status);
+            mWorkoutStatusIcon = (ImageView) v.findViewById(R.id.img_workout_status);
         }
     }
 }

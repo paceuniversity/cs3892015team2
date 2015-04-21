@@ -98,7 +98,7 @@ public class CustomExercisesListAdapter extends RecyclerView.Adapter<CustomExerc
                 100, 100, false);
 
         if (exerciseIconResized != null) {
-            exercisesViewHolder.mImageExerciseTop.setImageResource(exercisesItem.getIcon());
+            exercisesViewHolder.mImageExerciseTop.setImageBitmap(exerciseIconResized);
         }
 
 

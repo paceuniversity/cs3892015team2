@@ -18,8 +18,10 @@
 
 package pace.cs389.team2.quickfitness;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
@@ -32,6 +34,7 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -61,27 +64,23 @@ public class MainActivity extends ActionBarActivity {
     //App tag used for debug
     //The tag uses the class name to filter log messages for this class
     public static final String APP_TAG = MainActivity.class.getSimpleName();
-
+    private static final int RESULT_LOAD_IMG = 100;
+    TextView txtUserLoggedIn;
+    TextView txtUserLoggedInEmail;
+    ImageView mUserPicture;
+    String imgPathDecode;
+    FrameLayout mDrawerTop;
     // DrawerLayout object to display app's left menu options
     private DrawerLayout mDrawerLayout;
-
     // ListView to show menu options on DrawerLayout
     private ListView mDrawerList;
-
     private ActionBarDrawerToggle mDrawerToggle;
-
     //Variable to show the title on drawer
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private LinearLayout mGroupView;
-    TextView txtUserLoggedIn;
-    TextView txtUserLoggedInEmail;
     private List<DrawerItem> mDataList;
-    ImageView mUserPicture;
-    private static final int RESULT_LOAD_IMG = 100;
-    String imgPathDecode;
     private UserItem userItem;
-    FrameLayout mDrawerTop;
     private UserLoggedPreference prefs;
 
     @Override
@@ -159,6 +158,13 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+
     public void showDrawerTop() {
 
         userItem = QuickFitnessDAO.getInstance(this).loadLoggedUser(prefs.getName());
@@ -191,6 +197,31 @@ public class MainActivity extends ActionBarActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        if (id == R.id.action_log_out) {
+
+            final UserLoggedPreference prefs = new UserLoggedPreference(this);
+
+            new AlertDialog.Builder(this)
+                    .setTitle("Exit application")
+                    .setMessage("Are you sure you want to logout?")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            prefs.logOut();
+                            startActivity(new Intent(MainActivity.this, ActivityIntro.class));
+                            MainActivity.this.finish();
+                            Toast.makeText(MainActivity.this, "User logged out.", Toast.LENGTH_LONG).show();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+            return true;
+        }
 
         return mDrawerToggle.onOptionsItemSelected(item);
     }
@@ -199,7 +230,7 @@ public class MainActivity extends ActionBarActivity {
     public void selectItem(int position) {
 
         Fragment fragment;
-        Bundle args = new Bundle();
+        // Bundle args = new Bundle();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
 
         switch (position) {
@@ -221,29 +252,22 @@ public class MainActivity extends ActionBarActivity {
                 }
                 break;
             case 3:
-                fragment = new FragmentMainContent();
+                fragment = new MainFragment();
                 break;
             case 4:
                 fragment = new ActivityStatistics.StatisticsFragment();
                 break;
             case 5:
-                fragment = new FragmentMainContent();
-                args.putString(FragmentMainContent.ITEM_NAME, mDataList.get(position)
-                        .getmNameItem());
-                args.putInt(FragmentMainContent.IMAGE_RESOURCE_ID, mDataList
-                        .get(position).getmIconRes());
+                fragment = new MainFragment();
                 break;
             case 6:
-                fragment = new FragmentMainContent();
-                args.putString(FragmentMainContent.ITEM_NAME, mDataList.get(position)
-                        .getmNameItem());
-                args.putInt(FragmentMainContent.IMAGE_RESOURCE_ID, mDataList
-                        .get(position).getmIconRes());
+                fragment = new MainFragment();
                 break;
             default:
-                fragment = new FragmentMainContent();
+                fragment = new MainFragment();
                 break;
         }
+
 
         ft.replace(R.id.content_place_holder, fragment)
                 .commit();
@@ -277,27 +301,12 @@ public class MainActivity extends ActionBarActivity {
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
-
-    private class DrawerItemClickListener implements
-            ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position,
-                                long id) {
-            if (mDataList.get(position).getmTitleItem() == null) {
-                selectItem(position);
-            }
-
-        }
-
-    }
-
     public void setUserPicture(View view) {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
         startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
     }
-
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -343,6 +352,19 @@ public class MainActivity extends ActionBarActivity {
         } catch (Exception e) {
             Toast.makeText(this, "Something went wrong.", Toast.LENGTH_LONG)
                     .show();
+        }
+
+    }
+
+    private class DrawerItemClickListener implements
+            ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position,
+                                long id) {
+            if (mDataList.get(position).getmTitleItem() == null) {
+                selectItem(position);
+            }
+
         }
 
     }

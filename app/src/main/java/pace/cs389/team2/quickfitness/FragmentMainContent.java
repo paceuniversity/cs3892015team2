@@ -19,21 +19,35 @@
 package pace.cs389.team2.quickfitness;
 
 import android.app.Fragment;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.util.ArrayList;
+import org.eazegraph.lib.charts.PieChart;
+import org.eazegraph.lib.models.PieModel;
+
+import pace.cs389.team2.quickfitness.adapter.WorkoutCategoriesListAdapter;
+import pace.cs389.team2.quickfitness.data.QuickFitnessDAO;
+import pace.cs389.team2.quickfitness.model.WorkoutItem;
+import pace.cs389.team2.quickfitness.model.WorkoutStatusItem;
+import pace.cs389.team2.quickfitness.preferences.UserLoggedPreference;
 
 public class FragmentMainContent extends Fragment {
 
-    ImageView mImageIcon;
-    TextView mTextIcon;
+    TextView mTextCurrentWorkout;
+    CardView mCurrentWorkoutCard;
+    RecyclerView mRecyclerView;
+    private QuickFitnessDAO dao;
+    WorkoutCategoriesListAdapter mExercisesAdapter;
+    private ActionBar actionBar;
 
     public static final String IMAGE_RESOURCE_ID = "iconResourceID";
     public static final String ITEM_NAME = "itemName";
@@ -41,21 +55,58 @@ public class FragmentMainContent extends Fragment {
     public FragmentMainContent() {
     }
 
+    public void userLogout(View view) {
+        UserLoggedPreference prefs = new UserLoggedPreference(getActivity());
+        prefs.logOut();
+        Toast.makeText(getActivity(), "User logged out.", Toast.LENGTH_LONG).show();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        QuickFitnessDAO dao = QuickFitnessDAO.getInstance(getActivity());
+
+        WorkoutStatusItem status = dao.statusById(getActivity().getResources().getString(R.string.workout_status_doing));
+
+        WorkoutStatusItem statusDoing = dao.statusById(status.getStatus());
+
+        WorkoutItem mActiveWorkout = dao.getActivityWorkout(statusDoing.getId());
+
         View view = inflater.inflate(R.layout.fragment_main_content, container,
                 false);
 
-        mImageIcon = (ImageView) view.findViewById(R.id.fragment_one_icon);
-        mTextIcon = (TextView) view.findViewById(R.id.fragment_one_text);
 
-        mTextIcon.setText("Main content.");
+        PieChart mPieChart = (PieChart) view.findViewById(R.id.piechart);
 
-        mImageIcon.setImageDrawable(view.getResources().getDrawable(
-                R.mipmap.ic_launcher));
+        mPieChart.addPieSlice(new PieModel("Workouts Completed", 15, Color.parseColor("#56B7F1")));
+        mPieChart.addPieSlice(new PieModel("Workouts Skipped", 4, Color.parseColor("#FE6DA8")));
 
+        // mPieChart.startAnimation();
+
+
+        mTextCurrentWorkout = (TextView) view.findViewById(R.id.txt_current_workout);
+        mCurrentWorkoutCard = (CardView) view.findViewById(R.id.card_current_workout);
+
+        if (mTextCurrentWorkout != null) {
+            mCurrentWorkoutCard.setVisibility(View.VISIBLE);
+            mTextCurrentWorkout.setText(mActiveWorkout.getName());
+        } else {
+            mCurrentWorkoutCard.setVisibility(View.GONE);
+        }
+
+
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.cardList);
+        mRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        llm.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+        mRecyclerView.setLayoutManager(llm);
+
+        dao = QuickFitnessDAO.getInstance(getActivity());
+
+        mExercisesAdapter = new WorkoutCategoriesListAdapter(getActivity(), dao.listExercisesCategoriesExceptFirst(), mRecyclerView);
+        mRecyclerView.setAdapter(mExercisesAdapter);
 
         return view;
 

@@ -169,7 +169,7 @@ public class ActivitySetGoal extends ActionBarActivity {
                 if ((pos) == 1) {
                     setListExercisesAdapter(dao.listExercises());
                 } else {
-                    setListExercisesAdapter(dao.listExercisesById(pos));
+                    setListExercisesAdapter(dao.listExercisesByCategory(pos));
                 }
 
             } else {
