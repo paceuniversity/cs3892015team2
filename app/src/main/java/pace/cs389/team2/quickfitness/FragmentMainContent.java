@@ -88,11 +88,12 @@ public class FragmentMainContent extends Fragment {
         mTextCurrentWorkout = (TextView) view.findViewById(R.id.txt_current_workout);
         mCurrentWorkoutCard = (CardView) view.findViewById(R.id.card_current_workout);
 
-        if (mTextCurrentWorkout != null) {
+        if (mActiveWorkout != null) {
             mCurrentWorkoutCard.setVisibility(View.VISIBLE);
             mTextCurrentWorkout.setText(mActiveWorkout.getName());
         } else {
             mCurrentWorkoutCard.setVisibility(View.GONE);
+            mTextCurrentWorkout.setText("No workouts.");
         }
 
 

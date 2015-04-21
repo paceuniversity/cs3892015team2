@@ -74,9 +74,12 @@ public class WorkoutCategoriesListAdapter extends RecyclerView.Adapter<WorkoutCa
         List<ExercisesItem> exercisesItems = QuickFitnessDAO.getInstance(itemView.getContext()).listExercisesByCategory(categoryItem.get_id());
 
 
-        exerciseIcon = BitmapFactory.decodeResource(itemView.getResources(), exercisesItems.get(1).getIcon());
 
-        exercisesViewHolder.mImageExerciseTop.setImageBitmap(exerciseIcon);
+        //exerciseIcon = BitmapFactory.decodeResource();
+
+
+        exercisesViewHolder.mImageExerciseTop.setImageResource(exercisesItems.get(1).getIcon());
+
 
         exercisesViewHolder.mExerciseCategory.setText(categoryItem.getName());
 
