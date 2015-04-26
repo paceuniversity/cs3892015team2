@@ -67,6 +67,7 @@ public class ActivityIntro extends Activity {
 
     public void signUp(View view) {
         startActivity(new Intent(this, ActivitySignUpUser.class));
+        finish();
     }
 
     public void userLogin(View view) {

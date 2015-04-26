@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import pace.cs389.team2.quickfitness.data.QuickFitnessDAO;
 import pace.cs389.team2.quickfitness.model.UserItem;
+import pace.cs389.team2.quickfitness.preferences.UserLoggedPreference;
 import pace.cs389.team2.quickfitness.utils.PasswordHashGenerator;
 
 
@@ -119,7 +120,17 @@ public class ActivitySignUpUser extends ActionBarActivity {
 
             if (rowsUpdated != 0) {
                 Toast.makeText(this, "Successfully registered.", Toast.LENGTH_LONG).show();
+
+                UserLoggedPreference prefs = new UserLoggedPreference(this);
+                prefs.setName(mUserName.getText().toString());
+                prefs.setEmail(mUserEmail.getText().toString());
+                prefs.setOld(true);
+
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+
                 finish();
+
             } else {
                 Toast.makeText(this, "Couldn't process your request.", Toast.LENGTH_LONG).show();
                 clearFields();
