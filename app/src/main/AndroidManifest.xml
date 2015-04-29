@@ -52,6 +52,10 @@
             android:parentActivityName=".ActivityIntro"
             android:name=".ActivitySignUpUser"
             android:label="@string/title_activity_activity_sign_up_user" />
+
+        <activity
+            android:parentActivityName=".ActivityAddWorkout"
+            android:name=".ActivityUserProfileForm" />
     </application>
 
 </manifest>

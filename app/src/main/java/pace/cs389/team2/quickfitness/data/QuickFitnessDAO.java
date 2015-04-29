@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pace.cs389.team2.quickfitness.MainActivity;
+import pace.cs389.team2.quickfitness.model.BodyInfoItem;
 import pace.cs389.team2.quickfitness.model.CategoryItem;
 import pace.cs389.team2.quickfitness.model.ExercisesItem;
 import pace.cs389.team2.quickfitness.model.UserItem;
@@ -42,14 +43,17 @@ public class QuickFitnessDAO {
             QuickFitnessContract.ExerciseCategoryEntry.COLUMN_CATEGORY_NAME,
             QuickFitnessContract.ExerciseCategoryEntry.COLUMN_CATEGORY_ICON
     };
+
     private static final String[] PROJECTION_TABLE_STATUS = {QuickFitnessContract.StatusEntry.COLUMN_STATUS_ID,
             QuickFitnessContract.StatusEntry.COLUMN_STATUS_NAME
     };
+
     private static final String[] PROJECTION_TABLE_WORKOUT_X_EXERCISES = {
             QuickFitnessContract.WorkoutExerciseEntry.COLUMN_WORKOUT_EXERCISE_ID,
             QuickFitnessContract.WorkoutExerciseEntry.COLUMN_WORKOUT_KEY,
             QuickFitnessContract.WorkoutExerciseEntry.COLUMN_EXERCISE_KEY
     };
+
     private static final String[] PROJECTION_TABLE_WORKOUT = {QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_ID,
             QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_NAME,
             QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_DAYS_OF_WEEK,
@@ -57,6 +61,7 @@ public class QuickFitnessDAO {
             QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_TIME,
             QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_STATUS_KEY
     };
+
     private static final String[] PROJECTION_TABLE_EXERCISE = {QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_ID,
             QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_NAME,
             QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_DESCRIPTION,
@@ -68,7 +73,6 @@ public class QuickFitnessDAO {
             QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_CATEGORY_KEY
     };
 
-
     private static final String[] PROJECTION_TABLE_USER = {QuickFitnessContract.UserEntry.COLUMN_USER_ID,
             QuickFitnessContract.UserEntry.COLUMN_USER_NAME,
             QuickFitnessContract.UserEntry.COLUMN_USER_EMAIL,
@@ -76,6 +80,14 @@ public class QuickFitnessDAO {
             QuickFitnessContract.UserEntry.COLUMN_USER_GENRE,
             QuickFitnessContract.UserEntry.COLUMN_USER_PICTURE
 
+    };
+
+    private static final String[] PROJECTION_TABLE_BODY_INFO = {QuickFitnessContract.BodyEntry.COLUMN_BODY_ID,
+            QuickFitnessContract.BodyEntry.COLUMN_BODY_HEIGHT,
+            QuickFitnessContract.BodyEntry.COLUMN_BODY_WEIGHT,
+            QuickFitnessContract.BodyEntry.COLUMN_BODY_BF,
+            QuickFitnessContract.BodyEntry.COLUMN_BODY_BMI,
+            QuickFitnessContract.BodyEntry.COLUMN_BODY_USER_ID_KEY
     };
 
 
@@ -100,6 +112,18 @@ public class QuickFitnessDAO {
 
     public void deleteExercise(long exerciseId, long workoutId) {
         sqLiteDatabase.delete(QuickFitnessContract.WorkoutExerciseEntry.TABLE_NAME, QuickFitnessContract.WorkoutExerciseEntry.COLUMN_EXERCISE_KEY + " = ?" + " AND " + QuickFitnessContract.WorkoutExerciseEntry.COLUMN_WORKOUT_KEY + " = ?", new String[]{String.valueOf(exerciseId), String.valueOf(workoutId)});
+    }
+
+    public void insertWorkoutSet(BodyInfoItem bodyInfo) {
+        ContentValues values = new ContentValues();
+
+        values.put(QuickFitnessContract.BodyEntry.COLUMN_BODY_HEIGHT, bodyInfo.getHeight());
+        values.put(QuickFitnessContract.BodyEntry.COLUMN_BODY_WEIGHT, bodyInfo.getWeight());
+        values.put(QuickFitnessContract.BodyEntry.COLUMN_BODY_BF, bodyInfo.getBf());
+        values.put(QuickFitnessContract.BodyEntry.COLUMN_BODY_BMI, bodyInfo.getBmi());
+        values.put(QuickFitnessContract.BodyEntry.COLUMN_BODY_USER_ID_KEY, bodyInfo.getUserKey());
+
+        sqLiteDatabase.insert(QuickFitnessContract.UserEntry.TABLE_NAME, null, values);
     }
 
     public void insertWorkoutSet(WorkoutItem mItemWorkout) {
@@ -255,6 +279,32 @@ public class QuickFitnessDAO {
 
 
         return itemCategory;
+    }
+
+
+    public BodyInfoItem getUserBodyInfo(int id) {
+
+        Cursor cursor = sqLiteDatabase.query(QuickFitnessContract.BodyEntry.TABLE_NAME, PROJECTION_TABLE_BODY_INFO,
+                QuickFitnessContract.BodyEntry.COLUMN_BODY_ID + " = ?", new String[]{String.valueOf(id)}, null, null, null);
+
+        BodyInfoItem bodyInfoItem = null;
+
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    bodyInfoItem = new BodyInfoItem(cursor.getInt(0), cursor.getDouble(1), cursor.getDouble(2), cursor.getDouble(3), cursor.getDouble(4), cursor.getInt(5));
+                } while (cursor.moveToNext());
+            }
+        } catch (SQLiteDatabaseLockedException exception) {
+            Log.e(MainActivity.APP_TAG, exception.getMessage());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+
+        return bodyInfoItem;
     }
 
 

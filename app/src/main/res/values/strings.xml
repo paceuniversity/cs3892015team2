@@ -5,8 +5,10 @@
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>
     <string name="menu_do_exercise">Do Exercise</string>
+    <string name="menu_edit_profile">Edit Info</string>
     <string name="menu_new_workout">New Workout</string>
     <string name="menu_save_workout">Save</string>
+    <string name="menu_workout_next">Next</string>
     <string name="menu_start_workout">Start</string>
     <string name="workouts_list_empty">No workouts to display.</string>
     <string name="exercises_by_workout_list_empty">No Exercises to display.</string>
@@ -164,11 +166,25 @@
     <string name="txt_username_intro">Username</string>
     <string name="txt_app_name_intro">QuickFitness</string>
     <string name="txt_email_intro">Email</string>
-    <string name="txt_card_current_workout">Current Workout</string>
+    <string name="txt_card_current_workout">CURRENT WORKOUT</string>
     <string name="txt_card_recent_activity">Recent Activity</string>
     <string name="txt_workout_categories">Workout Categories</string>
     <string name="txt_button_status">Stats</string>
     <string name="txt_circle_status">circle_status</string>
     <string name="txt_status">Status</string>
+    <string name="text_user_profile_info">Body Info</string>
+    <string name="txt_bf_indicator">BF</string>
+    <string name="txt_bmi_indicator">BMI</string>
+    <string name="txt_profile_workout_stats">STATS</string>
+    <string name="txt_profile_full_stats">See full stats</string>
+    <string name="txt_profile_user_image">profile_user_image</string>
+    <string name="txt_enter_body_info">Enter Body Information</string>
+    <string name="txt_body_info_height">Height in (cm)</string>
+    <string name="txt_body_info_weight">Weight in (pounds)</string>
+    <string name="txt_create_workout">Create a new workout</string>
+    <string name="txt_hint_workout_name">Workout Name</string>
+    <string name="txt_times_per_week">Times per week</string>
+    <string name="txt_workout_duration">Duration</string>
+    <string name="txt_set_time_hint">Set Time</string>
 
 </resources>

@@ -19,8 +19,6 @@
 package pace.cs389.team2.quickfitness.adapter;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -39,7 +37,6 @@ import pace.cs389.team2.quickfitness.model.ExercisesItem;
 
 public class WorkoutCategoriesListAdapter extends RecyclerView.Adapter<WorkoutCategoriesListAdapter.ExercisesViewHolder> implements View.OnClickListener {
 
-    static Bitmap exerciseIcon;
     CategoryItem categoryItem;
     RecyclerView mRecyclerView;
     private List<CategoryItem> mCategoriesList;
@@ -72,7 +69,6 @@ public class WorkoutCategoriesListAdapter extends RecyclerView.Adapter<WorkoutCa
         categoryItem = mCategoriesList.get(i);
 
         List<ExercisesItem> exercisesItems = QuickFitnessDAO.getInstance(itemView.getContext()).listExercisesByCategory(categoryItem.get_id());
-
 
 
         //exerciseIcon = BitmapFactory.decodeResource();

@@ -114,8 +114,8 @@ public class MainActivity extends ActionBarActivity {
         mDataList.add(new DrawerItem(getResources().getString(R.string.list_drawer_item_workouts), R.mipmap.ic_workouts24dp));
         mDataList.add(new DrawerItem(getResources().getString(R.string.list_drawer_item_profile), R.mipmap.ic_person_grey600_24dp));
         mDataList.add(new DrawerItem(getResources().getString(R.string.list_drawer_item_statistics), R.mipmap.ic_trending_up_grey600_24dp));
-        mDataList.add(new DrawerItem(getResources().getString(R.string.list_drawer_item_settings), R.mipmap.ic_settings_grey600_24dp));
-        mDataList.add(new DrawerItem(getResources().getString(R.string.list_drawer_item_help), R.mipmap.ic_help_grey600_24dp));
+        // mDataList.add(new DrawerItem(getResources().getString(R.string.list_drawer_item_settings), R.mipmap.ic_settings_grey600_24dp));
+        // mDataList.add(new DrawerItem(getResources().getString(R.string.list_drawer_item_help), R.mipmap.ic_help_grey600_24dp));
 
         //Makes a reference to the menu drawer adapter, which will show them items with an icon on the left.
         //CustomDrawerAdapter receives the context, the custom xml layout adapter and the list of items to be displayed.
@@ -128,13 +128,13 @@ public class MainActivity extends ActionBarActivity {
         //Check if the action bar object isn't null and then enables the up navigator and home buttons
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeButtonEnabled(true);
+            //getSupportActionBar().setHomeButtonEnabled(true);
         }
 
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-                R.drawable.ic_drawer, R.string.drawer_open,
+                R.mipmap.ic_menu_white_24dp, R.string.drawer_open,
                 R.string.drawer_close) {
             public void onDrawerClosed(View view) {
                 getSupportActionBar().setTitle(mTitle);
@@ -230,7 +230,6 @@ public class MainActivity extends ActionBarActivity {
     public void selectItem(int position) {
 
         Fragment fragment;
-        // Bundle args = new Bundle();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
 
         switch (position) {
@@ -252,17 +251,17 @@ public class MainActivity extends ActionBarActivity {
                 }
                 break;
             case 3:
-                fragment = new MainFragment();
+                fragment = new FragmentUserProfile();
                 break;
             case 4:
                 fragment = new ActivityStatistics.StatisticsFragment();
                 break;
-            case 5:
+           /* case 5:
                 fragment = new MainFragment();
                 break;
             case 6:
                 fragment = new MainFragment();
-                break;
+                break;*/
             default:
                 fragment = new MainFragment();
                 break;

@@ -20,6 +20,7 @@ package pace.cs389.team2.quickfitness;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -158,7 +159,9 @@ public class ActivityAddWorkout extends ActionBarActivity implements TimeDialogF
                     WorkoutItem workoutItem = new WorkoutItem(edtSetName.getText().toString(), Integer.parseInt(edtSetDaysOfWeek.getText().toString()), Integer.parseInt(edtSetWorkoutDuration.getText().toString()), edtSetTime.getText().toString(), 1);
                     QuickFitnessDAO.getInstance(getActivity().getApplicationContext()).insertWorkoutSet(workoutItem);
 
-                    getActivity().setResult(RESULT_OK);
+                    //getActivity().setResult(RESULT_OK);
+
+                    startActivity(new Intent(getActivity(), ActivityUserProfileForm.class));
                     getActivity().finish();
                     return true;
 
