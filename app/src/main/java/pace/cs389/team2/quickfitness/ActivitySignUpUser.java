@@ -30,6 +30,7 @@ public class ActivitySignUpUser extends ActionBarActivity {
 
     private static EditText mUserName;
     private static EditText mUserEmail;
+    private static EditText mUserAge;
     private static EditText mUserPassword;
     static RadioGroup mGenreGroup;
     private static RadioButton mGenreMale;
@@ -100,7 +101,7 @@ public class ActivitySignUpUser extends ActionBarActivity {
         String salt = "Random$SaltValue#WithSpecialCharacters12@$@4&#%^$*";
         String passwordHash = PasswordHashGenerator.md5(mUserPassword.getText().toString().trim() + salt);
 
-        int genre = mGenreGroup.getCheckedRadioButtonId() == R.id.radio_male ? 0 : 1;
+        int genre = mGenreGroup.getCheckedRadioButtonId() == R.id.radio_male ? 1 : 0;
 
         if (checkForm()) {
 
@@ -110,9 +111,9 @@ public class ActivitySignUpUser extends ActionBarActivity {
             int rowsUpdated;
 
             if (isPictureNull) {
-                mUserItem = new UserItem(mUserName.getText().toString(), mUserEmail.getText().toString(), passwordHash, genre, "");
+                mUserItem = new UserItem(mUserName.getText().toString(), mUserEmail.getText().toString(), Integer.parseInt(mUserAge.getText().toString()), passwordHash, genre, "");
             } else {
-                mUserItem = new UserItem(mUserName.getText().toString(), mUserEmail.getText().toString(), passwordHash, genre, imgPathDecode);
+                mUserItem = new UserItem(mUserName.getText().toString(), mUserEmail.getText().toString(), Integer.parseInt(mUserAge.getText().toString()), passwordHash, genre, imgPathDecode);
             }
 
             rowsUpdated = dao.insertUser(mUserItem);
@@ -181,6 +182,7 @@ public class ActivitySignUpUser extends ActionBarActivity {
 
             mUserName = (EditText) mRootView.findViewById(R.id.edt_user_name);
             mUserEmail = (EditText) mRootView.findViewById(R.id.edt_user_email);
+            mUserAge = (EditText) mRootView.findViewById(R.id.edt_user_age);
             mUserPassword = (EditText) mRootView.findViewById(R.id.edt_user_password);
             mGenreGroup = (RadioGroup) mRootView.findViewById(R.id.sex_radio_group);
             mGenreMale = (RadioButton) mRootView.findViewById(R.id.radio_male);

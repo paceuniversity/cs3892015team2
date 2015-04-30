@@ -76,6 +76,7 @@ public class QuickFitnessDAO {
     private static final String[] PROJECTION_TABLE_USER = {QuickFitnessContract.UserEntry.COLUMN_USER_ID,
             QuickFitnessContract.UserEntry.COLUMN_USER_NAME,
             QuickFitnessContract.UserEntry.COLUMN_USER_EMAIL,
+            QuickFitnessContract.UserEntry.COLUMN_USER_AGE,
             QuickFitnessContract.UserEntry.COLUMN_USER_PASSWORD,
             QuickFitnessContract.UserEntry.COLUMN_USER_GENRE,
             QuickFitnessContract.UserEntry.COLUMN_USER_PICTURE
@@ -114,7 +115,7 @@ public class QuickFitnessDAO {
         sqLiteDatabase.delete(QuickFitnessContract.WorkoutExerciseEntry.TABLE_NAME, QuickFitnessContract.WorkoutExerciseEntry.COLUMN_EXERCISE_KEY + " = ?" + " AND " + QuickFitnessContract.WorkoutExerciseEntry.COLUMN_WORKOUT_KEY + " = ?", new String[]{String.valueOf(exerciseId), String.valueOf(workoutId)});
     }
 
-    public void insertWorkoutSet(BodyInfoItem bodyInfo) {
+    public void insertBodyInfo(BodyInfoItem bodyInfo) {
         ContentValues values = new ContentValues();
 
         values.put(QuickFitnessContract.BodyEntry.COLUMN_BODY_HEIGHT, bodyInfo.getHeight());
@@ -123,7 +124,7 @@ public class QuickFitnessDAO {
         values.put(QuickFitnessContract.BodyEntry.COLUMN_BODY_BMI, bodyInfo.getBmi());
         values.put(QuickFitnessContract.BodyEntry.COLUMN_BODY_USER_ID_KEY, bodyInfo.getUserKey());
 
-        sqLiteDatabase.insert(QuickFitnessContract.UserEntry.TABLE_NAME, null, values);
+        sqLiteDatabase.insert(QuickFitnessContract.BodyEntry.TABLE_NAME, null, values);
     }
 
     public void insertWorkoutSet(WorkoutItem mItemWorkout) {
@@ -143,6 +144,7 @@ public class QuickFitnessDAO {
 
         values.put(QuickFitnessContract.UserEntry.COLUMN_USER_NAME, user.getUsername());
         values.put(QuickFitnessContract.UserEntry.COLUMN_USER_EMAIL, user.getEmail());
+        values.put(QuickFitnessContract.UserEntry.COLUMN_USER_AGE, user.getAge());
         values.put(QuickFitnessContract.UserEntry.COLUMN_USER_PASSWORD, user.getPassword());
         values.put(QuickFitnessContract.UserEntry.COLUMN_USER_GENRE, user.getGenre());
         values.put(QuickFitnessContract.UserEntry.COLUMN_USER_PICTURE, user.getPicture());
@@ -285,7 +287,7 @@ public class QuickFitnessDAO {
     public BodyInfoItem getUserBodyInfo(int id) {
 
         Cursor cursor = sqLiteDatabase.query(QuickFitnessContract.BodyEntry.TABLE_NAME, PROJECTION_TABLE_BODY_INFO,
-                QuickFitnessContract.BodyEntry.COLUMN_BODY_ID + " = ?", new String[]{String.valueOf(id)}, null, null, null);
+                QuickFitnessContract.BodyEntry.COLUMN_BODY_USER_ID_KEY + " = ?", new String[]{String.valueOf(id)}, null, null, null);
 
         BodyInfoItem bodyInfoItem = null;
 
@@ -444,7 +446,7 @@ public class QuickFitnessDAO {
         try {
             if (cursor.moveToFirst()) {
                 do {
-                    user = new UserItem(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getInt(4), cursor.getString(5));
+                    user = new UserItem(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getString(4), cursor.getInt(5), cursor.getString(6));
                 } while (cursor.moveToNext());
             }
         } catch (SQLiteDatabaseLockedException exception) {
@@ -468,7 +470,7 @@ public class QuickFitnessDAO {
         try {
             if (cursor.moveToFirst()) {
                 do {
-                    user = new UserItem(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getInt(4), cursor.getString(5));
+                    user = new UserItem(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getString(4), cursor.getInt(5), cursor.getString(6));
                 } while (cursor.moveToNext());
             }
         } catch (SQLiteDatabaseLockedException exception) {

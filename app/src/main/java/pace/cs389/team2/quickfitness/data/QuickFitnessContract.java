@@ -34,11 +34,12 @@ public class QuickFitnessContract {
         //User name, stored as string
         public static final String COLUMN_USER_NAME = "user_name";
 
+        //User email, stored as string
+        public static final String COLUMN_USER_EMAIL = "user_email";
+
         //User age, stored as an integer
         public static final String COLUMN_USER_AGE = "user_age";
 
-        //User email, stored as string
-        public static final String COLUMN_USER_EMAIL = "user_email";
 
         //User password, stored as string
         public static final String COLUMN_USER_PASSWORD = "user_password";

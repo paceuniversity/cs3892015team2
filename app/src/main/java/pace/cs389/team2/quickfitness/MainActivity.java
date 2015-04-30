@@ -186,11 +186,11 @@ public class MainActivity extends ActionBarActivity {
         txtUserLoggedInEmail.setText(prefs.getEmail());
     }
 
-    public void userLogout(View view) {
+   /* public void userLogout(View view) {
         UserLoggedPreference prefs = new UserLoggedPreference(this);
         prefs.logOut();
         Toast.makeText(this, "User logged out.", Toast.LENGTH_LONG).show();
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -218,7 +218,7 @@ public class MainActivity extends ActionBarActivity {
                         public void onClick(DialogInterface dialog, int which) {
                         }
                     })
-                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setIcon(android.R.drawable.ic_dialog_info)
                     .show();
             return true;
         }

@@ -7,13 +7,15 @@ public class UserItem implements Serializable {
     private int id;
     private String username;
     private String email;
+    private int age;
     private String password;
     private int genre;
     private String picture;
 
-    public UserItem(String username, String email, String password, int genre, String picture) {
+    public UserItem(String username, String email, int age, String password, int genre, String picture) {
         this.username = username;
         this.email = email;
+        this.age = age;
         this.password = password;
         this.genre = genre;
         this.picture = picture;
@@ -24,10 +26,11 @@ public class UserItem implements Serializable {
         this.password = password;
     }
 
-    public UserItem(int id, String username, String email, String password, int genre, String picture) {
+    public UserItem(int id, String username, String email, int age, String password, int genre, String picture) {
         this.id = id;
         this.username = username;
         this.email = email;
+        this.age = age;
         this.password = password;
         this.genre = genre;
         this.picture = picture;
@@ -52,6 +55,10 @@ public class UserItem implements Serializable {
 
     public String getEmail() {
         return email;
+    }
+
+    public int getAge() {
+        return age;
     }
 
     public String getPassword() {

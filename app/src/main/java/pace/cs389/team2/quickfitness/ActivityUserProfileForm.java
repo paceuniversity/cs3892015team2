@@ -12,6 +12,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import pace.cs389.team2.quickfitness.data.QuickFitnessDAO;
+import pace.cs389.team2.quickfitness.model.BodyInfoItem;
+import pace.cs389.team2.quickfitness.model.UserItem;
+import pace.cs389.team2.quickfitness.preferences.UserLoggedPreference;
+
 
 public class ActivityUserProfileForm extends ActionBarActivity {
 
@@ -45,7 +50,28 @@ public class ActivityUserProfileForm extends ActionBarActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_save_body_info) {
-            Toast.makeText(this, "Save user info/Height: " + mEdtBodyHeight.getText(), Toast.LENGTH_LONG).show();
+
+            QuickFitnessDAO dao = QuickFitnessDAO.getInstance(this);
+
+            UserLoggedPreference prefs = new UserLoggedPreference(this);
+
+            if (!prefs.isFirstTime()) {
+                UserItem userItem = dao.loadLoggedUser(prefs.getName());
+
+                double bodyMassIndex = Double.parseDouble(mEdtBodyWeight.getText().toString()) / (Double.parseDouble(mEdtBodyHeight.getText().toString()) * Double.parseDouble(mEdtBodyHeight.getText().toString()));
+                double bodyFat = (1.20 * bodyMassIndex) + (0.23 * userItem.getAge()) - (10.8 * userItem.getGenre()) - 5.4;
+
+                BodyInfoItem bodyInfoItem = new BodyInfoItem(Double.parseDouble(mEdtBodyHeight.getText().toString()), Double.parseDouble(mEdtBodyWeight.getText().toString()), bodyFat, bodyMassIndex, userItem.getId());
+
+                dao.insertBodyInfo(bodyInfoItem);
+
+                Toast.makeText(this, "Body info saved.", Toast.LENGTH_LONG).show();
+
+                finish();
+            } else {
+                Toast.makeText(this, "User not logged in.", Toast.LENGTH_LONG).show();
+            }
+
 
             return true;
         }
