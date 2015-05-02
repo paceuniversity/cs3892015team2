@@ -65,7 +65,7 @@ public class ActivityUserProfileForm extends ActionBarActivity {
 
                 dao.insertBodyInfo(bodyInfoItem);
 
-                Toast.makeText(this, "Body info saved.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Workout saved.", Toast.LENGTH_LONG).show();
 
                 finish();
             } else {

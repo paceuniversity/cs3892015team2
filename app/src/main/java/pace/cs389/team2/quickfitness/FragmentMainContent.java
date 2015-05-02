@@ -21,7 +21,6 @@ package pace.cs389.team2.quickfitness;
 import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,7 +28,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.eazegraph.lib.charts.PieChart;
 import org.eazegraph.lib.models.PieModel;
@@ -45,20 +43,10 @@ public class FragmentMainContent extends Fragment {
     TextView mTextCurrentWorkout;
     CardView mCurrentWorkoutCard;
     RecyclerView mRecyclerView;
-    private QuickFitnessDAO dao;
     WorkoutCategoriesListAdapter mExercisesAdapter;
-    private ActionBar actionBar;
-
-    public static final String IMAGE_RESOURCE_ID = "iconResourceID";
-    public static final String ITEM_NAME = "itemName";
+    TextView mTextNoDataAvailable;
 
     public FragmentMainContent() {
-    }
-
-    public void userLogout(View view) {
-        UserLoggedPreference prefs = new UserLoggedPreference(getActivity());
-        prefs.logOut();
-        Toast.makeText(getActivity(), "User logged out.", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -66,6 +54,8 @@ public class FragmentMainContent extends Fragment {
                              Bundle savedInstanceState) {
 
         QuickFitnessDAO dao = QuickFitnessDAO.getInstance(getActivity());
+
+        UserLoggedPreference prefs = new UserLoggedPreference(getActivity());
 
         WorkoutStatusItem status = dao.statusById(getActivity().getResources().getString(R.string.workout_status_doing));
 
@@ -76,26 +66,31 @@ public class FragmentMainContent extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main_content, container,
                 false);
 
-
         PieChart mPieChart = (PieChart) view.findViewById(R.id.piechart);
-
-        mPieChart.addPieSlice(new PieModel("Workouts Completed", 15, Color.parseColor("#56B7F1")));
-        mPieChart.addPieSlice(new PieModel("Workouts Skipped", 4, Color.parseColor("#FE6DA8")));
-
-        // mPieChart.startAnimation();
-
 
         mTextCurrentWorkout = (TextView) view.findViewById(R.id.txt_current_workout);
         mCurrentWorkoutCard = (CardView) view.findViewById(R.id.card_current_workout);
+        mTextNoDataAvailable = (TextView) view.findViewById(R.id.txt_no_data_card);
 
-        if (mActiveWorkout != null) {
-            mCurrentWorkoutCard.setVisibility(View.VISIBLE);
-            mTextCurrentWorkout.setText(mActiveWorkout.getName());
+        if (!prefs.isFirstTime()) {
+
+            mPieChart.setVisibility(View.VISIBLE);
+
+            mPieChart.addPieSlice(new PieModel("Workouts Completed", 15, Color.parseColor("#56B7F1")));
+            mPieChart.addPieSlice(new PieModel("Workouts Skipped", 4, Color.parseColor("#FE6DA8")));
+
+            if (mActiveWorkout != null) {
+                mCurrentWorkoutCard.setVisibility(View.VISIBLE);
+                mTextCurrentWorkout.setText(mActiveWorkout.getName());
+            } else {
+                mCurrentWorkoutCard.setVisibility(View.GONE);
+                mTextCurrentWorkout.setText("No workouts.");
+            }
         } else {
+            mPieChart.setVisibility(View.GONE);
             mCurrentWorkoutCard.setVisibility(View.GONE);
-            mTextCurrentWorkout.setText("No workouts.");
+            mTextNoDataAvailable.setVisibility(View.VISIBLE);
         }
-
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.cardList);
         mRecyclerView.setHasFixedSize(true);

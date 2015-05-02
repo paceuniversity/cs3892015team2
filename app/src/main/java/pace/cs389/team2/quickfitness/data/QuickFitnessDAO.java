@@ -287,7 +287,7 @@ public class QuickFitnessDAO {
     public BodyInfoItem getUserBodyInfo(int id) {
 
         Cursor cursor = sqLiteDatabase.query(QuickFitnessContract.BodyEntry.TABLE_NAME, PROJECTION_TABLE_BODY_INFO,
-                QuickFitnessContract.BodyEntry.COLUMN_BODY_USER_ID_KEY + " = ?", new String[]{String.valueOf(id)}, null, null, null);
+                QuickFitnessContract.BodyEntry.COLUMN_BODY_USER_ID_KEY + " = ?", new String[]{String.valueOf(id)}, null, null, QuickFitnessContract.BodyEntry.COLUMN_BODY_ID + " ASC ");
 
         BodyInfoItem bodyInfoItem = null;
 

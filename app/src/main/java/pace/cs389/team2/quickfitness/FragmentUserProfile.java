@@ -5,21 +5,22 @@ import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import pace.cs389.team2.quickfitness.data.QuickFitnessDAO;
 import pace.cs389.team2.quickfitness.model.BodyInfoItem;
 import pace.cs389.team2.quickfitness.model.UserItem;
+import pace.cs389.team2.quickfitness.model.WorkoutItem;
+import pace.cs389.team2.quickfitness.model.WorkoutStatusItem;
 import pace.cs389.team2.quickfitness.preferences.UserLoggedPreference;
+import pace.cs389.team2.quickfitness.utils.BitmapUtils;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class FragmentUserProfile extends Fragment {
 
     ImageView mUserImage;
@@ -28,6 +29,9 @@ public class FragmentUserProfile extends Fragment {
     TextView mUserWeight;
     TextView mUserBodyFat;
     TextView mUserBMI;
+    LinearLayout bodyInfoLayout;
+    CardView mCurrentWorkoutCard;
+    TextView mTextWorkoutStats;
 
 
     public FragmentUserProfile() {
@@ -46,30 +50,70 @@ public class FragmentUserProfile extends Fragment {
         mUserWeight = (TextView) view.findViewById(R.id.txt_user_profile_weight);
         mUserBodyFat = (TextView) view.findViewById(R.id.txt_user_profile_bf);
         mUserBMI = (TextView) view.findViewById(R.id.txt_user_profile_bmi);
+        bodyInfoLayout = (LinearLayout) view.findViewById(R.id.layout_body_info);
+        mCurrentWorkoutCard = (CardView) view.findViewById(R.id.card_workouts_stats);
+        mTextWorkoutStats = (TextView) view.findViewById(R.id.txt_user_profile_workout_stats);
 
         QuickFitnessDAO dao = QuickFitnessDAO.getInstance(getActivity());
 
         UserLoggedPreference prefs = new UserLoggedPreference(getActivity());
 
+        WorkoutStatusItem status = dao.statusById(getActivity().getResources().getString(R.string.workout_status_doing));
+
+        WorkoutStatusItem statusDoing = dao.statusById(status.getStatus());
+
+        WorkoutItem mActiveWorkout = dao.getActivityWorkout(statusDoing.getId());
+
         if (!prefs.isFirstTime()) {
             UserItem userItem = dao.loadLoggedUser(prefs.getName());
 
-            Bitmap mIcon = BitmapFactory
-                    .decodeFile(userItem.getPicture());
+            BodyInfoItem bodyInfoItem = null;
 
-            mUserImage.setImageBitmap(mIcon);
+            if (userItem != null) {
+                Bitmap mIcon = BitmapFactory
+                        .decodeFile(userItem.getPicture());
 
-            mUserName.setText(userItem.getUsername());
+                if (mUserImage != null) {
+                    mUserImage.setVisibility(View.VISIBLE);
+                    if (mIcon != null) {
+                        Bitmap updatedIcon = BitmapUtils.getRoundedCroppedBitmap(mIcon, 500);
+                        mUserImage.setImageBitmap(updatedIcon);
+                    } else {
+                        mUserImage.setImageResource(R.mipmap.ic_account_circle_grey600_48dp);
+                    }
+                }
 
-            BodyInfoItem bodyInfoItem = dao.getUserBodyInfo(userItem.getId());
 
-            mUserHeight.setText(String.format("%.2f", bodyInfoItem.getHeight()));
+                mUserName.setText(userItem.getUsername());
+                bodyInfoItem = dao.getUserBodyInfo(userItem.getId());
+            }
 
-            mUserWeight.setText(String.format("%.2f", bodyInfoItem.getWeight()));
+            if (bodyInfoItem != null) {
 
-            mUserBodyFat.setText(String.format("%.2f", bodyInfoItem.getBf()) + "%");
+                if (bodyInfoLayout != null) {
+                    bodyInfoLayout.setVisibility(View.VISIBLE);
+                }
 
-            mUserBMI.setText(String.format("%.2f", bodyInfoItem.getBmi()));
+                mUserHeight.setText(String.format("%.2f", bodyInfoItem.getHeight()) + " m");
+
+                mUserWeight.setText(String.format("%.2f", bodyInfoItem.getWeight()) + " kg");
+
+                mUserBodyFat.setText(String.format("%.2f", bodyInfoItem.getBf()) + " %");
+
+                mUserBMI.setText(String.format("%.2f", bodyInfoItem.getBmi()));
+            } else {
+                if (bodyInfoLayout != null) {
+                    bodyInfoLayout.setVisibility(View.GONE);
+                }
+            }
+
+            if (mActiveWorkout != null) {
+                mCurrentWorkoutCard.setVisibility(View.VISIBLE);
+                mTextWorkoutStats.setText(mActiveWorkout.getName());
+            } else {
+                mCurrentWorkoutCard.setVisibility(View.GONE);
+                mTextWorkoutStats.setText("No workouts.");
+            }
         }
 
 

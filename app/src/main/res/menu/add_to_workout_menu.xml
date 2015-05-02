@@ -17,13 +17,14 @@
   -->
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:pace.cs389.team2.quickfitness="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ActivityExerciseDetails">
 
     <item
         android:id="@+id/action_add_exercise"
-        android:title="@string/menu_do_exercise"
         android:icon="@mipmap/ic_add_white_48dp"
+        android:title="@string/menu_do_exercise"
         pace.cs389.team2.quickfitness:showAsAction="ifRoom|withText" />
+
 </menu>

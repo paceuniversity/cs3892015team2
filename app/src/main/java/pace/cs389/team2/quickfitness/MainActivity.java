@@ -114,7 +114,7 @@ public class MainActivity extends ActionBarActivity {
         mDataList.add(new DrawerItem(getResources().getString(R.string.list_drawer_item_workouts), R.mipmap.ic_workouts24dp));
         mDataList.add(new DrawerItem(getResources().getString(R.string.list_drawer_item_profile), R.mipmap.ic_person_grey600_24dp));
         mDataList.add(new DrawerItem(getResources().getString(R.string.list_drawer_item_statistics), R.mipmap.ic_trending_up_grey600_24dp));
-        // mDataList.add(new DrawerItem(getResources().getString(R.string.list_drawer_item_settings), R.mipmap.ic_settings_grey600_24dp));
+        //mDataList.add(new DrawerItem(getResources().getString(R.string.list_drawer_item_log_out), R.mipmap.ic_settings_grey600_24dp));
         // mDataList.add(new DrawerItem(getResources().getString(R.string.list_drawer_item_help), R.mipmap.ic_help_grey600_24dp));
 
         //Makes a reference to the menu drawer adapter, which will show them items with an icon on the left.
@@ -160,8 +160,13 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return true;
+        if (!prefs.isFirstTime()) {
+            getMenuInflater().inflate(R.menu.main_menu, menu);
+            return true;
+        }
+
+        return false;
+
     }
 
 
@@ -186,12 +191,6 @@ public class MainActivity extends ActionBarActivity {
         txtUserLoggedInEmail.setText(prefs.getEmail());
     }
 
-   /* public void userLogout(View view) {
-        UserLoggedPreference prefs = new UserLoggedPreference(this);
-        prefs.logOut();
-        Toast.makeText(this, "User logged out.", Toast.LENGTH_LONG).show();
-    }*/
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -204,7 +203,7 @@ public class MainActivity extends ActionBarActivity {
             final UserLoggedPreference prefs = new UserLoggedPreference(this);
 
             new AlertDialog.Builder(this)
-                    .setTitle("Exit application")
+                    .setTitle("Exit applicationExit application")
                     .setMessage("Are you sure you want to logout?")
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
@@ -217,8 +216,7 @@ public class MainActivity extends ActionBarActivity {
                     .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                         }
-                    })
-                    .setIcon(android.R.drawable.ic_dialog_info)
+                    }).setIcon(R.mipmap.ic_warning_grey600_36dp)
                     .show();
             return true;
         }
@@ -231,6 +229,7 @@ public class MainActivity extends ActionBarActivity {
 
         Fragment fragment;
         FragmentTransaction ft = getFragmentManager().beginTransaction();
+        UserLoggedPreference prefs = new UserLoggedPreference(this);
 
         switch (position) {
 
@@ -241,7 +240,6 @@ public class MainActivity extends ActionBarActivity {
                 fragment = new ActivitySetGoal.FragmentSetGoal();
                 break;
             case 2:
-                UserLoggedPreference prefs = new UserLoggedPreference(this);
                 if (prefs.isFirstTime()) {
                     startActivity(new Intent(this, ActivityIntro.class));
                     fragment = new FragmentMainContent();
@@ -251,13 +249,19 @@ public class MainActivity extends ActionBarActivity {
                 }
                 break;
             case 3:
-                fragment = new FragmentUserProfile();
+                if (prefs.isFirstTime()) {
+                    startActivity(new Intent(this, ActivityIntro.class));
+                    fragment = new FragmentMainContent();
+                    finish();
+                } else {
+                    fragment = new FragmentUserProfile();
+                }
                 break;
             case 4:
                 fragment = new ActivityStatistics.StatisticsFragment();
                 break;
-           /* case 5:
-                fragment = new MainFragment();
+            /*case 5:
+                fragment = new Fragment();
                 break;
             case 6:
                 fragment = new MainFragment();

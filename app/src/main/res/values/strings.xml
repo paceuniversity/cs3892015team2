@@ -176,7 +176,7 @@
     <string name="txt_bf_indicator">BF</string>
     <string name="txt_bmi_indicator">BMI</string>
     <string name="txt_profile_workout_stats">STATS</string>
-    <string name="txt_profile_full_stats">See full stats</string>
+    <string name="txt_profile_full_stats">See Stats</string>
     <string name="txt_profile_user_image">profile_user_image</string>
     <string name="txt_enter_body_info">Enter Body Information</string>
     <string name="txt_body_info_height">Height in (meters)</string>
@@ -186,5 +186,9 @@
     <string name="txt_times_per_week">Times per week</string>
     <string name="txt_workout_duration">Duration</string>
     <string name="txt_set_time_hint">Set Time</string>
+    <string name="txt_body_height">Height</string>
+    <string name="txt_body_weight">Weight</string>
+    <string name="txt_card_no_data_available">No data Available</string>
+    <string name="txt_workout_duration_clock">workout_duration_clock_image</string>
 
 </resources>
