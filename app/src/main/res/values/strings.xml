@@ -166,7 +166,7 @@
     <string name="txt_username_intro">Username</string>
     <string name="txt_app_name_intro">QuickFitness</string>
     <string name="txt_email_intro">Email</string>
-    <string name="txt_card_current_workout">CURRENT WORKOUT</string>
+    <string name="txt_card_current_workout">Current Workout</string>
     <string name="txt_card_recent_activity">Recent Activity</string>
     <string name="txt_workout_categories">Workout Categories</string>
     <string name="txt_button_status">Stats</string>
@@ -175,7 +175,7 @@
     <string name="text_user_profile_info">Body Info</string>
     <string name="txt_bf_indicator">BF</string>
     <string name="txt_bmi_indicator">BMI</string>
-    <string name="txt_profile_workout_stats">STATS</string>
+    <string name="txt_profile_workout_stats">Active Workout</string>
     <string name="txt_profile_full_stats">See Stats</string>
     <string name="txt_profile_user_image">profile_user_image</string>
     <string name="txt_enter_body_info">Enter Body Information</string>
@@ -190,5 +190,7 @@
     <string name="txt_body_weight">Weight</string>
     <string name="txt_card_no_data_available">No data Available</string>
     <string name="txt_workout_duration_clock">workout_duration_clock_image</string>
+    <string name="txt_profile_male">Male</string>
+    <string name="txt_profile_female">Female</string>
 
 </resources>

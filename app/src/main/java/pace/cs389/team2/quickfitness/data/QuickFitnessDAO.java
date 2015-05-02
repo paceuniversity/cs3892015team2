@@ -88,7 +88,8 @@ public class QuickFitnessDAO {
             QuickFitnessContract.BodyEntry.COLUMN_BODY_WEIGHT,
             QuickFitnessContract.BodyEntry.COLUMN_BODY_BF,
             QuickFitnessContract.BodyEntry.COLUMN_BODY_BMI,
-            QuickFitnessContract.BodyEntry.COLUMN_BODY_USER_ID_KEY
+            QuickFitnessContract.BodyEntry.COLUMN_BODY_USER_ID_KEY,
+            QuickFitnessContract.BodyEntry.COLUMN_BODY_WORKOUT_ID_KEY
     };
 
 
@@ -123,6 +124,7 @@ public class QuickFitnessDAO {
         values.put(QuickFitnessContract.BodyEntry.COLUMN_BODY_BF, bodyInfo.getBf());
         values.put(QuickFitnessContract.BodyEntry.COLUMN_BODY_BMI, bodyInfo.getBmi());
         values.put(QuickFitnessContract.BodyEntry.COLUMN_BODY_USER_ID_KEY, bodyInfo.getUserKey());
+        values.put(QuickFitnessContract.BodyEntry.COLUMN_BODY_WORKOUT_ID_KEY, bodyInfo.getUserKey());
 
         sqLiteDatabase.insert(QuickFitnessContract.BodyEntry.TABLE_NAME, null, values);
     }
@@ -231,33 +233,6 @@ public class QuickFitnessDAO {
         return categories;
     }
 
-
-   /* public List<UserItem> listRegisteredUsers() {
-        List<UserItem> users = new ArrayList<>();
-
-        Cursor cursor = sqLiteDatabase.query(QuickFitnessContract.UserEntry.TABLE_NAME, PROJECTION_TABLE_USER,
-                null, null, null, null, null);
-
-        UserItem userItem;
-        try {
-            if (cursor.moveToFirst()) {
-                do {
-                    userItem = new UserItem(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getInt(4), cursor.getString(5));
-                    users.add(userItem);
-                } while (cursor.moveToNext());
-            }
-        } catch (SQLiteDatabaseLockedException exception) {
-            Log.e(MainActivity.APP_TAG, exception.getMessage());
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
-
-
-        return users;
-    }*/
-
     public CategoryItem categoryById(int id) {
 
         Cursor cursor = sqLiteDatabase.query(QuickFitnessContract.ExerciseCategoryEntry.TABLE_NAME, PROJECTION,
@@ -294,7 +269,7 @@ public class QuickFitnessDAO {
         try {
             if (cursor.moveToFirst()) {
                 do {
-                    bodyInfoItem = new BodyInfoItem(cursor.getInt(0), cursor.getDouble(1), cursor.getDouble(2), cursor.getDouble(3), cursor.getDouble(4), cursor.getInt(5));
+                    bodyInfoItem = new BodyInfoItem(cursor.getInt(0), cursor.getDouble(1), cursor.getDouble(2), cursor.getDouble(3), cursor.getDouble(4), cursor.getInt(5), cursor.getInt(6));
                 } while (cursor.moveToNext());
             }
         } catch (SQLiteDatabaseLockedException exception) {
@@ -415,6 +390,30 @@ public class QuickFitnessDAO {
 
         Cursor cursor = sqLiteDatabase.query(QuickFitnessContract.WorkoutSetEntry.TABLE_NAME, PROJECTION_TABLE_WORKOUT,
                 QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_STATUS_KEY + " = ?", new String[]{String.valueOf(statusId)}, null, null, null);
+
+        WorkoutItem itemWorkout = null;
+
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    itemWorkout = new WorkoutItem(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getInt(3), cursor.getString(4), cursor.getInt(5));
+                } while (cursor.moveToNext());
+            }
+        } catch (SQLiteDatabaseLockedException exception) {
+            Log.e(MainActivity.APP_TAG, exception.getMessage());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        return itemWorkout;
+    }
+
+    public WorkoutItem getCurrentWorkout() {
+
+        Cursor cursor = sqLiteDatabase.query(QuickFitnessContract.WorkoutSetEntry.TABLE_NAME, PROJECTION_TABLE_WORKOUT,
+                null, null, null, null, QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_ID + " DESC ", "1");
 
         WorkoutItem itemWorkout = null;
 

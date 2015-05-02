@@ -75,6 +75,9 @@ public class QuickFitnessContract {
 
         // Column with the foreign key into the user table
         public static final String COLUMN_BODY_USER_ID_KEY = "body_user_id";
+
+        // Column with the foreign key into the workout table
+        public static final String COLUMN_BODY_WORKOUT_ID_KEY = "body_workout_id";
     }
 
     /* Inner class that defines the table contents of the exercise table */

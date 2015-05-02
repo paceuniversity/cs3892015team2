@@ -40,12 +40,12 @@ public final class R {
 		public static final int normal = 0x7f09000a;
 	}
 	public static final class style {
-		public static final int FloatingActionButton = 0x7f0c006c;
-		public static final int FloatingActionButton_Dark = 0x7f0c006d;
-		public static final int FloatingActionButton_Dark_Mini = 0x7f0c006e;
-		public static final int FloatingActionButton_Light = 0x7f0c006f;
-		public static final int FloatingActionButton_Light_Mini = 0x7f0c0070;
-		public static final int FloatingActionButton_Mini = 0x7f0c0071;
+		public static final int FloatingActionButton = 0x7f0c006b;
+		public static final int FloatingActionButton_Dark = 0x7f0c006c;
+		public static final int FloatingActionButton_Dark_Mini = 0x7f0c006d;
+		public static final int FloatingActionButton_Light = 0x7f0c006e;
+		public static final int FloatingActionButton_Light_Mini = 0x7f0c006f;
+		public static final int FloatingActionButton_Mini = 0x7f0c0070;
 	}
 	public static final class styleable {
 		public static final int[] FloatingActionButton = { 0x7f010040, 0x7f010041, 0x7f010042, 0x7f010043 };

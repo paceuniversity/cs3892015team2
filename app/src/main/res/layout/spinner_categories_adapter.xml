@@ -19,32 +19,31 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="horizontal"
     android:layout_height="wrap_content"
-    android:background="@color/background_light_gray">
+    android:orientation="horizontal"
+    tools:ignore="UseCompoundDrawables">
 
     <TextView
         android:id="@+id/txt_spinner_adapter"
         android:layout_width="175dp"
         android:layout_height="wrap_content"
-        android:textColor="#424242"
-        android:text="Weight Loss"
-        android:paddingLeft="10dp"
-        android:paddingEnd="10dp"
         android:layout_gravity="fill_vertical"
-        android:paddingTop="5dp"
+        android:fontFamily="sans-serif-condensed"
         android:paddingBottom="5dp"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"
+        android:paddingTop="5dp"
         android:textAlignment="center"
-        android:textSize="18sp"
-        android:fontFamily="sans-serif-regular" />
+        android:textColor="@color/background_white"
+        android:textSize="18sp" />
 
     <ImageView
         android:id="@+id/img_spinner_adapter"
         android:layout_width="17dp"
         android:layout_height="17dp"
-        android:contentDescription="@string/spinner_categories_tag_content_desc"
-        android:layout_marginTop="10dp"
         android:layout_marginStart="30dp"
-        android:layout_marginEnd="5dp" />
+        android:layout_marginTop="10dp"
+        android:contentDescription="@string/spinner_categories_tag_content_desc" />
 </LinearLayout>

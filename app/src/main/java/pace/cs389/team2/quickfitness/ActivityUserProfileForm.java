@@ -15,15 +15,16 @@ import android.widget.Toast;
 import pace.cs389.team2.quickfitness.data.QuickFitnessDAO;
 import pace.cs389.team2.quickfitness.model.BodyInfoItem;
 import pace.cs389.team2.quickfitness.model.UserItem;
+import pace.cs389.team2.quickfitness.model.WorkoutItem;
 import pace.cs389.team2.quickfitness.preferences.UserLoggedPreference;
 
 
 public class ActivityUserProfileForm extends ActionBarActivity {
 
+    static TextView mTxtBodyFat;
+    static TextView mTxtBodyMBI;
     private static EditText mEdtBodyHeight;
     private static EditText mEdtBodyWeight;
-    private static TextView mTxtBodyFat;
-    private static TextView mTxtBodyMBI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,9 @@ public class ActivityUserProfileForm extends ActionBarActivity {
                 double bodyMassIndex = Double.parseDouble(mEdtBodyWeight.getText().toString()) / (Double.parseDouble(mEdtBodyHeight.getText().toString()) * Double.parseDouble(mEdtBodyHeight.getText().toString()));
                 double bodyFat = (1.20 * bodyMassIndex) + (0.23 * userItem.getAge()) - (10.8 * userItem.getGenre()) - 5.4;
 
-                BodyInfoItem bodyInfoItem = new BodyInfoItem(Double.parseDouble(mEdtBodyHeight.getText().toString()), Double.parseDouble(mEdtBodyWeight.getText().toString()), bodyFat, bodyMassIndex, userItem.getId());
+                WorkoutItem workoutItem = dao.getCurrentWorkout();
+
+                BodyInfoItem bodyInfoItem = new BodyInfoItem(Double.parseDouble(mEdtBodyHeight.getText().toString()), Double.parseDouble(mEdtBodyWeight.getText().toString()), bodyFat, bodyMassIndex, userItem.getId(), workoutItem.getId());
 
                 dao.insertBodyInfo(bodyInfoItem);
 

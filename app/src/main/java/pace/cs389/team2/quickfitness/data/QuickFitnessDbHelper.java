@@ -39,7 +39,7 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "fitness.db";
 
     //Database version. If database has been changed, increment version in 1 to recreate database.
-    private static final int DB_VERSION = 90;
+    private static final int DB_VERSION = 91;
 
     // SQL script to drop the entire database
     //private static final String SQL_DROP_DATABASE = "DROP DATABASE IF EXISTS " + DATABASE_NAME;
@@ -71,8 +71,14 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
             QuickFitnessContract.BodyEntry.COLUMN_BODY_BMI + " REAL NOT NULL, " +
             QuickFitnessContract.BodyEntry.COLUMN_BODY_BF + " REAL NOT NULL, " +
             QuickFitnessContract.BodyEntry.COLUMN_BODY_USER_ID_KEY + " INTEGER NOT NULL, " +
+            QuickFitnessContract.BodyEntry.COLUMN_BODY_WORKOUT_ID_KEY + " INTEGER NOT NULL, " +
+
             " FOREIGN KEY (" + QuickFitnessContract.BodyEntry.COLUMN_BODY_USER_ID_KEY + ") REFERENCES " +
-            QuickFitnessContract.UserEntry.TABLE_NAME + " (" + QuickFitnessContract.UserEntry.COLUMN_USER_ID + "));";
+            QuickFitnessContract.UserEntry.TABLE_NAME + " (" + QuickFitnessContract.UserEntry.COLUMN_USER_ID +
+            "), FOREIGN KEY (" + QuickFitnessContract.BodyEntry.COLUMN_BODY_WORKOUT_ID_KEY + ") REFERENCES " +
+            QuickFitnessContract.WorkoutSetEntry.TABLE_NAME + " (" + QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_ID +
+            "));";
+
 
     /*SQL script to create table 'exercise_category' on the database*/
     private static final String SQL_CREATE_CATEGORY_TABLE = "CREATE TABLE " + QuickFitnessContract.ExerciseCategoryEntry.TABLE_NAME + "(" +
@@ -118,9 +124,9 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
             QuickFitnessContract.WorkoutExerciseEntry.COLUMN_EXERCISE_KEY + " INTEGER NOT NULL, " +
             QuickFitnessContract.WorkoutExerciseEntry.COLUMN_WORKOUT_KEY + " INTEGER NOT NULL, " +
             " FOREIGN KEY (" + QuickFitnessContract.WorkoutExerciseEntry.COLUMN_EXERCISE_KEY + ") REFERENCES " +
-            QuickFitnessContract.WorkoutExerciseEntry.TABLE_NAME + " (" + QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_ID +
+            QuickFitnessContract.ExerciseEntry.TABLE_NAME + " (" + QuickFitnessContract.ExerciseEntry.COLUMN_EXERCISE_ID +
             "), FOREIGN KEY (" + QuickFitnessContract.WorkoutExerciseEntry.COLUMN_WORKOUT_KEY + ") REFERENCES " +
-            QuickFitnessContract.WorkoutExerciseEntry.TABLE_NAME + " (" + QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_ID +
+            QuickFitnessContract.WorkoutSetEntry.TABLE_NAME + " (" + QuickFitnessContract.WorkoutSetEntry.COLUMN_WORKOUT_SET_ID +
             "));";
 
     static Context mContext;

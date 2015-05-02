@@ -8,22 +8,25 @@ public class BodyInfoItem {
     private double bf;
     private double bmi;
     private int userKey;
+    private int workoutKey;
 
-    public BodyInfoItem(int id, double height, double weight, double bf, double bmi, int userKey) {
+    public BodyInfoItem(int id, double height, double weight, double bf, double bmi, int userKey, int workoutKey) {
         this.id = id;
         this.height = height;
         this.weight = weight;
         this.bf = bf;
         this.bmi = bmi;
         this.userKey = userKey;
+        this.workoutKey = workoutKey;
     }
 
-    public BodyInfoItem(double height, double weight, double bf, double bmi, int userKey) {
+    public BodyInfoItem(double height, double weight, double bf, double bmi, int userKey, int workoutKey) {
         this.height = height;
         this.weight = weight;
         this.bf = bf;
         this.bmi = bmi;
         this.userKey = userKey;
+        this.workoutKey = workoutKey;
     }
 
     public int getId() {
@@ -48,5 +51,9 @@ public class BodyInfoItem {
 
     public int getUserKey() {
         return userKey;
+    }
+
+    public int getWorkoutKey() {
+        return workoutKey;
     }
 }

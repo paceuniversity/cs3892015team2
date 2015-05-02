@@ -29,6 +29,9 @@ public class FragmentUserProfile extends Fragment {
     TextView mUserWeight;
     TextView mUserBodyFat;
     TextView mUserBMI;
+    TextView mUserEmail;
+    TextView mUserAge;
+    TextView mUserGender;
     LinearLayout bodyInfoLayout;
     CardView mCurrentWorkoutCard;
     TextView mTextWorkoutStats;
@@ -46,6 +49,9 @@ public class FragmentUserProfile extends Fragment {
 
         mUserImage = (ImageView) view.findViewById(R.id.user_profile_image);
         mUserName = (TextView) view.findViewById(R.id.txt_user_profile_name);
+        mUserEmail = (TextView) view.findViewById(R.id.txt_user_profile_email);
+        mUserAge = (TextView) view.findViewById(R.id.txt_user_profile_age);
+        mUserGender = (TextView) view.findViewById(R.id.txt_user_profile_gender);
         mUserHeight = (TextView) view.findViewById(R.id.txt_user_profile_height);
         mUserWeight = (TextView) view.findViewById(R.id.txt_user_profile_weight);
         mUserBodyFat = (TextView) view.findViewById(R.id.txt_user_profile_bf);
@@ -85,6 +91,15 @@ public class FragmentUserProfile extends Fragment {
 
 
                 mUserName.setText(userItem.getUsername());
+                mUserEmail.setText(userItem.getEmail());
+                mUserAge.setText(String.valueOf(userItem.getAge()) + " years old");
+
+                if (userItem.getGenre() == 1) {
+                    mUserGender.setText(getResources().getString(R.string.txt_profile_male));
+                } else if (userItem.getGenre() == 0) {
+                    mUserGender.setText(getResources().getString(R.string.txt_profile_female));
+                }
+
                 bodyInfoItem = dao.getUserBodyInfo(userItem.getId());
             }
 
