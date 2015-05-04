@@ -59,93 +59,95 @@
     <string name="workout_status_finished">Finished</string>
 
 
-    <string name="weight_loss_exercise_title_cycling">Cycling</string>
-    <string name="weight_loss_exercise_title_treadmill_rounds">Treadmill Rounds</string>
-    <string name="weight_loss_exercise_title_jumping_rope">Jumping Rope</string>
+    <!-- List of exercises stored on the app -->
 
-    <string name="weight_loss_exercise_description_cycling">Bicycling is another low-impact, high-rewards activity for losing weight.
-    Cycling can burn anywhere from 372 to over 1,100 calories per hour, depending on your weight, your speed and the terrain you’re biking across.</string>
-    <string name="weight_loss_exercise_description_treadmill_rounds">Treadmill rounds utilize the treadmill to get the heart rate up, followed by floor exercises that include plenty of resistance training to strengthen muscle and increase metabolism to help you burn more fat throughout the day</string>
-    <string name="weight_loss_exercise_description_jumping_rope">Jumping rope is a favorite activity on playgrounds across the country, but it’s hardly child’s play when it comes to losing weight.
-    Just ten minutes of rope jumping is worth an eight-minute mile when it comes to cardio benefits and calorie burning.
-    An hour of jumping rope burns over 800 calories and works the arms, legs, and core, as well as strengthens bones and joints.
-    </string>
+    <!-- Weight Loss exercises title-->
+    <string name="weight_loss_exercise_title_treadmill">Treadmill Rounds</string>
+    <string name="weight_loss_exercise_title_elliptical">Elliptical Trainer</string>
 
-    <string name="weight_loss_exercise_level_cycling">Beginner</string>
-    <string name="weight_loss_exercise_level_treadmill_rounds">Beginner</string>
-    <string name="weight_loss_exercise_level_jumping_rope">Intermediate</string>
-
-    <integer name="weight_loss_exercise_duration_cycling">8</integer>
-    <integer name="weight_loss_exercise_duration_treadmill_rounds">25</integer>
-    <integer name="weight_loss_exercise_duration_jumping_rope">5</integer>
-
-    <integer name="weight_loss_exercise_calories_cycling">700</integer>
-    <integer name="weight_loss_exercise_calories_treadmill_rounds">500</integer>
-    <integer name="weight_loss_exercise_calories_jumping_rope">800</integer>
-
-
-    <string name="strength_exercise_title_globet_squat">Globet Squat</string>
-    <string name="strength_exercise_title_pallof_press"> Pallof Press</string>
-    <string name="strength_exercise_title_dumbbell_row">Dumbbell Row</string>
-
-    <string name="strength_exercise_description_globet_squat">Squats are an exercise many people struggle to perform safely and effectively. Luckily, the goblet squat is a great progression from a bodyweight squat before squatting with a bar. Because the load is held in front, the core works double-time to keep you tall, while your legs work to control your movement down and stand back up.</string>
-    <string name="strength_exercise_description_pallof_press">The Pallof press is one of those movements that looks confusing, but is actually incredibly simple and beneficial, says Mike Campbell, personal trainer and owner of Unleash Your Alpha. While you may not be hoisting heavy weight, the real challenge lies in resisting movement — in this case, rotation</string>
-    <string name="strength_exercise_description_dumbbell_row">Most of us spend more time training the mirror muscles on the front of the body, and neglect what we can’t see, according to Campbell. But developing a strong back is key to balance things out, improve posture and avoid injury. The dumbbell row can help achieve all that, in addition building strong arms and a strong core</string>
-
-    <string name="strength_exercise_level_globet_squat">Beginner</string>
-    <string name="strength_exercise_level_pallof_pres">Intermediate</string>
-    <string name="strength_exercise_level_dumbbell_row">Intermediate</string>
-
-    <integer name="strength_exercise_duration_globet_squat">13</integer>
-    <integer name="strength_exercise_duration_pallof_pres">10</integer>
-    <integer name="strength_exercise_duration_dumbbell_row">8</integer>
-
-    <integer name="strength_exercise_calories_globet_squat">500</integer>
-    <integer name="strength_exercise_calories_pallof_pres">200</integer>
-    <integer name="strength_exercise_calories_dumbbell_row">450</integer>
-
-
-    <string name="cardio_exercise_title_elliptical">Elliptical Machines</string>
-    <string name="cardio_exercise_title_stationary_bike">Stationary Bikes</string>
-    <string name="cardio_exercise_title_rowing">Rowing Machines</string>
-
-    <string name="cardio_exercise_description_elliptical">These machines pack a little less punch on the joints, and either can be a good alternative to the treadmill.
+    <!-- Weight Loss exercises description-->
+     <string name="weight_loss_exercise_description_treadmill">These machines pack a little less punch on the joints, and either can be a good alternative to the treadmill.
      Because you use them in a standing position, you are using lots of muscle mass, so the calorie burn rate is still pretty high.</string>
-    <string name="cardio_exercise_description_stationary_bike">All our experts agree that the stationary bike offers the workout with the least impact on the joints. People with knee pain are often steered toward these bikes, since the impact of body weight is not a concern as it is on a treadmill, elliptical trainer, or stair stepper</string>
-    <string name="cardio_exercise_description_rowing">Don’t be fooled into thinking this machine gives you only an upper-body workout. Rowers are more advanced cardiovascular machines. Because you must push with the legs while you pull with the arms, rowers require coordination. They also you require you to engage your core abdominal muscles to support and protect your back.</string>
 
-    <string name="cardio_exercise_level_elliptical">Beginner</string>
-    <string name="cardio_exercise_level_stationary_bike">Beginner</string>
-    <string name="cardio_exercise_level_rowing">Beginner</string>
+     <string name="weight_loss_exercise_description_elliptical">These machines pack a little less punch on the joints, and either can be a good alternative to the treadmill.
+     Because you use them in a standing position, you are using lots of muscle mass, so the calorie burn rate is still pretty high.</string>
 
-    <integer name="cardio_exercise_duration_elliptical">25</integer>
-    <integer name="cardio_exercise_duration_stationary_bike">23</integer>
-    <integer name="cardio_exercise_duration_rowing">15</integer>
+    <!-- Weight Loss exercises level-->
+    <string name="weight_loss_exercise_level_treadmill">Beginner</string>
+    <string name="weight_loss_exercise_level_elliptical">Beginner</string>
 
-    <integer name="cardio_exercise_calories_elliptical">900</integer>
-    <integer name="cardio_exercise_calories_stationary_bike">490</integer>
-    <integer name="cardio_exercise_calories_rowing">720</integer>
+    <!-- Weight Loss exercises duration-->
+    <integer name="weight_loss_exercise_duration_treadmill">25</integer>
+    <integer name="weight_loss_exercise_duration_elliptical">35</integer>
+
+    <!-- Weight Loss exercises calories-->
+    <integer name="weight_loss_exercise_calories_treadmill">150</integer>
+    <integer name="weight_loss_exercise_calories_elliptical">320</integer>
 
 
-    <string name="endurance_exercise_title_swimming_laps">Swimming Laps</string>
-    <string name="endurance_exercise_title_stair_machines">Stair Machines</string>
-    <string name="endurance_exercise_title_push_ups">Push-ups</string>
+    <!-- Strength exercises title-->
+    <string name="strength_exercise_title_pull_down">Pull Down</string>
+    <string name="strength_exercise_title_push_up">Push ups</string>
 
-    <string name="endurance_exercise_description_swimming_laps">The overall goal of the Beginner Swimming Workouts is to build up to a level where the workouts will improve and maintain fitness goals. The 2 overriding challenges are to build up endurance so you can swim continuously without stopping, and to improve strokes and breathing through drills.</string>
-    <string name="endurance_exercise_description_stair_machines">Stair machines elevate your rate up by duplicating the motion of climbing up stairs. Although this is an excellent choice for cardiovascular endurance training, it might not be the best choice for a beginner or those with bad knees. The stair machine focuses on your lower body while your upper body tries not to hold on for dear life.</string>
-    <string name="endurance_exercise_description_push_ups">The beauty of the push-up is that you can do it anywhere, anytime. It is a great all-encompassing exercise that hits not only your arms and chest but also gets a burn going in your core. The only downside is that busting out the same old up-and-down routine day after day can start to feel tedious.</string>
+    <!-- Strength exercises description-->
+    <string name="strength_exercise_description_pull_down">Squats are an exercise many people struggle to perform safely and effectively. Luckily, the goblet squat is a great progression from a bodyweight squat before squatting with a bar. Because the load is held in front, the core works double-time to keep you tall, while your legs work to control your movement down and stand back up.</string>
+    <string name="strength_exercise_description_push_up">The beauty of the push-up is that you can do it anywhere, anytime. It is a great all-encompassing exercise that hits not only your arms and chest but also gets a burn going in your core. The only downside is that busting out the same old up-and-down routine day after day can start to feel tedious.</string>
 
-    <string name="endurance_exercise_level_swimming_laps">Beginner</string>
-    <string name="endurance_exercise_level_stair_machines">Intermediate</string>
-    <string name="endurance_exercise_level_push_ups">Beginner</string>
+    <!-- Strength exercises level-->
+    <string name="strength_exercise_level_pull_down">Intermediate</string>
+    <string name="strength_exercise_level_push_up">Beginner</string>
 
-    <integer name="endurance_exercise_duration_swimming_laps">20</integer>
-    <integer name="endurance_exercise_duration_stair_machines">15</integer>
-    <integer name="endurance_exercise_duration_push_ups">5</integer>
+    <!-- Strength exercises duration -->
+    <integer name="strength_exercise_duration_pull_down">10</integer>
+    <integer name="strength_exercise_duration_push_up">10</integer>
 
-    <integer name="endurance_exercise_calories_swimming_laps">600</integer>
-    <integer name="endurance_exercise_calories_stair_machines">500</integer>
-    <integer name="endurance_exercise_calories_push_ups">700</integer>
+    <!-- Strength exercises calories -->
+    <integer name="strength_exercise_calories_pull_down">200</integer>
+    <integer name="strength_exercise_calories_push_up">300</integer>
+
+
+    <!-- Endurance exercises titles -->
+    <string name="endurance_exercise_title_stationary_bike">Stationary Bikes</string>
+    <string name="endurance_exercise_title_crawl">Crawl</string>
+
+    <!-- Endurance exercises description -->
+    <string name="endurance_exercise_description_stationary_bike">All our experts agree that the stationary bike offers the workout with the least impact on the joints. People with knee pain are often steered toward these bikes, since the impact of body weight is not a concern as it is on a treadmill, elliptical trainer, or stair stepper</string>
+    <string name="endurance_exercise_description_crawl">All our experts agree that the stationary bike offers the workout with the least impact on the joints. People with knee pain are often steered toward these bikes, since the impact of body weight is not a concern as it is on a treadmill, elliptical trainer, or stair stepper</string>
+
+    <!-- Endurance exercises level -->
+    <string name="endurance_exercise_level_stationary_bike">Beginner</string>
+    <string name="endurance_exercise_level_crawl">Beginner</string>
+
+    <!-- Endurance exercises duration -->
+    <integer name="endurance_exercise_duration_stationary_bike">25</integer>
+    <integer name="endurance_exercise_duration_crawl">8</integer>
+
+    <!-- Endurance exercises calories -->
+    <integer name="endurance_exercise_calories_stationary_bike">400</integer>
+    <integer name="endurance_exercise_calories_crawl">120</integer>
+
+
+    <!-- Cardio exercises titles -->
+    <string name="cardio_exercise_title_treadmill_intervals">Treadmill Intervals</string>
+    <string name="cardio_exercise_title_jumping_jack">Jumping Jack</string>
+
+    <!-- Cardio exercises description -->
+    <string name="cardio_exercise_description_treadmill_intervals">All our experts agree that the stationary bike offers the workout with the least impact on the joints. People with knee pain are often steered toward these bikes, since the impact of body weight is not a concern as it is on a treadmill, elliptical trainer, or stair stepper</string>
+    <string name="cardio_exercise_description_jumping_jack">All our experts agree that the stationary bike offers the workout with the least impact on the joints. People with knee pain are often steered toward these bikes, since the impact of body weight is not a concern as it is on a treadmill, elliptical trainer, or stair stepper</string>
+
+    <!-- Cardio exercises level -->
+    <string name="cardio_exercise_level_treadmill_intervals">Beginner</string>
+    <string name="cardio_exercise_level_jumping_jack">Beginner</string>
+
+    <!-- Cardio exercises duration -->
+    <integer name="cardio_exercise_duration_treadmill_intervals">15</integer>
+    <integer name="cardio_exercise_duration_jumping_jack">5</integer>
+
+    <!-- Cardio exercises calories -->
+    <integer name="cardio_exercise_calories_treadmill_intervals">400</integer>
+    <integer name="cardio_exercise_calories_jumping_jack">80</integer>
+
+
     <string name="title_activity_exercise_details">ExerciseDetailsActivity</string>
     <string name="title_activity_activity_add_workout">New Workout</string>
     <string name="title_activity_activity_statistics">Graphs</string>
@@ -192,5 +194,6 @@
     <string name="txt_workout_duration_clock">workout_duration_clock_image</string>
     <string name="txt_profile_male">Male</string>
     <string name="txt_profile_female">Female</string>
+    <string name="txt_video_play_button">video_play_button</string>
 
 </resources>

@@ -58,8 +58,8 @@
 
             <ImageView
                 android:id="@+id/img_exercise_picture"
-                android:layout_width="140dp"
-                android:layout_height="120dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"

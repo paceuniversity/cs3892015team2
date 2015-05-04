@@ -3,6 +3,7 @@ package pace.cs389.team2.quickfitness;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,6 +17,7 @@ import pace.cs389.team2.quickfitness.data.QuickFitnessDAO;
 import pace.cs389.team2.quickfitness.model.BodyInfoItem;
 import pace.cs389.team2.quickfitness.model.UserItem;
 import pace.cs389.team2.quickfitness.model.WorkoutItem;
+import pace.cs389.team2.quickfitness.notification.NotificationBuilder;
 import pace.cs389.team2.quickfitness.preferences.UserLoggedPreference;
 
 
@@ -57,20 +59,26 @@ public class ActivityUserProfileForm extends ActionBarActivity {
             UserLoggedPreference prefs = new UserLoggedPreference(this);
 
             if (!prefs.isFirstTime()) {
-                UserItem userItem = dao.loadLoggedUser(prefs.getName());
 
-                double bodyMassIndex = Double.parseDouble(mEdtBodyWeight.getText().toString()) / (Double.parseDouble(mEdtBodyHeight.getText().toString()) * Double.parseDouble(mEdtBodyHeight.getText().toString()));
-                double bodyFat = (1.20 * bodyMassIndex) + (0.23 * userItem.getAge()) - (10.8 * userItem.getGenre()) - 5.4;
+                if (checkForm()) {
+                    UserItem userItem = dao.loadLoggedUser(prefs.getName());
 
-                WorkoutItem workoutItem = dao.getCurrentWorkout();
+                    double bodyMassIndex = Double.parseDouble(mEdtBodyWeight.getText().toString()) / (Double.parseDouble(mEdtBodyHeight.getText().toString()) * Double.parseDouble(mEdtBodyHeight.getText().toString()));
+                    double bodyFat = (1.20 * bodyMassIndex) + (0.23 * userItem.getAge()) - (10.8 * userItem.getGenre()) - 5.4;
 
-                BodyInfoItem bodyInfoItem = new BodyInfoItem(Double.parseDouble(mEdtBodyHeight.getText().toString()), Double.parseDouble(mEdtBodyWeight.getText().toString()), bodyFat, bodyMassIndex, userItem.getId(), workoutItem.getId());
+                    WorkoutItem workoutItem = dao.getCurrentWorkout();
 
-                dao.insertBodyInfo(bodyInfoItem);
+                    BodyInfoItem bodyInfoItem = new BodyInfoItem(Double.parseDouble(mEdtBodyHeight.getText().toString()), Double.parseDouble(mEdtBodyWeight.getText().toString()), bodyFat, bodyMassIndex, userItem.getId(), workoutItem.getId());
 
-                Toast.makeText(this, "Workout saved.", Toast.LENGTH_LONG).show();
+                    dao.insertBodyInfo(bodyInfoItem);
 
-                finish();
+                    buildNotification(workoutItem.getTime());
+
+                    Toast.makeText(this, "Workout saved. Reminder set to " + workoutItem.getTime(), Toast.LENGTH_LONG).show();
+
+                    finish();
+                }
+
             } else {
                 Toast.makeText(this, "User not logged in.", Toast.LENGTH_LONG).show();
             }
@@ -80,6 +88,33 @@ public class ActivityUserProfileForm extends ActionBarActivity {
         }
 
         return false;
+    }
+
+    private boolean checkForm() {
+
+        boolean isFieldSet;
+
+        if (TextUtils.isEmpty(mEdtBodyHeight.getText().toString())) {
+            mEdtBodyHeight.setError("Please, enter your height in meters.");
+            isFieldSet = false;
+        } else if (TextUtils.isEmpty(mEdtBodyWeight.getText().toString())) {
+            mEdtBodyWeight.setError("Please, enter your weight in kg.");
+            isFieldSet = false;
+
+        } else {
+            isFieldSet = true;
+        }
+
+        return isFieldSet;
+
+    }
+
+    private void buildNotification(String time) {
+
+        String notificationMsg = "Don't forget the gym time at " + time;
+
+        NotificationBuilder.buildNotification(this,
+                android.R.drawable.ic_dialog_info, "QuickFitness", notificationMsg);
     }
 
     public static class FragmentUserProfileForm extends Fragment {

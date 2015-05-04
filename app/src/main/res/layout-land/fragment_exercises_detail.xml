@@ -19,21 +19,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
     android:background="@color/background_light_gray"
+    android:orientation="vertical"
     tools:context=".MainActivity$PlaceholderFragment">
 
-    <TextView
-        android:id="@+id/txt_video_placeholder"
+    <FrameLayout
+        android:id="@+id/frame_exercise_video"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:textColor="@color/background_white"
-        android:background="@color/text_color_dark_grey"
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:text="VIDEO" />
+        android:background="#000">
 
+        <VideoView
+            android:id="@+id/video_placeholder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center" />
+
+        <ImageButton
+            android:id="@+id/btn_video_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/txt_video_play_button"
+            android:src="@mipmap/ic_play_arrow_white_48dp" />
+
+    </FrameLayout>
 
 </LinearLayout>

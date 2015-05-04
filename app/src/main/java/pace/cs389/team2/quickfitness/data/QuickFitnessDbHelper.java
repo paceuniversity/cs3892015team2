@@ -39,7 +39,7 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "fitness.db";
 
     //Database version. If database has been changed, increment version in 1 to recreate database.
-    private static final int DB_VERSION = 91;
+    private static final int DB_VERSION = 94;
 
     // SQL script to drop the entire database
     //private static final String SQL_DROP_DATABASE = "DROP DATABASE IF EXISTS " + DATABASE_NAME;
@@ -199,63 +199,56 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
 
     private void exercisesBulkInsert(SQLiteDatabase db) {
 
-        ExercisesItem weightLossCycling = new ExercisesItem(mContext.getResources().getString(R.string.weight_loss_exercise_title_cycling), mContext.getResources().getString(R.string.weight_loss_exercise_description_cycling),
-                R.drawable.cycling, mContext.getResources().getString(R.string.weight_loss_exercise_level_cycling), mContext.getResources().getInteger(R.integer.weight_loss_exercise_duration_cycling), mContext.getResources().getInteger(R.integer.weight_loss_exercise_calories_cycling), "video_path", 5);
+        String ellipticalVideoStringPath = "android.resource://" + mContext.getPackageName() + "/" + R.raw.video_elliptical;
+        ExercisesItem weightLossElliptical = new ExercisesItem(mContext.getResources().getString(R.string.weight_loss_exercise_title_elliptical), mContext.getResources().getString(R.string.weight_loss_exercise_description_elliptical),
+                R.drawable.elliptical, mContext.getResources().getString(R.string.weight_loss_exercise_level_elliptical), mContext.getResources().getInteger(R.integer.weight_loss_exercise_duration_elliptical), mContext.getResources().getInteger(R.integer.weight_loss_exercise_calories_elliptical), ellipticalVideoStringPath, 5);
 
-        ExercisesItem weightLossTreadmillRounds = new ExercisesItem(mContext.getResources().getString(R.string.weight_loss_exercise_title_treadmill_rounds), mContext.getResources().getString(R.string.weight_loss_exercise_description_treadmill_rounds),
-                R.drawable.treadmill_rounds, mContext.getResources().getString(R.string.weight_loss_exercise_level_treadmill_rounds), mContext.getResources().getInteger(R.integer.weight_loss_exercise_duration_treadmill_rounds), mContext.getResources().getInteger(R.integer.weight_loss_exercise_calories_treadmill_rounds), "video_path", 5);
-
-        ExercisesItem weightLossJumpRope = new ExercisesItem(mContext.getResources().getString(R.string.weight_loss_exercise_title_jumping_rope), mContext.getResources().getString(R.string.weight_loss_exercise_description_jumping_rope),
-                R.drawable.jumping_rope, mContext.getResources().getString(R.string.weight_loss_exercise_level_jumping_rope), mContext.getResources().getInteger(R.integer.weight_loss_exercise_duration_jumping_rope), mContext.getResources().getInteger(R.integer.weight_loss_exercise_calories_jumping_rope), "video_path", 5);
-
-        ExercisesItem strengthGlobetSquat = new ExercisesItem(mContext.getResources().getString(R.string.strength_exercise_title_globet_squat), mContext.getResources().getString(R.string.strength_exercise_title_globet_squat),
-                R.drawable.globet_squat, mContext.getResources().getString(R.string.strength_exercise_level_globet_squat), mContext.getResources().getInteger(R.integer.strength_exercise_duration_globet_squat), mContext.getResources().getInteger(R.integer.strength_exercise_calories_globet_squat), "video_path", 4);
-
-        ExercisesItem strengthPallofPress = new ExercisesItem(mContext.getResources().getString(R.string.strength_exercise_title_pallof_press), mContext.getResources().getString(R.string.strength_exercise_description_pallof_press),
-                R.drawable.pallof_press, mContext.getResources().getString(R.string.strength_exercise_level_pallof_pres), mContext.getResources().getInteger(R.integer.strength_exercise_duration_pallof_pres), mContext.getResources().getInteger(R.integer.strength_exercise_calories_pallof_pres), "video_path", 4);
-
-        ExercisesItem strengthDumbbellRow = new ExercisesItem(mContext.getResources().getString(R.string.strength_exercise_title_dumbbell_row), mContext.getResources().getString(R.string.strength_exercise_description_dumbbell_row),
-                R.drawable.dumbbell_row, mContext.getResources().getString(R.string.strength_exercise_level_dumbbell_row), mContext.getResources().getInteger(R.integer.strength_exercise_duration_dumbbell_row), mContext.getResources().getInteger(R.integer.strength_exercise_calories_dumbbell_row), "video_path", 4);
-
-        ExercisesItem cardioElliptical = new ExercisesItem(mContext.getResources().getString(R.string.cardio_exercise_title_elliptical), mContext.getResources().getString(R.string.cardio_exercise_description_elliptical),
-                R.drawable.elliptical, mContext.getResources().getString(R.string.cardio_exercise_level_elliptical), mContext.getResources().getInteger(R.integer.strength_exercise_duration_globet_squat), mContext.getResources().getInteger(R.integer.cardio_exercise_calories_elliptical), "video_path", 2);
-
-        ExercisesItem cardioStationaryBike = new ExercisesItem(mContext.getResources().getString(R.string.cardio_exercise_title_stationary_bike), mContext.getResources().getString(R.string.cardio_exercise_description_stationary_bike),
-                R.drawable.stationary_bike, mContext.getResources().getString(R.string.cardio_exercise_level_stationary_bike), mContext.getResources().getInteger(R.integer.cardio_exercise_duration_stationary_bike), mContext.getResources().getInteger(R.integer.cardio_exercise_calories_stationary_bike), "video_path", 2);
-
-        ExercisesItem cardioRowing = new ExercisesItem(mContext.getResources().getString(R.string.cardio_exercise_title_rowing), mContext.getResources().getString(R.string.cardio_exercise_description_rowing),
-                R.drawable.rowing_machines, mContext.getResources().getString(R.string.cardio_exercise_level_rowing), mContext.getResources().getInteger(R.integer.cardio_exercise_duration_rowing), mContext.getResources().getInteger(R.integer.cardio_exercise_calories_stationary_bike), "video_path", 2);
+        String treadmillVideoStringPath = "android.resource://" + mContext.getPackageName() + "/" + R.raw.video_treadmill;
+        ExercisesItem weightLossTreadmill = new ExercisesItem(mContext.getResources().getString(R.string.weight_loss_exercise_title_treadmill), mContext.getResources().getString(R.string.weight_loss_exercise_description_treadmill),
+                R.drawable.treadmill, mContext.getResources().getString(R.string.weight_loss_exercise_level_treadmill), mContext.getResources().getInteger(R.integer.weight_loss_exercise_duration_treadmill), mContext.getResources().getInteger(R.integer.weight_loss_exercise_calories_treadmill), treadmillVideoStringPath, 5);
 
 
-        ExercisesItem enduranceSwimmingLaps = new ExercisesItem(mContext.getResources().getString(R.string.endurance_exercise_title_swimming_laps), mContext.getResources().getString(R.string.endurance_exercise_description_swimming_laps),
-                R.drawable.swimming_laps, mContext.getResources().getString(R.string.endurance_exercise_level_swimming_laps), mContext.getResources().getInteger(R.integer.endurance_exercise_duration_swimming_laps), mContext.getResources().getInteger(R.integer.endurance_exercise_calories_swimming_laps), "video_path", 3);
+        String pullDownVideoStringPath = "android.resource://" + mContext.getPackageName() + "/" + R.raw.video_pull_down;
+        ExercisesItem strengthPullDown = new ExercisesItem(mContext.getResources().getString(R.string.strength_exercise_title_pull_down), mContext.getResources().getString(R.string.strength_exercise_description_pull_down),
+                R.drawable.pull_down, mContext.getResources().getString(R.string.strength_exercise_level_pull_down), mContext.getResources().getInteger(R.integer.strength_exercise_duration_pull_down), mContext.getResources().getInteger(R.integer.strength_exercise_calories_pull_down), pullDownVideoStringPath, 4);
+
+        String pushUpVideoStringPath = "android.resource://" + mContext.getPackageName() + "/" + R.raw.video_push_up;
+        ExercisesItem strengthPushUp = new ExercisesItem(mContext.getResources().getString(R.string.strength_exercise_title_push_up), mContext.getResources().getString(R.string.strength_exercise_description_push_up),
+                R.drawable.push_up, mContext.getResources().getString(R.string.strength_exercise_level_push_up), mContext.getResources().getInteger(R.integer.strength_exercise_duration_push_up), mContext.getResources().getInteger(R.integer.strength_exercise_calories_push_up), pushUpVideoStringPath, 4);
 
 
-        ExercisesItem enduranceStairMachine = new ExercisesItem(mContext.getResources().getString(R.string.endurance_exercise_title_stair_machines), mContext.getResources().getString(R.string.endurance_exercise_description_stair_machines),
-                R.drawable.stair_machine, mContext.getResources().getString(R.string.endurance_exercise_level_stair_machines), mContext.getResources().getInteger(R.integer.endurance_exercise_duration_stair_machines), mContext.getResources().getInteger(R.integer.endurance_exercise_calories_stair_machines), "video_path", 3);
+        String treadmillIntervalVideoStringPath = "android.resource://" + mContext.getPackageName() + "/" + R.raw.video_treadmill;
+        ExercisesItem cardioTreadmillInterval = new ExercisesItem(mContext.getResources().getString(R.string.cardio_exercise_title_treadmill_intervals), mContext.getResources().getString(R.string.cardio_exercise_description_treadmill_intervals),
+                R.drawable.treadmill, mContext.getResources().getString(R.string.cardio_exercise_level_treadmill_intervals), mContext.getResources().getInteger(R.integer.cardio_exercise_duration_treadmill_intervals), mContext.getResources().getInteger(R.integer.cardio_exercise_calories_treadmill_intervals), treadmillIntervalVideoStringPath, 2);
+
+        String jumpingJackVideoStringPath = "android.resource://" + mContext.getPackageName() + "/" + R.raw.video_jumping_jack;
+        ExercisesItem cardioJumping = new ExercisesItem(mContext.getResources().getString(R.string.cardio_exercise_title_jumping_jack), mContext.getResources().getString(R.string.cardio_exercise_description_jumping_jack),
+                R.drawable.jumping_jack, mContext.getResources().getString(R.string.cardio_exercise_level_jumping_jack), mContext.getResources().getInteger(R.integer.cardio_exercise_duration_jumping_jack), mContext.getResources().getInteger(R.integer.cardio_exercise_calories_jumping_jack), jumpingJackVideoStringPath, 2);
 
 
-        ExercisesItem endurancePushUps = new ExercisesItem(mContext.getResources().getString(R.string.endurance_exercise_title_push_ups), mContext.getResources().getString(R.string.endurance_exercise_description_push_ups),
-                R.drawable.push_ups, mContext.getResources().getString(R.string.endurance_exercise_level_push_ups), mContext.getResources().getInteger(R.integer.endurance_exercise_duration_push_ups), mContext.getResources().getInteger(R.integer.endurance_exercise_calories_push_ups), "video_path", 3);
+        String stationaryBikeVideoStringPath = "android.resource://" + mContext.getPackageName() + "/" + R.raw.video_stationary_bike;
+        ExercisesItem enduranceStanioraryBike = new ExercisesItem(mContext.getResources().getString(R.string.endurance_exercise_title_stationary_bike), mContext.getResources().getString(R.string.endurance_exercise_description_stationary_bike),
+                R.drawable.stationary_bike, mContext.getResources().getString(R.string.endurance_exercise_level_stationary_bike), mContext.getResources().getInteger(R.integer.endurance_exercise_duration_stationary_bike), mContext.getResources().getInteger(R.integer.endurance_exercise_calories_stationary_bike), stationaryBikeVideoStringPath, 3);
+
+
+        String crawlVideoStringPath = "android.resource://" + mContext.getPackageName() + "/" + R.raw.video_crawl;
+        ExercisesItem enduranceCrawl = new ExercisesItem(mContext.getResources().getString(R.string.endurance_exercise_title_crawl), mContext.getResources().getString(R.string.endurance_exercise_description_crawl),
+                R.drawable.crawl, mContext.getResources().getString(R.string.endurance_exercise_level_crawl), mContext.getResources().getInteger(R.integer.endurance_exercise_duration_crawl), mContext.getResources().getInteger(R.integer.endurance_exercise_calories_crawl), crawlVideoStringPath, 3);
 
 
         List<ExercisesItem> exercises = new ArrayList<>();
 
-        exercises.add(weightLossCycling);
-        exercises.add(weightLossTreadmillRounds);
-        exercises.add(weightLossJumpRope);
+        exercises.add(weightLossElliptical);
+        exercises.add(weightLossTreadmill);
 
-        exercises.add(strengthGlobetSquat);
-        exercises.add(strengthPallofPress);
-        exercises.add(strengthDumbbellRow);
+        exercises.add(strengthPullDown);
+        exercises.add(strengthPushUp);
 
-        exercises.add(cardioElliptical);
-        exercises.add(cardioStationaryBike);
-        exercises.add(cardioRowing);
+        exercises.add(cardioTreadmillInterval);
+        exercises.add(cardioJumping);
 
-        exercises.add(enduranceSwimmingLaps);
-        exercises.add(enduranceStairMachine);
-        exercises.add(endurancePushUps);
+        exercises.add(enduranceStanioraryBike);
+        exercises.add(enduranceCrawl);
 
         for (int i = 0; i < exercises.size(); i++) {
             ContentValues values = new ContentValues();

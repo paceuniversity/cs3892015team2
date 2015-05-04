@@ -20,16 +20,20 @@ package pace.cs389.team2.quickfitness;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import java.util.List;
 
@@ -53,13 +57,24 @@ import pace.cs389.team2.quickfitness.utils.OrientationUtils;
 
 public class ActivityExerciseDetails extends ActionBarActivity {
 
-    private static ExercisesItem mExerciseItem;
     public static final String LOGIN_FLOW_KEY = "login_flow";
     public static final String CLASS_NAME = ActivityExerciseDetails.class.getSimpleName();
+    private static ExercisesItem mExerciseItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ActionBar actionBar = getSupportActionBar();
+
+        if (!OrientationUtils.isPortrait(getResources().getConfiguration())) {
+            OrientationUtils.hideStatusBar(getWindow());
+
+            if (actionBar != null) {
+                actionBar.hide();
+            }
+        }
+
         setContentView(R.layout.activity_exercise_details);
 
         if (savedInstanceState == null) {
@@ -154,19 +169,41 @@ public class ActivityExerciseDetails extends ActionBarActivity {
 
             View mView = inflater.inflate(R.layout.fragment_exercises_detail, container,
                     false);
-            TextView mExerciseVideo;
+
+            final ImageButton btnPlay;
+            final VideoView mExerciseVideo;
+
             if (OrientationUtils.isPortrait(getActivity().getResources().getConfiguration())) {
                 CategoryItem categoryItem = QuickFitnessDAO.getInstance(getActivity()).categoryById(mExerciseItem.getCategoryKey());
 
-                mExerciseVideo = (TextView) mView.findViewById(R.id.txt_video_placeholder);
+                mExerciseVideo = (VideoView) mView.findViewById(R.id.video_placeholder);
                 TextView mExerciseTitle = (TextView) mView.findViewById(R.id.txt_video_title);
                 TextView mExerciseDescription = (TextView) mView.findViewById(R.id.txt_video_description);
                 TextView mExerciseCategory = (TextView) mView.findViewById(R.id.txt_exercise_category);
                 TextView mExerciseLevel = (TextView) mView.findViewById(R.id.txt_workout_level);
                 TextView mExerciseDuration = (TextView) mView.findViewById(R.id.txt_workout_duration);
                 TextView mExerciseCalories = (TextView) mView.findViewById(R.id.txt_workout_calories);
+                btnPlay = (ImageButton) mView.findViewById(R.id.btn_video_play);
 
-                mExerciseVideo.setText(mExerciseItem.getVideoAnimation());
+                btnPlay.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        if (mExerciseVideo.isPlaying()) {
+                            mExerciseVideo.stopPlayback();
+                        } else {
+                            String videoPath = mExerciseItem.getVideoAnimation();
+                            Uri videoUri = Uri.parse(videoPath);
+
+                            mExerciseVideo.setVideoURI(videoUri);
+                            mExerciseVideo.start();
+
+                            btnPlay.setVisibility(View.GONE);
+                        }
+                    }
+                });
+
+
                 mExerciseTitle.setText(mExerciseItem.getName());
                 mExerciseDescription.setText(mExerciseItem.getDescription());
                 mExerciseCategory.setText(categoryItem.getName());
@@ -174,8 +211,26 @@ public class ActivityExerciseDetails extends ActionBarActivity {
                 mExerciseDuration.setText(String.valueOf(mExerciseItem.getDuration()) + " minutes");
                 mExerciseCalories.setText(String.valueOf(mExerciseItem.getCalories()) + "g");
             } else {
-                mExerciseVideo = (TextView) mView.findViewById(R.id.txt_video_placeholder);
-                mExerciseVideo.setText(mExerciseItem.getVideoAnimation());
+                mExerciseVideo = (VideoView) mView.findViewById(R.id.video_placeholder);
+                btnPlay = (ImageButton) mView.findViewById(R.id.btn_video_play);
+
+                btnPlay.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        if (mExerciseVideo.isPlaying()) {
+                            mExerciseVideo.stopPlayback();
+                        } else {
+                            String videoPath = mExerciseItem.getVideoAnimation();
+                            Uri videoUri = Uri.parse(videoPath);
+
+                            mExerciseVideo.setVideoURI(videoUri);
+                            mExerciseVideo.start();
+
+                            btnPlay.setVisibility(View.GONE);
+                        }
+                    }
+                });
             }
 
             return mView;
