@@ -137,7 +137,7 @@
                     app:egLegendColor="#FFFFFF"
                     app:egLegendHeight="0dp"
                     app:egLegendTextSize="15sp"
-                    app:egShowBarLabel="false"
+                    app:egShowBarLabel="true"
                     app:egShowValues="true" />
             </LinearLayout>
 

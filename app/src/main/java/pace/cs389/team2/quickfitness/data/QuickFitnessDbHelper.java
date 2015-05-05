@@ -39,7 +39,7 @@ public class QuickFitnessDbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "fitness.db";
 
     //Database version. If database has been changed, increment version in 1 to recreate database.
-    private static final int DB_VERSION = 98;
+    private static final int DB_VERSION = 100;
 
     // SQL script to drop the entire database
     //private static final String SQL_DROP_DATABASE = "DROP DATABASE IF EXISTS " + DATABASE_NAME;

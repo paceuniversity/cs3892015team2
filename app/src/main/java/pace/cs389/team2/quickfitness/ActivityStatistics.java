@@ -114,23 +114,20 @@ public class ActivityStatistics extends ActionBarActivity {
                 listExercises = dao.listExercisesByWorkout(workoutList.get(i).getId());
                 if (listExercises.size() > 0) {
                     exercisesCounter.add(listExercises.size());
-
                 }
             }
 
             spnFilter.setOnItemSelectedListener(this);
 
-            String stringSeparator = "       ";
-
             if (exercisesCounter.size() > 0) {
                 mVerticalBarChartLayout.setVisibility(View.VISIBLE);
-
-                for (int j = 0; j < exercisesCounter.size(); j++) {
+                for (int j = 0; j < workoutList.size(); j++) {
                     int colorListSize = j % colorList.size();
-                    mVerticalBarChart.addBar(new BarModel((float) exercisesCounter.get(j), colorList.get(colorListSize)));
-                    mVerticalBarChart.setValueUnit(stringSeparator + workoutList.get(j).getName());
-                    mVerticalBarChart.startAnimation();
+                    mVerticalBarChart.addBar(new BarModel(workoutList.get(j).getName(), (float) exercisesCounter.get(j), colorList.get(colorListSize)));
                 }
+
+                mVerticalBarChart.startAnimation();
+
             } else {
                 mVerticalBarChartLayout.setVisibility(View.GONE);
             }

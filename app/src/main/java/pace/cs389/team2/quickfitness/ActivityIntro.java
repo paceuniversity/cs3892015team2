@@ -74,8 +74,6 @@ public class ActivityIntro extends Activity {
 
         QuickFitnessDAO dao = QuickFitnessDAO.getInstance(this);
 
-//        String loginFlow = getIntent().getStringExtra(ActivityExerciseDetails.LOGIN_FLOW_KEY);
-
         if (checkForm()) {
             String userEmail = mUserEmail.getText().toString();
             String salt = "Random$SaltValue#WithSpecialCharacters12@$@4&#%^$*";
@@ -86,8 +84,6 @@ public class ActivityIntro extends Activity {
             UserItem userLogged = dao.userLoginAuthentication(userItem);
 
             if (userLogged != null) {
-                Toast.makeText(this, "User successfully logged. " + userLogged.getUsername(), Toast.LENGTH_LONG).show();
-
                 UserLoggedPreference prefs = new UserLoggedPreference(this);
                 prefs.setName(userLogged.getUsername().trim());
                 prefs.setEmail(userLogged.getEmail().trim());
