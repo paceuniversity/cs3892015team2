@@ -114,8 +114,6 @@ public class MainActivity extends ActionBarActivity {
         mDataList.add(new DrawerItem(getResources().getString(R.string.list_drawer_item_workouts), R.mipmap.ic_workouts24dp));
         mDataList.add(new DrawerItem(getResources().getString(R.string.list_drawer_item_profile), R.mipmap.ic_person_grey600_24dp));
         mDataList.add(new DrawerItem(getResources().getString(R.string.list_drawer_item_statistics), R.mipmap.ic_trending_up_grey600_24dp));
-        //mDataList.add(new DrawerItem(getResources().getString(R.string.list_drawer_item_log_out), R.mipmap.ic_settings_grey600_24dp));
-        // mDataList.add(new DrawerItem(getResources().getString(R.string.list_drawer_item_help), R.mipmap.ic_help_grey600_24dp));
 
         //Makes a reference to the menu drawer adapter, which will show them items with an icon on the left.
         //CustomDrawerAdapter receives the context, the custom xml layout adapter and the list of items to be displayed.
@@ -210,7 +208,6 @@ public class MainActivity extends ActionBarActivity {
                             prefs.logOut();
                             startActivity(new Intent(MainActivity.this, ActivityIntro.class));
                             MainActivity.this.finish();
-                            Toast.makeText(MainActivity.this, "User logged out.", Toast.LENGTH_LONG).show();
                         }
                     })
                     .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -243,6 +240,7 @@ public class MainActivity extends ActionBarActivity {
                 if (prefs.isFirstTime()) {
                     startActivity(new Intent(this, ActivityIntro.class));
                     fragment = new FragmentMainContent();
+                    Toast.makeText(this, "You must sign in before checking workouts created.", Toast.LENGTH_LONG).show();
                     finish();
                 } else {
                     fragment = new ActivityWorkoutsList.FragmentWorkouts();
@@ -252,20 +250,22 @@ public class MainActivity extends ActionBarActivity {
                 if (prefs.isFirstTime()) {
                     startActivity(new Intent(this, ActivityIntro.class));
                     fragment = new FragmentMainContent();
+                    Toast.makeText(this, "You must sign in to see your profile.", Toast.LENGTH_LONG).show();
                     finish();
                 } else {
                     fragment = new FragmentUserProfile();
                 }
                 break;
             case 4:
-                fragment = new ActivityStatistics.StatisticsFragment();
+                if (prefs.isFirstTime()) {
+                    startActivity(new Intent(this, ActivityIntro.class));
+                    fragment = new FragmentMainContent();
+                    Toast.makeText(this, "You must sign in to check your workout statistics.", Toast.LENGTH_LONG).show();
+                    finish();
+                } else {
+                    fragment = new ActivityStatistics.StatisticsFragment();
+                }
                 break;
-            /*case 5:
-                fragment = new Fragment();
-                break;
-            case 6:
-                fragment = new MainFragment();
-                break;*/
             default:
                 fragment = new MainFragment();
                 break;

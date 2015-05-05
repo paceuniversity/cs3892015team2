@@ -67,15 +67,35 @@
                 android:layout_marginTop="20dp"
                 app:cardCornerRadius="2dp">
 
-                <TextView
-                    android:id="@+id/txt_video_title"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="5dp"
-                    android:fontFamily="sans-serif-condensed"
-                    android:textColor="@color/text_color_dark_grey"
-                    android:textSize="20sp" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    tools:ignore="UseCompoundDrawables">
+
+                    <TextView
+                        android:id="@+id/txt_video_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:textColor="@color/text_color_dark_grey"
+                        android:textSize="20sp" />
+
+                    <ImageView
+                        android:id="@+id/img_gym_equipment_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="5dp"
+                        android:contentDescription="@string/txt_gym_equipment_info"
+                        android:onClick="showGymEquipmentInfo"
+                        android:src="@mipmap/ic_help_grey600_24dp" />
+
+
+                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"

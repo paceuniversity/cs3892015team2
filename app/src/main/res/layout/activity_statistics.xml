@@ -16,25 +16,135 @@
   ~  */
   -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="pace.cs389.team2.quickfitness.ActivityStatistics.StatisticsFragment">
+    android:layout_height="match_parent">
 
-    <org.eazegraph.lib.charts.ValueLineChart xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/cubiclinechart"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        app:egUseCubic="true"
-        app:egUseOverlapFill="true"
-        app:egCurveSmoothness="0.4"
-        app:egIndicatorLineColor="#FE6DA8"
-        app:egLegendHeight="40dp"
-        app:egShowStandardValue="true" />
+        android:layout_height="wrap_content">
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/txt_chart_no_data"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
+            android:text="@string/txt_chart_no_data"
+            android:textSize="23sp"
+            android:textStyle="bold" />
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/layout_statistics"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:context="pace.cs389.team2.quickfitness.ActivityStatistics.StatisticsFragment">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/txt_statistics_body_progress"
+                android:textSize="23sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/background_white"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <Spinner
+                    android:id="@+id/spn_filter_chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@color/background_light_gray"
+                    android:entries="@array/statistics_spinner_entries" />
+
+                <org.eazegraph.lib.charts.BarChart
+                    android:id="@+id/chart_bar_chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="246dp"
+                    android:layout_marginTop="10dp"
+                    android:padding="10dp"
+                    app:egBarWidth="35dp"
+                    app:egFixedBarWidth="true"
+                    app:egLegendHeight="0dp"
+                    app:egShowDecimal="true"
+                    app:egShowValues="true" />
+
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/txt_statistics_workouts_info"
+                android:textSize="23sp" />
+
+
+            <org.eazegraph.lib.charts.PieChart xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/chart_pie_chart"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/background_white"
+                android:paddingTop="10dp"
+                app:egLegendTextSize="18sp"
+                app:egUsePieRotation="true"
+                app:egValueTextSize="36sp" />
+
+            <LinearLayout
+                android:id="@+id/layout_vertical_bar_chart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/txt_statistics_number_exercises_per_workout"
+                    android:textSize="23sp" />
+
+                <org.eazegraph.lib.charts.VerticalBarChart
+                    android:id="@+id/chart_vertical_bar_chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/background_white"
+                    android:padding="20dp"
+                    app:egBarWidth="35dp"
+                    app:egEnableScroll="true"
+                    app:egFixedBarWidth="true"
+                    app:egLegendColor="#FFFFFF"
+                    app:egLegendHeight="0dp"
+                    app:egLegendTextSize="15sp"
+                    app:egShowBarLabel="false"
+                    app:egShowValues="true" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </FrameLayout>
+
+
+</ScrollView>

@@ -291,13 +291,13 @@
             </LinearLayout>
 
             <Button
+                android:id="@+id/btn_profile_see_stats"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
                 android:layout_marginBottom="-2dp"
                 android:layout_marginEnd="-2dp"
-                android:onClick="seeFullStats"
                 android:text="@string/txt_profile_full_stats"
                 android:textColor="@color/material_blue_700"
                 android:textSize="13sp" />

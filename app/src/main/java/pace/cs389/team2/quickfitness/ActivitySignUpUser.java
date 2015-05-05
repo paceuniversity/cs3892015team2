@@ -28,15 +28,15 @@ import pace.cs389.team2.quickfitness.utils.PasswordHashGenerator;
 
 public class ActivitySignUpUser extends ActionBarActivity {
 
+    private static final int RESULT_LOAD_IMG = 100;
+    static RadioGroup mGenreGroup;
     private static EditText mUserName;
     private static EditText mUserEmail;
     private static EditText mUserAge;
     private static EditText mUserPassword;
-    static RadioGroup mGenreGroup;
     private static RadioButton mGenreMale;
     private static RadioButton mGenreFemale;
     private QuickFitnessDAO dao;
-    private static final int RESULT_LOAD_IMG = 100;
     private String imgPathDecode;
 
     @Override
@@ -94,7 +94,6 @@ public class ActivitySignUpUser extends ActionBarActivity {
             Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG)
                     .show();
         }
-
     }
 
     public void userSignUp(View view) {
@@ -118,9 +117,7 @@ public class ActivitySignUpUser extends ActionBarActivity {
 
             rowsUpdated = dao.insertUser(mUserItem);
 
-
             if (rowsUpdated != 0) {
-                Toast.makeText(this, "Successfully registered.", Toast.LENGTH_LONG).show();
 
                 UserLoggedPreference prefs = new UserLoggedPreference(this);
                 prefs.setName(mUserName.getText().toString());
@@ -166,6 +163,58 @@ public class ActivitySignUpUser extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void clearFields() {
+        mUserName.setText(null);
+        mUserEmail.setText(null);
+        mUserAge.setText(null);
+        mUserPassword.setText(null);
+        mGenreGroup.clearCheck();
+        mUserEmail.requestFocus();
+    }
+
+    private boolean checkForm() {
+
+        boolean isFieldSet;
+
+        if (TextUtils.isEmpty(mUserName.getText().toString())) {
+            mUserName.setError("Please, enter your name.");
+            isFieldSet = false;
+        } else if (TextUtils.isEmpty(mUserEmail.getText().toString())) {
+            mUserEmail.setError("Please, provide a valid email address.");
+            isFieldSet = false;
+
+        } else if (!mUserEmail.getText().toString().contains("@")) {
+            Toast.makeText(this, "Please, provide a valid email. For instance, have you typed '@' ?", Toast.LENGTH_LONG).show();
+            isFieldSet = false;
+
+        } else if (!mUserEmail.getText().toString().contains(".com")) {
+            Toast.makeText(this, "Please, provide a valid email. For instance, have you typed '.com' ?", Toast.LENGTH_LONG).show();
+            isFieldSet = false;
+
+        } else if (TextUtils.isEmpty(mUserAge.getText().toString())) {
+            mUserAge.setError("Please, provide your age.");
+            isFieldSet = false;
+
+        } else if (Integer.parseInt(mUserAge.getText().toString()) <= 0) {
+            Toast.makeText(this, "The age must be greater than zero.", Toast.LENGTH_LONG).show();
+            isFieldSet = false;
+
+        } else if (TextUtils.isEmpty(mUserPassword.getText().toString())) {
+            mUserPassword.setError("Please, create a secure password.");
+            isFieldSet = false;
+
+        } else if ((!mGenreMale.isChecked()) && (!mGenreFemale.isChecked())) {
+            Toast.makeText(this, "Please, select your genre.", Toast.LENGTH_LONG).show();
+            isFieldSet = false;
+
+        } else {
+            isFieldSet = true;
+        }
+
+        return isFieldSet;
+
+    }
+
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -190,41 +239,6 @@ public class ActivitySignUpUser extends ActionBarActivity {
 
             return mRootView;
         }
-    }
-
-    private void clearFields() {
-        mUserName.setText(null);
-        mUserEmail.setText(null);
-        mUserPassword.setText(null);
-        mGenreGroup.clearCheck();
-        mUserEmail.requestFocus();
-    }
-
-    private boolean checkForm() {
-
-        boolean isFieldSet;
-
-        if (TextUtils.isEmpty(mUserName.getText().toString())) {
-            mUserName.setError("Please, enter your name.");
-            isFieldSet = false;
-        } else if (TextUtils.isEmpty(mUserEmail.getText().toString())) {
-            mUserEmail.setError("Please, provide a valid email address.");
-            isFieldSet = false;
-
-        } else if (TextUtils.isEmpty(mUserPassword.getText().toString())) {
-            mUserPassword.setError("Please, create a secure password.");
-            isFieldSet = false;
-
-        } else if ((!mGenreMale.isChecked()) && (!mGenreFemale.isChecked())) {
-            Toast.makeText(this, "Please, select your genre.", Toast.LENGTH_LONG).show();
-            isFieldSet = false;
-
-        } else {
-            isFieldSet = true;
-        }
-
-        return isFieldSet;
-
     }
 
 }

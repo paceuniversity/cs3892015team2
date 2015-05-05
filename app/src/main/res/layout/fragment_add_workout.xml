@@ -28,17 +28,38 @@
 
         tools:context="pace.cs389.team2.quickfitness.ActivityAddWorkout$PlaceholderFragment">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:fontFamily="sans-serif-condensed"
-            android:gravity="bottom"
-            android:paddingBottom="5dp"
-            android:paddingEnd="10dp"
-            android:paddingStart="10dp"
-            android:text="@string/txt_create_workout"
-            android:textColor="@color/text_color_dark_grey"
-            android:textSize="25sp" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="bottom"
+                android:paddingBottom="5dp"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:text="@string/txt_create_workout"
+                android:textColor="@color/text_color_dark_grey"
+                android:textSize="25sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="bottom"
+                android:paddingBottom="5dp"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:text="@string/txt_workout_info_description"
+                android:textColor="@color/text_color_lighter_grey"
+                android:textSize="18sp" />
+        </LinearLayout>
 
         <EditText
             android:id="@+id/edt_set_workout_name"
@@ -47,9 +68,11 @@
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
+            android:background="@drawable/edittext_default_bg"
             android:fontFamily="sans-serif-condensed"
             android:hint="@string/txt_hint_workout_name"
             android:inputType="textCapWords"
+            android:padding="8dp"
             android:textColorHint="@color/text_color_lighter_grey"
             android:textSize="20sp" />
 
@@ -66,9 +89,11 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_weight="1"
+                android:background="@drawable/edittext_default_bg"
                 android:fontFamily="sans-serif-condensed"
                 android:hint="@string/txt_times_per_week"
                 android:onClick="promptSetDaysDialog"
+                android:padding="8dp"
                 android:textColorHint="@color/text_color_lighter_grey"
                 android:textSize="20sp" />
 
@@ -80,9 +105,11 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_weight="1"
+                android:background="@drawable/edittext_default_bg"
                 android:fontFamily="sans-serif-condensed"
                 android:hint="@string/txt_workout_duration"
                 android:onClick="promptSetDurationDialog"
+                android:padding="8dp"
                 android:textColorHint="@color/text_color_lighter_grey"
                 android:textSize="20sp" />
 
@@ -96,9 +123,11 @@
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
+            android:background="@drawable/edittext_default_bg"
             android:fontFamily="sans-serif-condensed"
             android:hint="@string/txt_set_time_hint"
             android:onClick="promptSetTimeDialog"
+            android:padding="8dp"
             android:textColorHint="@color/text_color_lighter_grey"
             android:textSize="20sp" />
     </LinearLayout>

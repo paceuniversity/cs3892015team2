@@ -27,6 +27,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.eazegraph.lib.charts.PieChart;
@@ -72,6 +73,8 @@ public class FragmentMainContent extends Fragment {
         mCurrentWorkoutCard = (CardView) view.findViewById(R.id.card_current_workout);
         mTextNoDataAvailable = (TextView) view.findViewById(R.id.txt_no_data_card);
 
+        Button btnSeeStats = (Button) view.findViewById(R.id.btn_profile_see_stats);
+
         if (!prefs.isFirstTime()) {
 
             mPieChart.setVisibility(View.VISIBLE);
@@ -82,6 +85,14 @@ public class FragmentMainContent extends Fragment {
             if (mActiveWorkout != null) {
                 mCurrentWorkoutCard.setVisibility(View.VISIBLE);
                 mTextCurrentWorkout.setText(mActiveWorkout.getName());
+
+                btnSeeStats.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        getFragmentManager().beginTransaction().replace(R.id.content_place_holder, new ActivityStatistics.StatisticsFragment()).commit();
+                    }
+                });
+
             } else {
                 mCurrentWorkoutCard.setVisibility(View.GONE);
                 mTextCurrentWorkout.setText("No workouts.");

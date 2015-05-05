@@ -24,20 +24,41 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-
         tools:context="pace.cs389.team2.quickfitness.ActivityAddWorkout$PlaceholderFragment">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:fontFamily="sans-serif-condensed"
-            android:gravity="bottom"
-            android:paddingBottom="5dp"
-            android:paddingEnd="10dp"
-            android:paddingStart="10dp"
-            android:text="@string/txt_enter_body_info"
-            android:textColor="@color/text_color_dark_grey"
-            android:textSize="25sp" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="bottom"
+                android:paddingBottom="5dp"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:text="@string/txt_enter_body_info"
+                android:textColor="@color/text_color_dark_grey"
+                android:textSize="25sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="bottom"
+                android:paddingBottom="5dp"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:text="@string/txt_body_info_description"
+                android:textColor="@color/text_color_lighter_grey"
+                android:textSize="18sp" />
+
+
+        </LinearLayout>
 
         <EditText
             android:id="@+id/edt_body_height"
@@ -46,9 +67,11 @@
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
+            android:background="@drawable/edittext_default_bg"
             android:fontFamily="sans-serif-condensed"
             android:hint="@string/txt_body_info_height"
-            android:inputType="numberDecimal"
+            android:inputType="number"
+            android:padding="8dp"
             android:textColorHint="@color/text_color_lighter_grey"
             android:textSize="20sp" />
 
@@ -59,9 +82,11 @@
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
+            android:background="@drawable/edittext_default_bg"
             android:fontFamily="sans-serif-condensed"
             android:hint="@string/txt_body_info_weight"
             android:inputType="numberDecimal"
+            android:padding="8dp"
             android:textColorHint="@color/text_color_lighter_grey"
             android:textSize="20sp" />
 

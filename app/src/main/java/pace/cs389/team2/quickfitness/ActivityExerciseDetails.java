@@ -39,6 +39,7 @@ import java.util.List;
 
 import pace.cs389.team2.quickfitness.adapter.CustomExercisesListAdapter;
 import pace.cs389.team2.quickfitness.data.QuickFitnessDAO;
+import pace.cs389.team2.quickfitness.dialog.GymEquipmentDialog;
 import pace.cs389.team2.quickfitness.dialog.WorkoutsListDialog;
 import pace.cs389.team2.quickfitness.model.CategoryItem;
 import pace.cs389.team2.quickfitness.model.ExercisesItem;
@@ -86,6 +87,11 @@ public class ActivityExerciseDetails extends ActionBarActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(true);
         }
+    }
+
+    public void showGymEquipmentInfo(View view) {
+        GymEquipmentDialog gymEquipmentDialog = new GymEquipmentDialog();
+        gymEquipmentDialog.show(getFragmentManager(), "gym_equip_dialog");
     }
 
     @Override

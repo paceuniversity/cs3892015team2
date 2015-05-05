@@ -284,6 +284,34 @@ public class QuickFitnessDAO {
         return bodyInfoItem;
     }
 
+    public List<BodyInfoItem> listBodyInfo() {
+
+        List<BodyInfoItem> bodyInfoList = new ArrayList<>();
+
+
+        Cursor cursor = sqLiteDatabase.query(QuickFitnessContract.BodyEntry.TABLE_NAME, PROJECTION_TABLE_BODY_INFO,
+                null, null, null, null, null);
+
+        BodyInfoItem bodyInfoItem;
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    bodyInfoItem = new BodyInfoItem(cursor.getInt(0), cursor.getDouble(1), cursor.getDouble(2), cursor.getDouble(3), cursor.getDouble(4), cursor.getInt(5), cursor.getInt(6));
+                    bodyInfoList.add(bodyInfoItem);
+                } while (cursor.moveToNext());
+            }
+        } catch (SQLiteDatabaseLockedException exception) {
+            Log.e(MainActivity.APP_TAG, exception.getMessage());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+
+        return bodyInfoList;
+    }
+
 
     public List<ExercisesItem> listExercisesByCategory(int id) {
         List<ExercisesItem> exercises = new ArrayList<>();

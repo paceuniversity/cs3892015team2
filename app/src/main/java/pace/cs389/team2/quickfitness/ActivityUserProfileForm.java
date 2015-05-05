@@ -63,12 +63,15 @@ public class ActivityUserProfileForm extends ActionBarActivity {
                 if (checkForm()) {
                     UserItem userItem = dao.loadLoggedUser(prefs.getName());
 
-                    double bodyMassIndex = Double.parseDouble(mEdtBodyWeight.getText().toString()) / (Double.parseDouble(mEdtBodyHeight.getText().toString()) * Double.parseDouble(mEdtBodyHeight.getText().toString()));
+                    double height = Double.parseDouble(mEdtBodyHeight.getText().toString()) / 100;
+
+                    double bodyMassIndex = Double.parseDouble(mEdtBodyWeight.getText().toString()) / (height * height);
+
                     double bodyFat = (1.20 * bodyMassIndex) + (0.23 * userItem.getAge()) - (10.8 * userItem.getGenre()) - 5.4;
 
                     WorkoutItem workoutItem = dao.getCurrentWorkout();
 
-                    BodyInfoItem bodyInfoItem = new BodyInfoItem(Double.parseDouble(mEdtBodyHeight.getText().toString()), Double.parseDouble(mEdtBodyWeight.getText().toString()), bodyFat, bodyMassIndex, userItem.getId(), workoutItem.getId());
+                    BodyInfoItem bodyInfoItem = new BodyInfoItem(height, Double.parseDouble(mEdtBodyWeight.getText().toString()), bodyFat, bodyMassIndex, userItem.getId(), workoutItem.getId());
 
                     dao.insertBodyInfo(bodyInfoItem);
 
@@ -95,12 +98,18 @@ public class ActivityUserProfileForm extends ActionBarActivity {
         boolean isFieldSet;
 
         if (TextUtils.isEmpty(mEdtBodyHeight.getText().toString())) {
-            mEdtBodyHeight.setError("Please, enter your height in meters.");
+            mEdtBodyHeight.setError("Please, enter your height in centimeters.");
             isFieldSet = false;
         } else if (TextUtils.isEmpty(mEdtBodyWeight.getText().toString())) {
             mEdtBodyWeight.setError("Please, enter your weight in kg.");
             isFieldSet = false;
 
+        } else if (Double.parseDouble(mEdtBodyHeight.getText().toString()) <= 0) {
+            isFieldSet = false;
+            Toast.makeText(this, "Height must be greater than zero.", Toast.LENGTH_LONG).show();
+        } else if (Double.parseDouble(mEdtBodyWeight.getText().toString()) <= 0) {
+            isFieldSet = false;
+            Toast.makeText(this, "Weight must be greater than zero.", Toast.LENGTH_LONG).show();
         } else {
             isFieldSet = true;
         }

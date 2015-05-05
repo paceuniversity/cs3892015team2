@@ -22,14 +22,28 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import org.eazegraph.lib.charts.ValueLineChart;
-import org.eazegraph.lib.models.ValueLinePoint;
-import org.eazegraph.lib.models.ValueLineSeries;
+import org.eazegraph.lib.charts.BarChart;
+import org.eazegraph.lib.charts.PieChart;
+import org.eazegraph.lib.charts.VerticalBarChart;
+import org.eazegraph.lib.models.BarModel;
+import org.eazegraph.lib.models.PieModel;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import pace.cs389.team2.quickfitness.data.QuickFitnessDAO;
+import pace.cs389.team2.quickfitness.model.BodyInfoItem;
+import pace.cs389.team2.quickfitness.model.ExercisesItem;
+import pace.cs389.team2.quickfitness.model.WorkoutItem;
+import pace.cs389.team2.quickfitness.preferences.UserLoggedPreference;
 
 
 public class ActivityStatistics extends ActionBarActivity {
@@ -46,33 +60,21 @@ public class ActivityStatistics extends ActionBarActivity {
         }
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.menu_statistics, menu);
-        return false;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        //int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        // if (id == R.id.action_settings) {
-        //   return true;
-        //}
-
-        return super.onOptionsItemSelected(item);
-    }
-
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class StatisticsFragment extends Fragment {
+    public static class StatisticsFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+
+        UserLoggedPreference prefs;
+        QuickFitnessDAO dao;
+        BarChart mNormalBarChart;
+        VerticalBarChart mVerticalBarChart;
+        TextView txtNoData;
+        LinearLayout mStatisticsLayout;
+        List<WorkoutItem> workoutList;
+        List<BodyInfoItem> bodyInfoList;
+        List<Integer> colorList;
+        LinearLayout mVerticalBarChartLayout;
 
         public StatisticsFragment() {
         }
@@ -81,30 +83,106 @@ public class ActivityStatistics extends ActionBarActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
 
-
             View rootView = inflater.inflate(R.layout.activity_statistics, container, false);
-            ValueLineChart mCubicValueLineChart = (ValueLineChart) rootView.findViewById(R.id.cubiclinechart);
+            mNormalBarChart = (BarChart) rootView.findViewById(R.id.chart_bar_chart);
+            PieChart mPieChart = (PieChart) rootView.findViewById(R.id.chart_pie_chart);
+            mVerticalBarChart = (VerticalBarChart) rootView.findViewById(R.id.chart_vertical_bar_chart);
+            Spinner spnFilter = (Spinner) rootView.findViewById(R.id.spn_filter_chart);
+            txtNoData = (TextView) rootView.findViewById(R.id.txt_chart_no_data);
+            mStatisticsLayout = (LinearLayout) rootView.findViewById(R.id.layout_statistics);
+            mVerticalBarChartLayout = (LinearLayout) rootView.findViewById(R.id.layout_vertical_bar_chart);
 
-            ValueLineSeries series = new ValueLineSeries();
-            series.setColor(0xFF56B7F1);
+            prefs = new UserLoggedPreference(getActivity());
+            dao = QuickFitnessDAO.getInstance(getActivity());
 
-            series.addPoint(new ValueLinePoint("Jan", 2.4f));
-            series.addPoint(new ValueLinePoint("Feb", 3.4f));
-            series.addPoint(new ValueLinePoint("Mar", .4f));
-            series.addPoint(new ValueLinePoint("Apr", 1.2f));
-            series.addPoint(new ValueLinePoint("Mai", 2.6f));
-            series.addPoint(new ValueLinePoint("Jun", 1.0f));
-            series.addPoint(new ValueLinePoint("Jul", 3.5f));
-            series.addPoint(new ValueLinePoint("Aug", 2.4f));
-            series.addPoint(new ValueLinePoint("Sep", 2.4f));
-            series.addPoint(new ValueLinePoint("Oct", 3.4f));
-            series.addPoint(new ValueLinePoint("Nov", .4f));
-            series.addPoint(new ValueLinePoint("Dec", 1.3f));
+            workoutList = dao.listWorkouts();
+            bodyInfoList = dao.listBodyInfo();
 
-            mCubicValueLineChart.addSeries(series);
-            mCubicValueLineChart.startAnimation();
+            colorList = new ArrayList<>();
+            colorList.add(0xFF123456);
+            colorList.add(0xFF873F56);
+            colorList.add(0xFF56B7F1);
+            colorList.add(0xFF343456);
+            colorList.add(0xFF1FF4AC);
+            colorList.add(0xFF1BA4E6);
+
+
+            List<ExercisesItem> listExercises;
+            List<Integer> exercisesCounter = new ArrayList<>();
+
+            for (int i = 0; i < workoutList.size(); i++) {
+                listExercises = dao.listExercisesByWorkout(workoutList.get(i).getId());
+                if (listExercises.size() > 0) {
+                    exercisesCounter.add(listExercises.size());
+
+                }
+            }
+
+            spnFilter.setOnItemSelectedListener(this);
+
+            String stringSeparator = "       ";
+
+            if (exercisesCounter.size() > 0) {
+                mVerticalBarChartLayout.setVisibility(View.VISIBLE);
+
+                for (int j = 0; j < exercisesCounter.size(); j++) {
+                    int colorListSize = j % colorList.size();
+                    mVerticalBarChart.addBar(new BarModel((float) exercisesCounter.get(j), colorList.get(colorListSize)));
+                    mVerticalBarChart.setValueUnit(stringSeparator + workoutList.get(j).getName());
+                    mVerticalBarChart.startAnimation();
+                }
+            } else {
+                mVerticalBarChartLayout.setVisibility(View.GONE);
+            }
+
+            mPieChart.addPieSlice(new PieModel("Workouts Completed", 15, colorList.get(0)));
+            mPieChart.addPieSlice(new PieModel("Workouts Skipped", 4, colorList.get(1)));
 
             return rootView;
+        }
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            if (workoutList.size() > 0) {
+                txtNoData.setVisibility(View.GONE);
+                mStatisticsLayout.setVisibility(View.VISIBLE);
+
+                if (position >= 0 && position <= 2) {
+                    if (position == 0) {
+                        mNormalBarChart.clearChart();
+                        for (int i = 0; i < workoutList.size(); i++) {
+                            int colorListSize = i % colorList.size();
+                            mNormalBarChart.addBar(new BarModel((float) bodyInfoList.get(i).getWeight(), colorList.get(colorListSize)));
+                        }
+                    } else if (position == 1) {
+                        mNormalBarChart.clearChart();
+                        for (int i = 0; i < workoutList.size(); i++) {
+                            int colorListSize = i % colorList.size();
+                            mNormalBarChart.addBar(new BarModel((float) bodyInfoList.get(i).getBf(), colorList.get(colorListSize)));
+                        }
+
+                        mNormalBarChart.startAnimation();
+                    } else if (position == 2) {
+                        mNormalBarChart.clearChart();
+                        for (int i = 0; i < workoutList.size(); i++) {
+                            int colorListSize = i % colorList.size();
+                            mNormalBarChart.addBar(new BarModel((float) bodyInfoList.get(i).getBmi(), colorList.get(colorListSize)));
+                        }
+                    }
+                    mNormalBarChart.startAnimation();
+                }
+
+            } else {
+                txtNoData.setVisibility(View.VISIBLE);
+                mStatisticsLayout.setVisibility(View.GONE);
+                Toast.makeText(getActivity(), "You haven't created any workout.", Toast.LENGTH_LONG).show();
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
         }
     }
 }

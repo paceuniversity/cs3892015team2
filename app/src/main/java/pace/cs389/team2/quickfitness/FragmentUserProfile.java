@@ -9,6 +9,7 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -59,6 +60,14 @@ public class FragmentUserProfile extends Fragment {
         bodyInfoLayout = (LinearLayout) view.findViewById(R.id.layout_body_info);
         mCurrentWorkoutCard = (CardView) view.findViewById(R.id.card_workouts_stats);
         mTextWorkoutStats = (TextView) view.findViewById(R.id.txt_user_profile_workout_stats);
+        Button btnSeeStats = (Button) view.findViewById(R.id.btn_profile_see_stats);
+
+        btnSeeStats.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().beginTransaction().replace(R.id.content_place_holder, new ActivityStatistics.StatisticsFragment()).commit();
+            }
+        });
 
         QuickFitnessDAO dao = QuickFitnessDAO.getInstance(getActivity());
 
@@ -109,7 +118,7 @@ public class FragmentUserProfile extends Fragment {
                     bodyInfoLayout.setVisibility(View.VISIBLE);
                 }
 
-                mUserHeight.setText(String.format("%.2f", bodyInfoItem.getHeight()) + " m");
+                mUserHeight.setText(String.valueOf(bodyInfoItem.getHeight() * 100) + " cm");
 
                 mUserWeight.setText(String.format("%.2f", bodyInfoItem.getWeight()) + " kg");
 
@@ -134,6 +143,5 @@ public class FragmentUserProfile extends Fragment {
 
         return view;
     }
-
 
 }
